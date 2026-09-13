@@ -1,0 +1,852 @@
+:root {
+  --bg: #fff;
+  --sand: #141414; /* ink on white */
+  --sand-dim: rgba(20, 20, 20, 0.48);
+  --sand-mute: rgba(20, 20, 20, 0.22);
+  --line: rgba(20, 20, 20, 0.12);
+  --accent: #d8c8af; /* warm sand for rare accents */
+  --safe: clamp(1.5rem, 3vw, 2.6rem);
+  --header-h: 4.25rem;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --max: 1180px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--bg);
+  color: var(--sand);
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter Tight", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--sand);
+  min-height: 100dvh;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; }
+:focus-visible { outline: 1px solid var(--sand); outline-offset: 3px; }
+img { display: block; max-width: 100%; }
+.cover { width: 100%; height: 100%; object-fit: cover; }
+
+/* —— Header —— */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  padding: 0 var(--safe);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0) 100%);
+}
+
+.brand {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+.brand:hover { opacity: 0.7; }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem 1.25rem;
+  z-index: 2;
+}
+.nav a {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  position: relative;
+  padding: 0.15rem 0;
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s var(--ease);
+}
+.nav a:hover::after,
+.nav a.is-active::after { width: 100%; }
+.nav .dot { opacity: 0.4; font-size: 0.65rem; }
+
+.ig {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-left: 0.35rem;
+  opacity: 0.85;
+  display: inline-flex;
+}
+.ig:hover { opacity: 1; }
+.ig svg { width: 100%; height: 100%; fill: currentColor; }
+
+.menu-toggle {
+  display: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+.nav-mobile {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  background: rgba(255,255,255,0.98);
+  padding: calc(var(--header-h) + 1.5rem) var(--safe) 2rem;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.nav-mobile.is-open { display: flex; }
+.nav-mobile a {
+  display: block;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.4rem, 10vw, 3.6rem);
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  padding: 0.2rem 0;
+  color: var(--sand-mute);
+  transition: color 0.25s var(--ease);
+}
+.nav-mobile a:hover,
+.nav-mobile a.is-active { color: var(--sand); }
+.nav-mobile-end {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+}
+.nav-mobile-end a:hover { color: var(--sand); }
+
+body.menu-open { overflow: hidden; }
+
+/* —— Footer —— */
+.site-footer {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.75rem var(--safe) 2.5rem;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+.site-footer .left { color: var(--sand-dim); }
+.site-footer .center {
+  text-align: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+}
+.site-footer .right { text-align: right; display: flex; gap: 1.25rem; justify-content: flex-end; }
+.site-footer a:hover { opacity: 0.75; }
+
+.page-wrap { padding-bottom: 3rem; }
+.page-wrap.has-footer-space { min-height: 100dvh; display: flex; flex-direction: column; }
+.page-wrap.has-footer-space > main { flex: 1; }
+
+/* —— Homepage index —— */
+.home-body {
+  overflow: hidden;
+  height: 100dvh;
+}
+.home-body .site-footer { display: none; }
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(22rem, 0.95fr) minmax(0, 1.15fr);
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100dvh;
+  height: 100dvh;
+  padding-top: var(--header-h);
+  overflow: hidden;
+}
+
+.index-pane {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem var(--safe) 3rem;
+  background: linear-gradient(90deg, #fff 55%, rgba(255,255,255,0.85) 85%, transparent 100%);
+  min-width: 0;
+  height: calc(100dvh - var(--header-h));
+  overflow: hidden;
+}
+
+.tagline {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  margin-bottom: 2.2rem;
+}
+
+.artist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.artist-row {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.75rem 1rem;
+  padding: 0.35rem 0;
+  width: 100%;
+  min-width: 0;
+  transition: color 0.25s var(--ease);
+}
+.artist-row .num {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--sand-mute);
+  font-variant-numeric: tabular-nums;
+}
+.artist-row .name {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.1rem, 4.6vw, 4.2rem);
+  line-height: 0.92;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  color: var(--sand-mute);
+  min-width: 0;
+  white-space: nowrap;
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.artist-row .credit {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--sand-mute);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), color 0.3s;
+}
+.artist-row:hover .name,
+.artist-row.is-active .name {
+  color: var(--sand);
+  transform: translateX(4px);
+}
+.artist-row:hover .num,
+.artist-row.is-active .num { color: var(--sand-dim); }
+.artist-row:hover .credit,
+.artist-row.is-active .credit {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--sand);
+}
+
+.photo-pane {
+  position: relative;
+  min-height: 0;
+  height: calc(100dvh - var(--header-h));
+  align-self: stretch;
+  isolation: isolate;
+  overflow: hidden;
+  background: #fff;
+}
+
+.photo-scroller {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #fff;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* smaller peeks — active frame dominates */
+  scroll-padding-block: 12%;
+}
+.photo-scroller::-webkit-scrollbar { display: none; }
+
+.photo-slide {
+  position: relative;
+  display: block;
+  width: 100%;
+  /* larger active frame = smaller peeks */
+  height: 76%;
+  min-height: 76%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  margin: 0;
+  border: 0;
+}
+.photo-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  display: block;
+  transform: scale(1.02);
+  transition: filter 0.55s var(--ease), opacity 0.55s var(--ease), transform 0.7s var(--ease);
+  /* softer dimming on neighbors */
+  filter: brightness(0.78) saturate(0.88);
+  opacity: 0.78;
+}
+.photo-spacer {
+  height: 12%;
+  min-height: 12%;
+  flex: none;
+  pointer-events: none;
+}
+
+.photo-slide.is-active img {
+  filter: none;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.photo-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  background:
+    linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.55) 8%, transparent 22%),
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.65) 0%,
+      transparent 14%,
+      transparent 86%,
+      rgba(255,255,255,0.65) 100%
+    );
+}
+
+.photo-caption {
+  position: absolute;
+  right: var(--safe);
+  bottom: 1.75rem;
+  z-index: 7;
+  text-align: right;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease);
+}
+.photo-caption .label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  margin-bottom: 0.35rem;
+}
+.photo-caption .big {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+}
+
+.home-foot {
+  position: fixed;
+  left: var(--safe);
+  bottom: 1.25rem;
+  z-index: 20;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--sand-mute);
+}
+.home-foot a:hover { color: var(--sand); }
+
+/* —— Inner page chrome —— */
+.page-hero {
+  padding: calc(var(--header-h) + 2.5rem) var(--safe) 2rem;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.page-kicker {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  margin-bottom: 0.85rem;
+}
+.page-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  letter-spacing: 0.04em;
+  line-height: 0.92;
+}
+.page-lede {
+  margin-top: 1rem;
+  max-width: 34rem;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--sand-dim);
+  line-height: 1.45;
+}
+
+/* —— Music grid —— */
+.live-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.5rem var(--safe) 3rem;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.75rem;
+}
+.live-cell {
+  position: relative;
+  overflow: hidden;
+  background: #f2f2f2;
+  aspect-ratio: 3 / 4;
+}
+.live-cell:nth-child(1) { grid-column: span 7; aspect-ratio: 16 / 11; }
+.live-cell:nth-child(2) { grid-column: span 5; }
+.live-cell:nth-child(3) { grid-column: span 4; }
+.live-cell:nth-child(4) { grid-column: span 4; }
+.live-cell:nth-child(5) { grid-column: span 4; }
+.live-cell:nth-child(6) { grid-column: span 6; aspect-ratio: 4 / 3; }
+.live-cell:nth-child(7) { grid-column: span 6; aspect-ratio: 4 / 3; }
+.live-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease);
+}
+.live-cell:hover img { transform: scale(1.04); }
+.live-meta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2.5rem 1rem 0.9rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.live-meta strong {
+  display: block;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-top: 0.15rem;
+}
+
+/* —— Projects cards —— */
+.card-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.5rem var(--safe) 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.project-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  transition: border-color 0.3s var(--ease);
+}
+.project-card:hover { border-color: rgba(20, 20, 20, 0.35); }
+.project-card .thumb {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: #f2f2f2;
+}
+.project-card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  transition: transform 0.7s var(--ease);
+}
+.project-card:hover .thumb img { transform: scale(1.04); }
+.project-card .body {
+  padding: 1.1rem 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+.project-card .num {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  color: var(--sand-mute);
+}
+.project-card .name {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.15rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.project-card .credit {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--sand-dim);
+}
+.project-card .cta {
+  margin-top: 1rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.project-card:hover .cta { color: var(--sand); }
+.project-card .cta span {
+  display: inline-block;
+  width: 1.4rem;
+  height: 1px;
+  background: currentColor;
+}
+
+/* —— Artist project page —— */
+.artist-hero {
+  position: relative;
+  min-height: 72dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: calc(var(--header-h) + 2rem) var(--safe) 2.5rem;
+  overflow: hidden;
+}
+.artist-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.artist-hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  filter: brightness(0.72);
+}
+.artist-hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, #000 0%, rgba(0,0,0,0.55) 28%, transparent 62%),
+    linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 50%);
+}
+.artist-hero-copy { position: relative; z-index: 2; max-width: 40rem; }
+.artist-num {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  margin-bottom: 0.6rem;
+}
+.artist-name {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3.2rem, 9vw, 6.5rem);
+  letter-spacing: 0.03em;
+  line-height: 0.9;
+}
+.artist-credit {
+  margin-top: 0.85rem;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: 1.25rem;
+}
+.artist-credit em { opacity: 0.65; margin-right: 0.2em; }
+
+.gallery {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 2rem var(--safe) 3rem;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.75rem;
+}
+.gallery figure {
+  overflow: hidden;
+  background: #f2f2f2;
+  position: relative;
+}
+.gallery figure:nth-child(1) { grid-column: span 8; aspect-ratio: 16 / 11; }
+.gallery figure:nth-child(2) { grid-column: span 4; aspect-ratio: 3 / 4; }
+.gallery figure:nth-child(3) { grid-column: span 5; aspect-ratio: 4 / 5; }
+.gallery figure:nth-child(4) { grid-column: span 7; aspect-ratio: 16 / 12; }
+.gallery figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gallery figcaption {
+  position: absolute;
+  left: 0.85rem;
+  bottom: 0.75rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+}
+
+.artist-nav {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--safe) 2rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+}
+.artist-nav a:hover { color: var(--sand); }
+
+/* —— Publications —— */
+.pub-list {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.5rem var(--safe) 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.pub-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--line);
+}
+.pub-item:last-child { border-bottom: 1px solid var(--line); }
+.pub-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sand-mute);
+  margin-bottom: 0.75rem;
+}
+.pub-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 0.85rem;
+}
+.pub-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--sand-dim);
+  max-width: 32rem;
+}
+.pub-body p + p { margin-top: 0.85rem; }
+.pub-visual {
+  position: relative;
+  overflow: hidden;
+  background: #f2f2f2;
+  aspect-ratio: 4 / 5;
+}
+.pub-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pub-link {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+}
+.pub-link:hover { border-color: var(--sand); }
+
+/* —— About —— */
+.about-block {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 3rem) var(--safe) 3rem;
+}
+.about-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3.5rem, 12vw, 7.5rem);
+  letter-spacing: 0.02em;
+  line-height: 0.88;
+  margin-bottom: 2.5rem;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 3rem;
+  align-items: start;
+}
+.about-aside {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  padding-top: 0.35rem;
+}
+.about-body {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--sand-dim);
+  max-width: 36rem;
+}
+.about-body p + p { margin-top: 1.1rem; }
+.about-body strong { color: var(--sand); font-weight: 500; }
+.about-contact {
+  margin-top: 2.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.75rem;
+  align-items: center;
+}
+.inquire {
+  display: inline-block;
+  border: 1px solid var(--sand-dim);
+  padding: 0.65rem 1.15rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  transition: border-color 0.25s, background 0.25s, color 0.25s;
+}
+.inquire:hover {
+  border-color: var(--sand);
+  background: var(--sand);
+  color: #fff;
+}
+.about-contact .ghost {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+}
+.about-contact .ghost:hover { color: var(--sand); border-color: var(--sand); }
+
+
+/* —— Quiet sitemap (projects.html fallback) —— */
+.sitemap-list {
+  max-width: var(--max);
+  margin: 0 auto 2rem;
+  padding: 0 var(--safe);
+  list-style: none;
+  counter-reset: work;
+}
+.sitemap-list li {
+  counter-increment: work;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--sand-dim);
+}
+.sitemap-list li::before {
+  content: counter(work, decimal-leading-zero);
+  display: inline-block;
+  width: 2.2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--sand-mute);
+  margin-right: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+.sitemap-list a {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.55rem;
+  letter-spacing: 0.04em;
+  margin-right: 0.5rem;
+}
+.sitemap-list a:hover { color: var(--sand); }
+
+/* —— Responsive —— */
+@media (max-width: 960px) {
+  .nav { display: none; }
+  .menu-toggle { display: block; }
+
+  .home-body { overflow: hidden; }
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 100vw;
+    min-width: 0;
+  }
+  .photo-pane {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    height: 100dvh;
+    opacity: 0.45;
+  }
+  .photo-vignette {
+    background: rgba(255,255,255,0.72);
+  }
+  .index-pane {
+    background: transparent;
+    min-height: 100dvh;
+    height: auto;
+  }
+  .photo-caption { display: none; }
+  .artist-row .credit { display: none; }
+  .artist-row .name { font-size: clamp(2rem, 9vw, 3.2rem); }
+
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .live-cell:nth-child(n) { grid-column: span 6; aspect-ratio: 3 / 4; }
+  .live-cell:nth-child(1) { grid-column: span 12; aspect-ratio: 16 / 11; }
+
+  .pub-item { grid-template-columns: 1fr; gap: 1.25rem; }
+  .pub-visual { max-width: 22rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+
+  .gallery figure:nth-child(n) { grid-column: span 12; aspect-ratio: 4 / 5; }
+  .gallery figure:nth-child(1),
+  .gallery figure:nth-child(4) { aspect-ratio: 16 / 11; }
+
+  .site-footer {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  .site-footer .right { justify-content: center; text-align: center; }
+  .site-footer .left,
+  .site-footer .center { text-align: center; }
+}
+
+@media (max-width: 640px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .live-cell:nth-child(n) { grid-column: span 12; }
+  .artist-row {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+  .artist-row .name { font-size: clamp(2.2rem, 12vw, 3.2rem); }
+}

@@ -725,6 +725,8 @@ body.menu-open { overflow: hidden; }
   color: var(--sand-mute);
   font-variant-numeric: tabular-nums;
 }
+.cv-title a { border-bottom: 1px solid transparent; }
+.cv-title a:hover { border-bottom-color: currentColor; }
 .cv-title {
   font-family: "Bebas Neue", sans-serif;
   font-size: clamp(1.45rem, 3vw, 1.9rem);

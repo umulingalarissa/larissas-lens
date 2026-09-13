@@ -29,7 +29,7 @@
       header.innerHTML =
         '<a class="brand" href="' + root + 'index.html">LARISSA UMULINGA</a>' +
         '<nav class="nav" aria-label="Primary">' +
-        '<a href="' + root + 'publications.html">publications</a><span class="dot" aria-hidden="true">·</span>' +
+        '<a href="' + root + 'publications.html">curations</a><span class="dot" aria-hidden="true">·</span>' +
         '<a href="' + root + 'about.html">about</a>' +
         '<a class="ig" href="' + IG + '" target="_blank" rel="noopener noreferrer" aria-label="Instagram @larissaumulinga">' +
         IG_SVG +
@@ -41,7 +41,7 @@
     if (mobile) {
       mobile.innerHTML =
         "<div>" +
-        '<a href="' + root + 'publications.html">publications</a>' +
+        '<a href="' + root + 'publications.html">curations</a>' +
         '<a href="' + root + 'about.html">about</a>' +
         "</div>" +
         '<div class="nav-mobile-end">' +

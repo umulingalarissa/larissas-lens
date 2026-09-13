@@ -28,13 +28,13 @@ No Node, no npm, no environment variables required.
 
 ## Site map
 
-Home is the work. Header nav is **publications · about** (+ Instagram). The logo/name returns home.
+Home is the work. Header nav is **curations · about** (+ Instagram). The logo/name returns home.
 
 | Page | Path |
 |------|------|
 | Work archive (numbered artist/project index) | `index.html` (`#work`) |
 | Full galleries | `projects/tyla.html`, `davido.html`, `ayra-starr.html`, `tiwa-savage.html`, `black-sheriff.html`, `musa-keys.html`, `pher.html`, `natacha.html` |
-| Publications (press / covers only) | `publications.html` |
+| Curations / Publications (exhibitions + press) | `publications.html` |
 | About (bio + inquire) | `about.html` |
 | Quiet sitemap (redirects home) | `projects.html` |
 

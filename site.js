@@ -1,5 +1,5 @@
 (function () {
-  var IG = "https://www.instagram.com/larissaslens_/";
+  var IG = "https://www.instagram.com/larissaumulinga/";
   var IG_SVG =
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.2A4.8 4.8 0 1 0 12 16.8 4.8 4.8 0 0 0 12 7.2Zm0 7.92A3.12 3.12 0 1 1 12 8.88a3.12 3.12 0 0 1 0 6.24ZM17.64 6.96a1.12 1.12 0 1 1-2.24 0 1.12 1.12 0 0 1 2.24 0ZM21.6 7.2A5.52 5.52 0 0 0 16.8 2.4H7.2A5.52 5.52 0 0 0 2.4 7.2v9.6A5.52 5.52 0 0 0 7.2 21.6h9.6a5.52 5.52 0 0 0 4.8-4.8V7.2Zm-1.68 9.6a3.12 3.12 0 0 1-3.12 3.12H7.2a3.12 3.12 0 0 1-3.12-3.12V7.2A3.12 3.12 0 0 1 7.2 4.08h9.6A3.12 3.12 0 0 1 19.92 7.2v9.6Z"/></svg>';
 
@@ -31,7 +31,7 @@
         '<nav class="nav" aria-label="Primary">' +
         '<a href="' + root + 'publications.html">publications</a><span class="dot" aria-hidden="true">·</span>' +
         '<a href="' + root + 'about.html">about</a>' +
-        '<a class="ig" href="' + IG + '" target="_blank" rel="noopener noreferrer" aria-label="Instagram @larissaslens_">' +
+        '<a class="ig" href="' + IG + '" target="_blank" rel="noopener noreferrer" aria-label="Instagram @larissaumulinga">' +
         IG_SVG +
         "</a></nav>" +
         '<button class="menu-toggle" type="button" aria-controls="mobile-nav" aria-expanded="false">menu</button>';
@@ -78,6 +78,7 @@
     if (!list || !scroller) return;
 
     var artists = [
+      { name: "Wizkid", credit: "live", href: "projects/wizkid.html", img: "img/Wizkid-1.jpg" },
       { name: "Tyla", credit: "for Blastfest", href: "projects/tyla.html", img: "img/Tyla-1.jpg" },
       { name: "Davido", credit: "live", href: "projects/davido.html", img: "img/Davido-03.jpg" },
       { name: "Ayra Starr", credit: "live", href: "projects/ayra-starr.html", img: "img/Ayra-15.jpg" },

@@ -7,7 +7,7 @@
   <meta name="description" content="Concert photography. Live music / Afrobeats / the stage." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@1&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@1&family=Inter+Tight:wght@400;500;600&family=Poppins:wght@300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="home-body" data-root="">
@@ -21,6 +21,12 @@
     <aside class="photo-pane" aria-label="Selected work">
       <div class="photo-scroller" id="photo-scroller" tabindex="0"></div>
       <div class="photo-vignette" aria-hidden="true"></div>
+      <div class="photo-frame" aria-hidden="true">
+        <span class="corner tl"></span>
+        <span class="corner tr"></span>
+        <span class="corner bl"></span>
+        <span class="corner br"></span>
+      </div>
       <div class="photo-caption">
         <p class="label">Selected work</p>
         <p class="big" id="cap-name">Wizkid</p>
@@ -28,6 +34,7 @@
     </aside>
   </main>
   <p class="home-foot"><a href="https://www.instagram.com/larissaumulinga/">@larissaumulinga</a></p>
+  <script src="projects/artists-data.js"></script>
   <script src="site.js"></script>
 </body>
 </html>

@@ -33,14 +33,23 @@ Home is the work. Header nav is **curations · about** (+ Instagram). The logo/n
 | Page | Path |
 |------|------|
 | Work archive (numbered artist/project index) | `index.html` (`#work`) |
-| Full galleries | `projects/tyla.html`, `davido.html`, `ayra-starr.html`, `tiwa-savage.html`, `black-sheriff.html`, `musa-keys.html`, `pher.html`, `natacha.html` |
+| Full galleries (one reusable template, driven by slug) | `projects/artist.html?a=<slug>` |
 | Curations / Publications (exhibitions + press) | `publications.html` |
 | About (bio + inquire) | `about.html` |
 | Quiet sitemap (redirects home) | `projects.html` |
 
-Concert first on the home index (Tyla → Musa Keys), then two editorial entries that already have images: Pher (SPICE cover) and Natacha.
+Concert first on the home index (Wizkid → Adekunle), then one editorial entry: Pher (SPICE cover).
 
-Shared chrome: `styles.css` + `site.js` (header/footer inject). Images live in `img/`.
+Shared chrome: `styles.css` + `site.js` (header/footer inject). Every artist's photos live under `img/<slug>/`, numbered `01.jpg`, `02.jpg`, ... — the same order they appear in the gallery, with `01.jpg` doubling as the hero + homepage thumbnail.
+
+### Adding a new artist
+
+No new HTML file needed:
+
+1. Drop their photos in `img/<slug>/` (e.g. `img/burna-boy/01.jpg`, `02.jpg`, ...).
+2. Add one entry to the `window.ARTISTS` array in `projects/artists-data.js` — name, credit line, a short lede, and the `images` list (file, alt text, caption, optional `object-position` override).
+
+That's it. The homepage list, the hero, the gallery grid, the "Project 0X / NN" numbering, and the prev/next nav on every artist page are all generated from that one array in `projects/artist.html` + `site.js`.
 
 ## Design
 

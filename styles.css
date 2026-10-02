@@ -2,11 +2,14 @@
   --bg: #fff;
   --sand: #141414; /* ink on white */
   --sand-dim: rgba(20, 20, 20, 0.48);
+  --sand-soft: rgba(20, 20, 20, 0.7); /* lighter than full ink — less "bold"-reading titles */
   --sand-mute: rgba(20, 20, 20, 0.22);
   --line: rgba(20, 20, 20, 0.12);
   --accent: #d8c8af; /* warm sand for rare accents */
+  --bg-rgb: 255, 255, 255;
   --safe: clamp(1.5rem, 3vw, 2.6rem);
-  --header-h: 4.25rem;
+  --header-h: clamp(5.5rem, 9vw, 7.5rem);
+  --matte: clamp(0.5in, 5vw, 1in);
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --max: 1180px;
 }
@@ -47,9 +50,11 @@ img { display: block; max-width: 100%; }
 }
 
 .brand {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.24em;
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-size: clamp(2.2rem, 4.2vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   z-index: 2;
 }
@@ -187,11 +192,14 @@ body.menu-open { overflow: hidden; }
   flex-direction: column;
   justify-content: center;
   padding: 2rem var(--safe) 3rem;
-  background: linear-gradient(90deg, #fff 55%, rgba(255,255,255,0.85) 85%, transparent 100%);
+  background: linear-gradient(90deg, rgb(var(--bg-rgb)) 55%, rgba(var(--bg-rgb), 0.85) 85%, transparent 100%);
   min-width: 0;
   height: calc(100dvh - var(--header-h));
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
 }
+.index-pane::-webkit-scrollbar { display: none; }
 
 .tagline {
   font-size: 0.65rem;
@@ -247,7 +255,7 @@ body.menu-open { overflow: hidden; }
 }
 .artist-row:hover .name,
 .artist-row.is-active .name {
-  color: var(--sand);
+  color: var(--sand-soft);
   transform: translateX(4px);
 }
 .artist-row:hover .num,
@@ -266,14 +274,14 @@ body.menu-open { overflow: hidden; }
   align-self: stretch;
   isolation: isolate;
   overflow: hidden;
-  background: #fff;
+  background-color: var(--bg);
 }
 
 .photo-scroller {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: #fff;
+  background-color: var(--bg);
   overflow-x: hidden;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
@@ -296,9 +304,11 @@ body.menu-open { overflow: hidden; }
   scroll-snap-align: center;
   scroll-snap-stop: always;
   overflow: hidden;
-  background: #fff;
+  background-color: var(--bg);
   cursor: pointer;
-  margin: 0;
+  margin: 0 0 clamp(1.25rem, 3vw, 2.25rem);
+  /* matte — white space between the photo and its corner brackets */
+  padding: var(--matte);
   border: 0;
 }
 .photo-slide img {
@@ -331,22 +341,40 @@ body.menu-open { overflow: hidden; }
   inset: 0;
   pointer-events: none;
   z-index: 6;
-  background:
-    linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.55) 8%, transparent 22%),
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.65) 0%,
-      transparent 14%,
-      transparent 86%,
-      rgba(255,255,255,0.65) 100%
-    );
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--bg-rgb), 0.65) 0%,
+    transparent 14%,
+    transparent 86%,
+    rgba(var(--bg-rgb), 0.65) 100%
+  );
 }
+
+/* Corner brackets framing the active photo — sit halfway into the matte
+   (padding on .photo-slide), splitting the white gap between the photo
+   edge and the bracket, like a mat inside a picture frame. */
+.photo-frame {
+  position: absolute;
+  inset: calc(12% + var(--matte) / 2) calc(var(--matte) / 2);
+  z-index: 8;
+  pointer-events: none;
+}
+.photo-frame .corner {
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 4px solid #000;
+}
+.photo-frame .corner.tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+.photo-frame .corner.tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+.photo-frame .corner.bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+.photo-frame .corner.br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
 
 .photo-caption {
   position: absolute;
   right: var(--safe);
   bottom: 1.75rem;
-  z-index: 7;
+  z-index: 9;
   text-align: right;
   pointer-events: none;
   transition: opacity 0.35s var(--ease);
@@ -592,10 +620,12 @@ body.menu-open { overflow: hidden; }
   background: #f2f2f2;
   position: relative;
 }
-.gallery figure:nth-child(1) { grid-column: span 8; aspect-ratio: 16 / 11; }
-.gallery figure:nth-child(2) { grid-column: span 4; aspect-ratio: 3 / 4; }
-.gallery figure:nth-child(3) { grid-column: span 5; aspect-ratio: 4 / 5; }
-.gallery figure:nth-child(4) { grid-column: span 7; aspect-ratio: 16 / 12; }
+/* 8/4/5/7-column mosaic, repeating every 4 photos so it still works
+   whether a gallery has 4 images or 40. */
+.gallery figure:nth-child(4n+1) { grid-column: span 8; aspect-ratio: 16 / 11; }
+.gallery figure:nth-child(4n+2) { grid-column: span 4; aspect-ratio: 3 / 4; }
+.gallery figure:nth-child(4n+3) { grid-column: span 5; aspect-ratio: 4 / 5; }
+.gallery figure:nth-child(4n) { grid-column: span 7; aspect-ratio: 16 / 12; }
 .gallery figure img {
   width: 100%;
   height: 100%;
@@ -866,14 +896,16 @@ body.menu-open { overflow: hidden; }
     opacity: 0.45;
   }
   .photo-vignette {
-    background: rgba(255,255,255,0.72);
+    background: rgba(var(--bg-rgb), 0.72);
   }
   .index-pane {
     background: transparent;
     min-height: 100dvh;
     height: auto;
   }
+  .photo-slide { padding: 0; }
   .photo-caption { display: none; }
+  .photo-frame { display: none; }
   .artist-row .credit { display: none; }
   .artist-row .name { font-size: clamp(2rem, 9vw, 3.2rem); }
 
@@ -886,8 +918,8 @@ body.menu-open { overflow: hidden; }
   .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
 
   .gallery figure:nth-child(n) { grid-column: span 12; aspect-ratio: 4 / 5; }
-  .gallery figure:nth-child(1),
-  .gallery figure:nth-child(4) { aspect-ratio: 16 / 11; }
+  .gallery figure:nth-child(4n+1),
+  .gallery figure:nth-child(4n) { aspect-ratio: 16 / 11; }
 
   .site-footer {
     grid-template-columns: 1fr;

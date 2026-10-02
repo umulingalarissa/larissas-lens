@@ -3,6 +3,13 @@
   var IG_SVG =
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.2A4.8 4.8 0 1 0 12 16.8 4.8 4.8 0 0 0 12 7.2Zm0 7.92A3.12 3.12 0 1 1 12 8.88a3.12 3.12 0 0 1 0 6.24ZM17.64 6.96a1.12 1.12 0 1 1-2.24 0 1.12 1.12 0 0 1 2.24 0ZM21.6 7.2A5.52 5.52 0 0 0 16.8 2.4H7.2A5.52 5.52 0 0 0 2.4 7.2v9.6A5.52 5.52 0 0 0 7.2 21.6h9.6a5.52 5.52 0 0 0 4.8-4.8V7.2Zm-1.68 9.6a3.12 3.12 0 0 1-3.12 3.12H7.2a3.12 3.12 0 0 1-3.12-3.12V7.2A3.12 3.12 0 0 1 7.2 4.08h9.6A3.12 3.12 0 0 1 19.92 7.2v9.6Z"/></svg>';
 
+  function pickHero(images) {
+    for (var i = 0; i < images.length; i++) {
+      if (/_hero/i.test(images[i].file)) return images[i];
+    }
+    return images[0];
+  }
+
   function depthPrefix() {
     var d = document.body && document.body.getAttribute("data-root");
     return d || "";
@@ -77,17 +84,14 @@
     var scroller = document.getElementById("photo-scroller");
     if (!list || !scroller) return;
 
-    var artists = [
-      { name: "Wizkid", credit: "live", href: "projects/wizkid.html", img: "img/Wizkid-1.jpg" },
-      { name: "Tyla", credit: "for Blastfest", href: "projects/tyla.html", img: "img/Tyla-1.jpg" },
-      { name: "Davido", credit: "live", href: "projects/davido.html", img: "img/Davido-03.jpg" },
-      { name: "Ayra Starr", credit: "live", href: "projects/ayra-starr.html", img: "img/Ayra-15.jpg" },
-      { name: "Tiwa Savage", credit: "live", href: "projects/tiwa-savage.html", img: "img/TiwaSavage-4.jpg" },
-      { name: "Black Sheriff", credit: "live", href: "projects/black-sheriff.html", img: "img/BSheriff-6.jpg" },
-      { name: "Musa Keys", credit: "live", href: "projects/musa-keys.html", img: "img/MusaKeys.jpg" },
-      { name: "Pher", credit: "SPICE cover", href: "projects/pher.html", img: "img/Pher-7-3.jpg" },
-      { name: "Natacha", credit: "editorial", href: "projects/natacha.html", img: "img/Natacha-10.jpg" }
-    ];
+    var artists = (window.ARTISTS || []).map(function (a) {
+      return {
+        name: a.name,
+        credit: a.credit,
+        href: "projects/artist.html?a=" + a.slug,
+        img: "img/" + a.slug + "/" + pickHero(a.images).file
+      };
+    });
 
     var cap = document.getElementById("cap-name");
     var active = -1;
@@ -160,9 +164,12 @@
     });
     scroller.appendChild(makeSpacer());
 
+    function wrap(i) {
+      return ((i % n) + n) % n;
+    }
+
     function setActive(i, fromScroll) {
-      if (i < 0) i = 0;
-      if (i >= n) i = n - 1;
+      i = wrap(i);
       if (i === active) return;
       active = i;
 
@@ -176,8 +183,7 @@
     }
 
     function goTo(i, smooth) {
-      if (i < 0) i = 0;
-      if (i >= n) i = n - 1;
+      i = wrap(i);
       setActive(i, false);
       scrollingProgrammatic = true;
       if (scrollLockTimer) clearTimeout(scrollLockTimer);
@@ -192,6 +198,46 @@
         scrollingProgrammatic = false;
       }, smooth ? 700 : 50);
     }
+
+    // Loop the photo scroller: past the last slide wraps to the first
+    // (and vice versa) instead of stopping dead at the end.
+    scroller.addEventListener(
+      "wheel",
+      function (e) {
+        if (scrollingProgrammatic) return;
+        if (active === n - 1 && e.deltaY > 0) {
+          e.preventDefault();
+          goTo(0, true);
+        } else if (active === 0 && e.deltaY < 0) {
+          e.preventDefault();
+          goTo(n - 1, true);
+        }
+      },
+      { passive: false }
+    );
+
+    var touchStartY = null;
+    scroller.addEventListener(
+      "touchstart",
+      function (e) {
+        touchStartY = e.touches[0].clientY;
+      },
+      { passive: true }
+    );
+    scroller.addEventListener(
+      "touchend",
+      function (e) {
+        if (touchStartY === null || scrollingProgrammatic) return;
+        var dy = touchStartY - e.changedTouches[0].clientY;
+        touchStartY = null;
+        if (active === n - 1 && dy > 40) {
+          goTo(0, true);
+        } else if (active === 0 && dy < -40) {
+          goTo(n - 1, true);
+        }
+      },
+      { passive: true }
+    );
 
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(
@@ -258,8 +304,86 @@
     });
   }
 
+  function initArtistPage() {
+    var hero = document.querySelector(".artist-hero");
+    if (!hero) return;
+
+    var list = window.ARTISTS || [];
+    var slug = new URLSearchParams(location.search).get("a");
+    var idx = -1;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].slug === slug) {
+        idx = i;
+        break;
+      }
+    }
+    if (idx === -1) {
+      location.href = "../index.html";
+      return;
+    }
+
+    var a = list[idx];
+    var n = list.length;
+    var base = "../img/" + a.slug + "/";
+
+    document.title = a.name + " — Larissa Umulinga";
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute("content", a.name + " photography by Larissa Umulinga.");
+
+    var heroPick = pickHero(a.images);
+    var heroImg = hero.querySelector(".artist-hero-bg img");
+    heroImg.src = base + heroPick.file;
+    heroImg.alt = a.heroAlt || heroPick.alt;
+
+    document.querySelector(".artist-num").textContent =
+      "Project " + String(idx + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0");
+    document.querySelector(".artist-name").textContent = a.name.toUpperCase();
+    document.querySelector(".artist-credit").textContent = a.credit;
+    document.querySelector(".page-lede").textContent = a.lede;
+
+    var gallery = document.querySelector(".gallery");
+    gallery.setAttribute("aria-label", a.name + " gallery");
+    gallery.innerHTML = a.images
+      .map(function (img, i) {
+        var style = img.position ? ' style="object-position: ' + img.position + ';"' : "";
+        return (
+          "<figure><img src=\"" +
+          base +
+          img.file +
+          '" alt="' +
+          img.alt +
+          '" loading="' +
+          (i === 0 ? "eager" : "lazy") +
+          '"' +
+          (i === 0 ? ' fetchpriority="high"' : "") +
+          style +
+          " /><figcaption>" +
+          img.caption +
+          "</figcaption></figure>"
+        );
+      })
+      .join("");
+
+    var prev = list[(idx - 1 + n) % n];
+    var next = list[(idx + 1) % n];
+    var nav = document.querySelector(".artist-nav");
+    nav.innerHTML =
+      '<a href="artist.html?a=' +
+      prev.slug +
+      '">← ' +
+      prev.name +
+      "</a>" +
+      '<a href="../index.html">all work</a>' +
+      '<a href="artist.html?a=' +
+      next.slug +
+      '">' +
+      next.name +
+      " →</a>";
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     injectChrome();
     initHomeIndex();
+    initArtistPage();
   });
 })();

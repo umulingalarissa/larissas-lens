@@ -12,9 +12,17 @@
 </head>
 <body data-root="">
   <header class="site-header" id="site-header"></header>
-  <nav class="nav-mobile" id="mobile-nav" aria-label="Mobile"></nav>
+  <nav class="site-menu" id="site-menu" aria-label="Menu"></nav>
   <div class="page-wrap has-footer-space">
   <main>
+    <nav class="filter-bar" id="filter-bar" aria-label="Filter projects">
+      <span class="filter-label">Filter <em>by</em></span>
+      <div class="filter-tabs">
+        <button type="button" class="filter-tab is-active" data-filter="">All</button>
+        <button type="button" class="filter-tab" data-filter="live">Concert</button>
+        <button type="button" class="filter-tab" data-filter="editorial">Editorial</button>
+      </div>
+    </nav>
     <section class="scatter-grid" id="scatter-grid" aria-label="All work"></section>
   </main>
   <footer class="site-footer" id="site-footer"></footer>

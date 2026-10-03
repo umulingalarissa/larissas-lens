@@ -66,6 +66,10 @@ window.ARTISTS = [
     heroAlt: "Davido performing live",
     lede: "Live performance. Heat, jewelry, a white shirt in green stage light.",
     images: [
+      { file: "01.jpg", alt: "Davido — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Davido — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Davido — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Davido — Live", caption: "Live" },
       { file: "hero.jpg", alt: "Davido — Cover", caption: "Cover" }
     ]
   },
@@ -108,6 +112,8 @@ window.ARTISTS = [
     heroAlt: "Black Sheriff performing live",
     lede: "Live. Ghana on the road, caught mid-phrase.",
     images: [
+      { file: "0-23.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "0-24.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "01.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "02.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "03.jpg", alt: "Black Sheriff — Live", caption: "Live" },
@@ -115,17 +121,6 @@ window.ARTISTS = [
       { file: "05.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "06.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "hero.jpg", alt: "Black Sheriff — Cover", caption: "Cover" }
-    ]
-  },
-  {
-    slug: "musa-keys",
-    name: "Musa Keys",
-    category: "live",
-    credit: "for Blastfest",
-    heroAlt: "Musa Keys performing live",
-    lede: "Live. A quieter pocket inside the night.",
-    images: [
-      { file: "hero.jpg", alt: "Musa Keys — Cover", caption: "Cover" }
     ]
   },
   {
@@ -246,46 +241,6 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "ishusho",
-    name: "Ishusho",
-    category: "editorial",
-    credit: "live",
-    heroAlt: "Ishusho performing live",
-    lede: "Live — selected frames from the set.",
-    images: [
-      { file: "01.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "09.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "010.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "012.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "013.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "014.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "015.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "016.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "017.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "018.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "019.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "020.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "021.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "022.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "023.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "024.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "025.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "026.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "027.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "028.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "029.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "030.jpg", alt: "Ishusho — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Ishusho — Cover", caption: "Cover" }
-    ]
-  },
-  {
     slug: "mustafa",
     name: "Mustafa",
     category: "editorial",
@@ -357,7 +312,190 @@ window.ARTISTS = [
       { file: "03.jpg", alt: "Lesley — Live", caption: "Live" },
       { file: "04.jpg", alt: "Lesley — Live", caption: "Live" },
       { file: "05.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "09.jpg", alt: "Lesley — Live", caption: "Live" },
       { file: "hero.jpg", alt: "Lesley — Cover", caption: "Cover" }
+    ]
+  },
+  {
+    slug: "bobby-nsenga",
+    name: "Bobby Nsenga",
+    category: "live",
+    credit: "for The Bobby Nsenga Experience",
+    heroAlt: "Bobby Nsenga performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "01.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "hero.jpg", alt: "Bobby Nsenga — Cover", caption: "Cover" }
+    ]
+  },
+  {
+    slug: "kingjames",
+    name: "King James",
+    category: "live",
+    credit: "for 20 Years of King James",
+    heroAlt: "King James performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "01.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "09.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "010.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "011.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "012.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "013.jpg", alt: "Kingjames — Live", caption: "Live" },
+      { file: "hero.jpg", alt: "Kingjames — Cover", caption: "Cover" }
+    ]
+  },
+  {
+    slug: "mkgnmvmnts",
+    name: "Mkgnmvmnts",
+    category: "live",
+    credit: "for Black and Loud Festival",
+    heroAlt: "Mkgnmvmnts performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "01.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
+      { file: "09.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
+      { file: "hero.jpg", alt: "Mkgnmvmnts — Cover", caption: "Cover" }
+    ]
+  },
+  {
+    slug: "mustard",
+    name: "Mustard",
+    category: "live",
+    credit: "for Blastfest",
+    heroAlt: "Mustard performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "01.jpg", alt: "Mustard — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Mustard — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Mustard — Live", caption: "Live" },
+      { file: "hero.jpg", alt: "Mustard — Cover", caption: "Cover" }
+    ]
+  },
+  {
+    slug: "personal-projects",
+    name: "Personal Projects",
+    category: "editorial",
+    credit: "Personal work",
+    heroAlt: "Personal Projects performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "01.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "09.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "010.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "012.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "013.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "014.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "015.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "016.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "017.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "018.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "019.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "020.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "021.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "022.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "023.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "024.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "025.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "026.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "027.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "028.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "029.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "030.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "031.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "032.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "033.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "034.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "035.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "036.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "037.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "038.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "039.jpg", alt: "Personal Projects — Live", caption: "Live" },
+      { file: "hero.jpg", alt: "Personal Projects — Cover", caption: "Cover" }
+    ]
+  },
+  {
+    slug: "pheelz",
+    name: "Pheelz",
+    category: "live",
+    credit: "for Blastfest",
+    heroAlt: "Pheelz performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "01.jpg", alt: "Pheelz — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Pheelz — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Pheelz — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Pheelz — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Pheelz — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Pheelz — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Pheelz — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Pheelz — Live", caption: "Live" },
+      { file: "hero.jpg", alt: "Pheelz — Cover", caption: "Cover" }
+    ]
+  },
+  {
+    slug: "shaffy",
+    name: "Shaffy",
+    category: "live",
+    credit: "live",
+    heroAlt: "Shaffy performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "01.jpg", alt: "Shaffy — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Shaffy — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Shaffy — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Shaffy — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Shaffy — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Shaffy — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Shaffy — Live", caption: "Live" },
+      { file: "hero.jpg", alt: "Shaffy — Cover", caption: "Cover" }
+    ]
+  },
+  {
+    slug: "shenseea",
+    name: "Shenseea",
+    category: "live",
+    credit: "for Blastfest",
+    heroAlt: "Shenseea performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "02.jpg", alt: "Shenseea — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Shenseea — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Shenseea — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Shenseea — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Shenseea — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Shenseea — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Shenseea — Live", caption: "Live" },
+      { file: "hero.jpg", alt: "Shenseea — Cover", caption: "Cover" }
     ]
   }
 ];

@@ -60,51 +60,16 @@ img { display: block; max-width: 100%; }
 }
 .brand:hover { opacity: 0.7; }
 
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 0.15rem 1.25rem;
-  z-index: 2;
-}
-.nav a {
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  position: relative;
-  padding: 0.15rem 0;
-}
-.nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 0;
-  height: 1px;
-  background: currentColor;
-  transition: width 0.3s var(--ease);
-}
-.nav a:hover::after,
-.nav a.is-active::after { width: 100%; }
-.nav .dot { opacity: 0.4; font-size: 0.65rem; }
-
-.ig {
-  width: 1.1rem;
-  height: 1.1rem;
-  margin-left: 0.35rem;
-  opacity: 0.85;
-  display: inline-flex;
-}
-.ig:hover { opacity: 1; }
-.ig svg { width: 100%; height: 100%; fill: currentColor; }
-
 .menu-toggle {
-  display: none;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   z-index: 3;
 }
 
-.nav-mobile {
+/* The only nav on the site — one "menu" button, every page, every
+   screen size, opening this same full-screen panel. */
+.site-menu {
   display: none;
   position: fixed;
   inset: 0;
@@ -112,30 +77,20 @@ img { display: block; max-width: 100%; }
   background: rgba(255,255,255,0.98);
   padding: calc(var(--header-h) + 1.5rem) var(--safe) 2rem;
   flex-direction: column;
-  justify-content: space-between;
 }
-.nav-mobile.is-open { display: flex; }
-.nav-mobile a {
+.site-menu.is-open { display: flex; }
+.site-menu a {
   display: block;
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(2.4rem, 10vw, 3.6rem);
+  font-size: clamp(2.4rem, 10vw, 4.2rem);
   letter-spacing: 0.04em;
   line-height: 1.05;
   padding: 0.2rem 0;
   color: var(--sand-mute);
   transition: color 0.25s var(--ease);
 }
-.nav-mobile a:hover,
-.nav-mobile a.is-active { color: var(--sand); }
-.nav-mobile-end {
-  display: flex;
-  gap: 1.5rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--sand-dim);
-}
-.nav-mobile-end a:hover { color: var(--sand); }
+.site-menu a:hover,
+.site-menu a.is-active { color: var(--sand); }
 
 body.menu-open { overflow: hidden; }
 
@@ -145,21 +100,14 @@ body.menu-open { overflow: hidden; }
   margin: 0 auto;
   padding: 1.75rem var(--safe) 2.5rem;
   border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
   font-size: 0.72rem;
   letter-spacing: 0.08em;
 }
 .site-footer .left { color: var(--sand-dim); }
-.site-footer .center {
-  text-align: center;
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--sand-dim);
-}
 .site-footer .right { text-align: right; display: flex; gap: 1.25rem; justify-content: flex-end; }
 .site-footer a:hover { opacity: 0.75; }
 
@@ -197,11 +145,49 @@ body.menu-open { overflow: hidden; }
 }
 
 
+/* —— Filter bar (landing page, Photo / All / Concert / Editorial) —— */
+.filter-bar {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 2rem) var(--safe) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+}
+.filter-label {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--sand-dim);
+}
+.filter-label em { font-style: italic; }
+.filter-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+}
+.filter-tab {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  background: none;
+  border: none;
+  padding: 0.15rem 0;
+  cursor: pointer;
+  transition: color 0.25s var(--ease);
+}
+.filter-tab:hover { color: var(--sand); }
+.filter-tab.is-active { color: var(--sand); }
+
 /* —— Scatter grid (landing page) —— */
 .scatter-grid {
   max-width: var(--max);
   margin: 0 auto;
-  padding: calc(var(--header-h) + 2rem) var(--safe) 4rem;
+  padding: 1.5rem var(--safe) 4rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2.5rem 1.5rem;
@@ -210,6 +196,11 @@ body.menu-open { overflow: hidden; }
   position: relative;
   display: block;
   aspect-ratio: 3 / 4;
+  /* don't let the long-press-to-preview gesture trigger iOS's copy/
+     open-in-new-tab callout or a text-selection highlight */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .scatter-photo {
   position: relative;
@@ -339,6 +330,71 @@ body.menu-open { overflow: hidden; }
   display: block;
 }
 
+/* The filmstrip's last "slide" — closes out a project by introducing
+   the next one, instead of just stopping dead at the last photo. */
+.carousel-slide.next-up {
+  justify-content: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: 0 var(--safe);
+  text-decoration: none;
+  color: inherit;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.next-up-photo {
+  flex: none;
+  width: clamp(9rem, 22vw, 16rem);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #f2f2f2;
+}
+.next-up-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.next-up:hover .next-up-photo img { transform: scale(1.04); }
+.next-up-copy { max-width: 26rem; }
+.next-up-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  margin-bottom: 0.6rem;
+}
+.next-up-credit {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--sand-dim);
+}
+.next-up-name {
+  margin-top: 0.3rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  letter-spacing: 0.03em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.next-up-cta {
+  margin-top: 1.25rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s var(--ease);
+}
+.next-up:hover .next-up-cta { color: var(--sand); }
+.next-up-cta span {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+}
 
 /* A compact, centered row below the photo — narrower than the full
    width so it doesn't compete with the photo above it. */
@@ -640,10 +696,12 @@ body.menu-open { overflow: hidden; }
 
 /* —— Responsive —— */
 @media (max-width: 960px) {
-  .nav { display: none; }
-  .menu-toggle { display: block; }
-
+  .filter-bar { padding: calc(var(--header-h) + 1.5rem) var(--safe) 0; }
+  .filter-tabs { gap: 1.1rem; }
   .scatter-grid { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
+
+  .carousel-slide.next-up { flex-direction: column; text-align: center; gap: 1.25rem; }
+  .next-up-photo { width: clamp(8rem, 40vw, 11rem); }
 
   .pub-item { grid-template-columns: 1fr; gap: 1.25rem; }
   .pub-visual { max-width: 22rem; }
@@ -652,15 +710,25 @@ body.menu-open { overflow: hidden; }
   .about-photo-frame { flex: none; aspect-ratio: 3 / 4; }
 
   .site-footer {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     text-align: center;
     gap: 0.75rem;
   }
   .site-footer .right { justify-content: center; text-align: center; }
-  .site-footer .left,
-  .site-footer .center { text-align: center; }
+  .site-footer .left { text-align: center; }
 }
 
 @media (max-width: 640px) {
-  .scatter-grid { grid-template-columns: 1fr; }
+  /* One project per screen — scroll to the next instead of a grid of
+     small tiles, so each photo gets the person's full attention. */
+  .scatter-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: var(--header-h) 0 0;
+  }
+  .scatter-cell {
+    aspect-ratio: auto;
+    height: 100dvh;
+  }
+  .scatter-label { padding: 2rem var(--safe); min-height: 14rem; }
 }

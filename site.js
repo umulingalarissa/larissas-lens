@@ -26,52 +26,46 @@
     });
   }
 
+  var INQUIRE_MAILTO = "mailto:umulingalarissa@gmail.com?subject=Photo%20Inquiry%3A";
+
   function injectChrome() {
     var root = depthPrefix();
     var header = document.getElementById("site-header");
     var footer = document.getElementById("site-footer");
-    var mobile = document.getElementById("mobile-nav");
+    var menu = document.getElementById("site-menu");
 
     if (header) {
       header.innerHTML =
         '<a class="brand" href="' + root + 'index.html">LARISSA UMULINGA</a>' +
-        '<nav class="nav" aria-label="Primary">' +
-        '<a href="' + root + 'publications.html">curations</a><span class="dot" aria-hidden="true">·</span>' +
-        '<a href="' + root + 'about.html">about</a>' +
-        '<a class="ig" href="' + IG + '" target="_blank" rel="noopener noreferrer" aria-label="Instagram @larissaumulinga">' +
-        IG_SVG +
-        "</a></nav>" +
-        '<button class="menu-toggle" type="button" aria-controls="mobile-nav" aria-expanded="false">menu</button>';
-      markActive(header.querySelectorAll(".nav a:not(.ig)"));
+        '<button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false">menu</button>';
     }
 
-    if (mobile) {
-      mobile.innerHTML =
+    // One menu, every page, every screen size — Photo / Curations /
+    // Connect, each a real page (not an inline panel). Instagram lives
+    // in the footer only, not duplicated here.
+    if (menu) {
+      menu.innerHTML =
         "<div>" +
-        '<a href="' + root + 'publications.html">curations</a>' +
-        '<a href="' + root + 'about.html">about</a>' +
-        "</div>" +
-        '<div class="nav-mobile-end">' +
-        '<a href="mailto:umulingalarissa@gmail.com">inquiries</a>' +
-        '<a href="' + IG + '" target="_blank" rel="noopener noreferrer">instagram</a>' +
+        '<a href="' + root + 'index.html">Photo</a>' +
+        '<a href="' + root + 'publications.html">Curations</a>' +
+        '<a href="' + root + 'connect.html">Connect</a>' +
         "</div>";
-      markActive(mobile.querySelectorAll("a"));
+      markActive(menu.querySelectorAll("a"));
     }
 
     if (footer) {
       footer.innerHTML =
         '<div class="left">© Larissa Umulinga</div>' +
-        '<div class="center">live music · afrobeats · the stage</div>' +
         '<div class="right">' +
-        '<a href="mailto:umulingalarissa@gmail.com">inquiries</a>' +
+        '<a href="' + INQUIRE_MAILTO + '">inquiries</a>' +
         '<a href="' + IG + '" target="_blank" rel="noopener noreferrer">instagram</a>' +
         "</div>";
     }
 
     var btn = document.querySelector(".menu-toggle");
-    if (btn && mobile) {
+    if (btn && menu) {
       btn.addEventListener("click", function () {
-        var open = mobile.classList.toggle("is-open");
+        var open = menu.classList.toggle("is-open");
         btn.setAttribute("aria-expanded", open ? "true" : "false");
         btn.textContent = open ? "close" : "menu";
         document.body.classList.toggle("menu-open", open);
@@ -87,7 +81,7 @@
     var grid = document.getElementById("scatter-grid");
     if (!grid) return;
 
-    var artists = window.ARTISTS || [];
+    var allArtists = window.ARTISTS || [];
     var ROW_SIZE = 3; // photos per row; the 4th slot is a text space
     // Which of the 4 slots is the space, cycling so it never repeats in
     // the same column on consecutive rows.
@@ -95,93 +89,6 @@
 
     function escapeAttr(str) {
       return String(str).replace(/"/g, "&quot;");
-    }
-
-    var html = [];
-    var i = 0;
-    var row = 0;
-    while (i < artists.length) {
-      var pos = SPACE_POSITIONS[row % SPACE_POSITIONS.length];
-      var rowArtists = artists.slice(i, i + ROW_SIZE);
-      var ai = 0;
-      for (var slot = 0; slot < 4; slot++) {
-        if (slot === pos) {
-          html.push(
-            '<div class="scatter-label" data-row="' +
-            row +
-            '"><span class="label-text"></span><span class="count"></span></div>'
-          );
-        } else if (ai < rowArtists.length) {
-          var a = rowArtists[ai++];
-          var hero = pickHero(a.images);
-          var img = "img/" + a.slug + "/" + hero.file;
-          var allImages = a.images.map(function (im) {
-            return "img/" + a.slug + "/" + im.file;
-          });
-          html.push(
-            '<a class="scatter-cell" href="projects/artist.html?a=' +
-            a.slug +
-            '" data-name="' +
-            escapeAttr(a.name) +
-            '" data-credit="' +
-            escapeAttr(a.credit) +
-            '" data-row="' +
-            row +
-            '" data-hero="' +
-            escapeAttr(img) +
-            '" data-images="' +
-            escapeAttr(JSON.stringify(allImages)) +
-            '" aria-label="' +
-            escapeAttr(a.name) +
-            ' — view project">' +
-            '<span class="scatter-photo">' +
-            '<img class="layer base" src="' +
-            img +
-            '" alt="' +
-            escapeAttr(a.heroAlt || hero.alt) +
-            '" loading="' +
-            (row === 0 ? "eager" : "lazy") +
-            '"' +
-            (row === 0 && ai === 1 ? ' fetchpriority="high"' : "") +
-            " />" +
-            '<img class="layer top" alt="" />' +
-            "</span></a>"
-          );
-        }
-      }
-      i += ROW_SIZE;
-      row++;
-    }
-
-    grid.innerHTML = html.join("");
-
-    // Each row has its own space cell — hovering a photo only ever
-    // updates the space in that same row, not the whole grid. Row 0's
-    // defaults to the total count; every other row starts blank.
-    var spaceByRow = {};
-    Array.prototype.forEach.call(grid.querySelectorAll(".scatter-label"), function (el) {
-      spaceByRow[el.getAttribute("data-row")] = el;
-    });
-
-    function setSpace(el, countText, labelText) {
-      el.querySelector(".count").textContent = countText;
-      el.querySelector(".label-text").textContent = labelText;
-    }
-
-    function rowDefault(r) {
-      if (spaceByRow[r]) setSpace(spaceByRow[r], "", "");
-    }
-
-    Object.keys(spaceByRow).forEach(rowDefault);
-
-    function showInfo(cell) {
-      var el = spaceByRow[cell.getAttribute("data-row")];
-      if (!el) return;
-      setSpace(el, cell.getAttribute("data-credit"), cell.getAttribute("data-name"));
-    }
-
-    function showDefault(cell) {
-      rowDefault(cell.getAttribute("data-row"));
     }
 
     // One shared set of 4 corner brackets, not one per photo — they fly
@@ -332,26 +239,195 @@
       }, SLIDESHOW_MS);
     }
 
-    Array.prototype.forEach.call(grid.querySelectorAll(".scatter-cell"), function (cell) {
-      cell.addEventListener("mouseenter", function () {
-        showInfo(cell);
-        positionFrame(cell);
-        startSlideshow(cell);
+    // Touch devices have no hover, so holding a photo down stands in for
+    // it: past LONG_PRESS_MS the brackets/text/slideshow all start, same
+    // as a mouse hover, and lifting the finger reverts them instead of
+    // following the link — a quick tap still navigates normally.
+    var LONG_PRESS_MS = 450;
+    var MOVE_TOLERANCE = 10;
+
+    // Rebuilds the grid's markup and wiring for a given category filter
+    // ("" = all). The corner brackets and slideshow state above are
+    // created once and persist across re-renders instead of being torn
+    // down and rebuilt with the grid.
+    function renderGrid(filter) {
+      var artists = filter
+        ? allArtists.filter(function (a) {
+            return a.category === filter;
+          })
+        : allArtists;
+
+      var html = [];
+      var i = 0;
+      var row = 0;
+      while (i < artists.length) {
+        var pos = SPACE_POSITIONS[row % SPACE_POSITIONS.length];
+        var rowArtists = artists.slice(i, i + ROW_SIZE);
+        var ai = 0;
+        for (var slot = 0; slot < 4; slot++) {
+          if (slot === pos) {
+            html.push(
+              '<div class="scatter-label" data-row="' +
+              row +
+              '"><span class="label-text"></span><span class="count"></span></div>'
+            );
+          } else if (ai < rowArtists.length) {
+            var a = rowArtists[ai++];
+            var hero = pickHero(a.images);
+            var img = "img/" + a.slug + "/" + hero.file;
+            var allImages = a.images.map(function (im) {
+              return "img/" + a.slug + "/" + im.file;
+            });
+            html.push(
+              '<a class="scatter-cell" href="projects/artist.html?a=' +
+              a.slug +
+              (filter ? "&cat=" + encodeURIComponent(filter) : "") +
+              '" data-name="' +
+              escapeAttr(a.name) +
+              '" data-credit="' +
+              escapeAttr(a.credit) +
+              '" data-row="' +
+              row +
+              '" data-hero="' +
+              escapeAttr(img) +
+              '" data-images="' +
+              escapeAttr(JSON.stringify(allImages)) +
+              '" aria-label="' +
+              escapeAttr(a.name) +
+              ' — view project">' +
+              '<span class="scatter-photo">' +
+              '<img class="layer base" src="' +
+              img +
+              '" alt="' +
+              escapeAttr(a.heroAlt || hero.alt) +
+              '" loading="' +
+              (row === 0 ? "eager" : "lazy") +
+              '"' +
+              (row === 0 && ai === 1 ? ' fetchpriority="high"' : "") +
+              " />" +
+              '<img class="layer top" alt="" />' +
+              "</span></a>"
+            );
+          }
+        }
+        i += ROW_SIZE;
+        row++;
+      }
+
+      stopSlideshow();
+      hideFrame();
+      grid.innerHTML = html.join("");
+
+      // Each row has its own space cell — hovering a photo only ever
+      // updates the space in that same row, not the whole grid. Row 0's
+      // defaults to the total count; every other row starts blank.
+      var spaceByRow = {};
+      Array.prototype.forEach.call(grid.querySelectorAll(".scatter-label"), function (el) {
+        spaceByRow[el.getAttribute("data-row")] = el;
       });
-      cell.addEventListener("focus", function () {
-        showInfo(cell);
-        positionFrame(cell);
-        startSlideshow(cell);
+
+      function setSpace(el, countText, labelText) {
+        el.querySelector(".count").textContent = countText;
+        el.querySelector(".label-text").textContent = labelText;
+      }
+
+      function rowDefault(r) {
+        if (spaceByRow[r]) setSpace(spaceByRow[r], "", "");
+      }
+
+      Object.keys(spaceByRow).forEach(rowDefault);
+
+      function showInfo(cell) {
+        var el = spaceByRow[cell.getAttribute("data-row")];
+        if (!el) return;
+        setSpace(el, cell.getAttribute("data-credit"), cell.getAttribute("data-name"));
+      }
+
+      function showDefault(cell) {
+        rowDefault(cell.getAttribute("data-row"));
+      }
+
+      Array.prototype.forEach.call(grid.querySelectorAll(".scatter-cell"), function (cell) {
+        cell.addEventListener("mouseenter", function () {
+          showInfo(cell);
+          positionFrame(cell);
+          startSlideshow(cell);
+        });
+        cell.addEventListener("focus", function () {
+          showInfo(cell);
+          positionFrame(cell);
+          startSlideshow(cell);
+        });
+        cell.addEventListener("mouseleave", function () {
+          showDefault(cell);
+          stopSlideshow();
+        });
+        cell.addEventListener("blur", function () {
+          showDefault(cell);
+          stopSlideshow();
+        });
+
+        var pressTimer = null;
+        var longPressed = false;
+        var touchStart = null;
+
+        function cancelPress() {
+          if (pressTimer) {
+            clearTimeout(pressTimer);
+            pressTimer = null;
+          }
+        }
+
+        cell.addEventListener(
+          "touchstart",
+          function (e) {
+            var t = e.touches[0];
+            touchStart = { x: t.clientX, y: t.clientY };
+            longPressed = false;
+            cancelPress();
+            pressTimer = setTimeout(function () {
+              longPressed = true;
+              showInfo(cell);
+              positionFrame(cell);
+              startSlideshow(cell);
+            }, LONG_PRESS_MS);
+          },
+          { passive: true }
+        );
+        cell.addEventListener(
+          "touchmove",
+          function (e) {
+            if (!touchStart) return;
+            var t = e.touches[0];
+            var dx = Math.abs(t.clientX - touchStart.x);
+            var dy = Math.abs(t.clientY - touchStart.y);
+            if (dx > MOVE_TOLERANCE || dy > MOVE_TOLERANCE) cancelPress();
+          },
+          { passive: true }
+        );
+        cell.addEventListener("touchend", function (e) {
+          cancelPress();
+          if (longPressed) {
+            // The hold already showed the preview — treat lifting the
+            // finger as leaving, not as the tap that follows the link.
+            e.preventDefault();
+            showDefault(cell);
+            stopSlideshow();
+          }
+          touchStart = null;
+        });
+        cell.addEventListener("touchcancel", function () {
+          cancelPress();
+          if (longPressed) {
+            showDefault(cell);
+            stopSlideshow();
+          }
+          touchStart = null;
+        });
       });
-      cell.addEventListener("mouseleave", function () {
-        showDefault(cell);
-        stopSlideshow();
-      });
-      cell.addEventListener("blur", function () {
-        showDefault(cell);
-        stopSlideshow();
-      });
-    });
+    }
+
+    renderGrid("");
 
     // The bracket frame only fully hides once the pointer/focus leaves
     // the whole grid, not between individual photos — that's what lets
@@ -365,13 +441,39 @@
         hideFrame();
       }
     });
+
+    // Filter tabs (All / Concert / Editorial) re-render the grid by the
+    // artist's category field instead of navigating to a new page.
+    var filterBar = document.getElementById("filter-bar");
+    if (filterBar) {
+      var tabs = filterBar.querySelectorAll(".filter-tab");
+      Array.prototype.forEach.call(tabs, function (btn) {
+        btn.addEventListener("click", function () {
+          if (btn.classList.contains("is-active")) return;
+          Array.prototype.forEach.call(tabs, function (b) {
+            b.classList.remove("is-active");
+          });
+          btn.classList.add("is-active");
+          renderGrid(btn.getAttribute("data-filter"));
+        });
+      });
+    }
   }
 
   function initArtistPage() {
     var carousel = document.querySelector(".carousel");
     if (!carousel) return;
 
-    var list = window.ARTISTS || [];
+    // A project opened from a filtered landing-page tab (?cat=live or
+    // ?cat=editorial) keeps that same filtered order for prev/next and
+    // "next up" here, instead of always cycling the full artist list.
+    var fullList = window.ARTISTS || [];
+    var catFilter = new URLSearchParams(location.search).get("cat") || "";
+    var list = catFilter
+      ? fullList.filter(function (x) {
+          return x.category === catFilter;
+        })
+      : fullList;
     var slug = new URLSearchParams(location.search).get("a");
     var idx = -1;
     for (var i = 0; i < list.length; i++) {
@@ -381,13 +483,29 @@
       }
     }
     if (idx === -1) {
+      // The slug isn't in that filtered set (stale link, or the project's
+      // category changed) — fall back to the full list rather than
+      // dead-ending.
+      list = fullList;
+      catFilter = "";
+      for (var j = 0; j < list.length; j++) {
+        if (list[j].slug === slug) {
+          idx = j;
+          break;
+        }
+      }
+    }
+    if (idx === -1) {
       location.href = "../index.html";
       return;
     }
 
+    var catSuffix = catFilter ? "&cat=" + encodeURIComponent(catFilter) : "";
     var a = list[idx];
     var n = list.length;
     var base = "../img/" + a.slug + "/";
+    var prev = list[(idx - 1 + n) % n];
+    var next = list[(idx + 1) % n];
 
     document.title = a.name + " — Larissa Umulinga";
     var metaDesc = document.querySelector('meta[name="description"]');
@@ -398,23 +516,51 @@
     var active = 0;
     var scrollingProgrammatic = false;
     var scrollLockTimer = null;
+    // One extra slide beyond the real photos — a "next up" card that
+    // closes out the filmstrip instead of just stopping dead.
+    var totalSlides = a.images.length + 1;
 
-    track.innerHTML = a.images
-      .map(function (img, i) {
-        return (
-          '<div class="carousel-slide" data-i="' +
-          i +
-          '"><img src="' +
-          base +
-          img.file +
-          '" alt="' +
-          img.alt +
-          '" loading="' +
-          (i === 0 ? "eager" : "lazy") +
-          '" /></div>'
-        );
-      })
-      .join("");
+    var nextHero = pickHero(next.images);
+    var nextUpSlide =
+      '<a class="carousel-slide next-up" data-i="' +
+      a.images.length +
+      '" href="artist.html?a=' +
+      next.slug +
+      catSuffix +
+      '">' +
+      '<div class="next-up-photo"><img src="../img/' +
+      next.slug +
+      "/" +
+      nextHero.file +
+      '" alt="" loading="lazy" /></div>' +
+      '<div class="next-up-copy">' +
+      '<p class="next-up-label">Next up</p>' +
+      '<p class="next-up-credit">' +
+      next.credit +
+      "</p>" +
+      '<h2 class="next-up-name">' +
+      next.name +
+      "</h2>" +
+      '<p class="next-up-cta"><span></span>View project</p>' +
+      "</div></a>";
+
+    track.innerHTML =
+      a.images
+        .map(function (img, i) {
+          return (
+            '<div class="carousel-slide" data-i="' +
+            i +
+            '"><img src="' +
+            base +
+            img.file +
+            '" alt="' +
+            img.alt +
+            '" loading="' +
+            (i === 0 ? "eager" : "lazy") +
+            '" /></div>'
+          );
+        })
+        .join("") + nextUpSlide;
     var slides = Array.prototype.slice.call(track.children);
 
     strip.innerHTML = a.images
@@ -536,45 +682,53 @@
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
       if (e.key === "ArrowRight") {
         e.preventDefault();
-        setActive((active + 1) % a.images.length);
+        setActive((active + 1) % totalSlides);
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
-        setActive((active - 1 + a.images.length) % a.images.length);
+        setActive((active - 1 + totalSlides) % totalSlides);
       }
     });
 
-    // Scrolling (vertical wheel) over the strip slides to the next/
-    // previous photo instead of scrolling the page; a horizontal swipe
-    // or shift+wheel still scrolls the strip natively.
+    // Scrolling over the strip slides to the next/previous photo instead
+    // of scrolling the page. A trackpad fires a continuous stream of
+    // wheel events for the length of one physical swipe (not a single
+    // event like a mouse notch), so advancing once per gesture — rather
+    // than once per event, or unlocking on a fixed timer that can expire
+    // mid-swipe and double-advance — means watching for the gesture to
+    // actually pause, not just waiting out a clock.
     var wheelLock = false;
+    var wheelEndTimer = null;
+    var WHEEL_COOLDOWN = 650;
     track.addEventListener(
       "wheel",
       function (e) {
-        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
         e.preventDefault();
-        if (wheelLock || !e.deltaY) return;
-        wheelLock = true;
-        if (e.deltaY > 0) setActive((active + 1) % a.images.length);
-        else setActive((active - 1 + a.images.length) % a.images.length);
-        setTimeout(function () {
+        var delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+        if (!delta) return;
+        if (wheelEndTimer) clearTimeout(wheelEndTimer);
+        wheelEndTimer = setTimeout(function () {
           wheelLock = false;
-        }, SLIDE_MS);
+        }, WHEEL_COOLDOWN);
+        if (wheelLock) return;
+        wheelLock = true;
+        if (delta > 0) setActive((active + 1) % totalSlides);
+        else setActive((active - 1 + totalSlides) % totalSlides);
       },
       { passive: false }
     );
 
-    var prev = list[(idx - 1 + n) % n];
-    var next = list[(idx + 1) % n];
     var nav = document.querySelector(".artist-nav");
     nav.innerHTML =
       '<a href="artist.html?a=' +
       prev.slug +
+      catSuffix +
       '">← ' +
       prev.name +
       "</a>" +
       '<a href="../index.html">all work</a>' +
       '<a href="artist.html?a=' +
       next.slug +
+      catSuffix +
       '">' +
       next.name +
       " →</a>";

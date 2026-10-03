@@ -134,13 +134,17 @@ window.ARTISTS = [
 `;
 
 function main() {
-  const existing = readExistingArtists();
+  // Folders reserved for site chrome (not projects) — never synced as
+  // artists, and dropped from the output if a stale entry exists.
+  const RESERVED_SLUGS = ["about"];
+
+  const existing = readExistingArtists().filter((a) => !RESERVED_SLUGS.includes(a.slug));
   const bySlug = new Map(existing.map((a) => [a.slug, a]));
   const existingOrder = existing.map((a) => a.slug);
 
   const folderSlugs = fs
     .readdirSync(IMG_DIR, { withFileTypes: true })
-    .filter((d) => d.isDirectory())
+    .filter((d) => d.isDirectory() && !RESERVED_SLUGS.includes(d.name))
     .map((d) => d.name)
     .sort();
 

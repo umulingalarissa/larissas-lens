@@ -115,6 +115,9 @@
           var a = rowArtists[ai++];
           var hero = pickHero(a.images);
           var img = "img/" + a.slug + "/" + hero.file;
+          var allImages = a.images.map(function (im) {
+            return "img/" + a.slug + "/" + im.file;
+          });
           html.push(
             '<a class="scatter-cell" href="projects/artist.html?a=' +
             a.slug +
@@ -124,10 +127,15 @@
             escapeAttr(a.credit) +
             '" data-row="' +
             row +
+            '" data-hero="' +
+            escapeAttr(img) +
+            '" data-images="' +
+            escapeAttr(JSON.stringify(allImages)) +
             '" aria-label="' +
             escapeAttr(a.name) +
             ' — view project">' +
-            '<span class="scatter-photo"><img src="' +
+            '<span class="scatter-photo">' +
+            '<img class="layer base" src="' +
             img +
             '" alt="' +
             escapeAttr(a.heroAlt || hero.alt) +
@@ -135,7 +143,9 @@
             (row === 0 ? "eager" : "lazy") +
             '"' +
             (row === 0 && ai === 1 ? ' fetchpriority="high"' : "") +
-            " /></span></a>"
+            " />" +
+            '<img class="layer top" alt="" />' +
+            "</span></a>"
           );
         }
       }
@@ -249,20 +259,97 @@
       });
     }
 
+    // Cycles a hovered/focused photo through the rest of that project's
+    // images — a little preview that there's more to see than the cover.
+    // Each change is a true crossfade between the two photos (see the
+    // layer.top transition in styles.css), not a fade through the
+    // background.
+    var SLIDESHOW_MS = 1600;
+    var FADE_MS = 600;
+    var slideshowTimer = null;
+    var fadeTimer = null;
+    var slideshowCell = null;
+
+    function stopSlideshow() {
+      if (slideshowTimer) {
+        clearInterval(slideshowTimer);
+        slideshowTimer = null;
+      }
+      if (fadeTimer) {
+        clearTimeout(fadeTimer);
+        fadeTimer = null;
+      }
+      // Always revert whichever cell was mid-slideshow, not just the one
+      // passed in — covers a new hover starting before the old one's
+      // mouseleave/blur had a chance to fire and clean up after itself.
+      if (slideshowCell) {
+        var base = slideshowCell.querySelector(".scatter-photo .layer.base");
+        var top = slideshowCell.querySelector(".scatter-photo .layer.top");
+        var hero = slideshowCell.getAttribute("data-hero");
+        if (base && hero) base.src = hero;
+        if (top) {
+          top.style.transition = "none";
+          top.style.opacity = "0";
+          top.getBoundingClientRect();
+          top.style.transition = "";
+        }
+        slideshowCell = null;
+      }
+    }
+
+    function startSlideshow(cell) {
+      stopSlideshow();
+      var images;
+      try {
+        images = JSON.parse(cell.getAttribute("data-images"));
+      } catch (e) {
+        images = null;
+      }
+      if (!images || images.length <= 1) return;
+      var base = cell.querySelector(".scatter-photo .layer.base");
+      var top = cell.querySelector(".scatter-photo .layer.top");
+      if (!base || !top) return;
+      images.forEach(function (src) {
+        var pre = new Image();
+        pre.src = src;
+      });
+      slideshowCell = cell;
+      var idx = 0;
+      slideshowTimer = setInterval(function () {
+        idx = (idx + 1) % images.length;
+        // "top" loads the next photo and fades in directly over "base"
+        // (still showing the current one) — a real blend between the
+        // two images, nothing in between shows through.
+        top.src = images[idx];
+        top.style.opacity = "1";
+        fadeTimer = setTimeout(function () {
+          base.src = images[idx];
+          top.style.transition = "none";
+          top.style.opacity = "0";
+          top.getBoundingClientRect(); // force reflow before re-enabling
+          top.style.transition = "";
+        }, FADE_MS);
+      }, SLIDESHOW_MS);
+    }
+
     Array.prototype.forEach.call(grid.querySelectorAll(".scatter-cell"), function (cell) {
       cell.addEventListener("mouseenter", function () {
         showInfo(cell);
         positionFrame(cell);
+        startSlideshow(cell);
       });
       cell.addEventListener("focus", function () {
         showInfo(cell);
         positionFrame(cell);
+        startSlideshow(cell);
       });
       cell.addEventListener("mouseleave", function () {
         showDefault(cell);
+        stopSlideshow();
       });
       cell.addEventListener("blur", function () {
         showDefault(cell);
+        stopSlideshow();
       });
     });
 
@@ -305,12 +392,6 @@
     document.title = a.name + " — Larissa Umulinga";
     var metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", a.name + " photography by Larissa Umulinga.");
-
-    document.querySelector(".carousel-num").textContent =
-      "Project " + String(idx + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0");
-    document.querySelector(".carousel-info .artist-name").textContent = a.name.toUpperCase();
-    document.querySelector(".carousel-info .artist-credit").textContent = a.credit;
-    document.querySelector(".carousel-info .page-lede").textContent = a.lede;
 
     var track = document.getElementById("carousel-track");
     var strip = document.getElementById("carousel-strip");
@@ -363,7 +444,9 @@
 
     // Slides to the given photo with a smooth sliding transition — pass
     // smooth: false only for the initial, unanimated positioning on load.
-    var SLIDE_MS = 500;
+    // Matches the 600ms crossfade duration used for the landing-page
+    // slideshow, so both read as the same level of smoothness.
+    var SLIDE_MS = 600;
 
     // Manually animated (rather than scrollIntoView/scroll-behavior:smooth)
     // so the slide has a slower, consistent duration across browsers.
@@ -479,17 +562,6 @@
       },
       { passive: false }
     );
-
-    var infoToggle = document.getElementById("info-toggle");
-    var infoPanel = document.getElementById("carousel-info");
-    if (infoToggle && infoPanel) {
-      infoToggle.addEventListener("click", function () {
-        var opening = infoPanel.hidden;
-        infoPanel.hidden = !opening;
-        infoToggle.setAttribute("aria-expanded", String(opening));
-        infoToggle.textContent = opening ? "Hide info" : "View info";
-      });
-    }
 
     var prev = list[(idx - 1 + n) % n];
     var next = list[(idx + 1) % n];

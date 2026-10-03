@@ -212,20 +212,31 @@ body.menu-open { overflow: hidden; }
   aspect-ratio: 3 / 4;
 }
 .scatter-photo {
+  position: relative;
   display: block;
   width: 100%;
   height: 100%;
   overflow: hidden;
   background: #f2f2f2;
+  transition: transform 0.6s var(--ease);
 }
-.scatter-photo img {
+.scatter-cell:hover .scatter-photo,
+.scatter-cell:focus-visible .scatter-photo { transform: scale(1.03); }
+/* Two stacked layers, not one — crossfading opacity on a single <img>
+   would flash the background between photos. "base" is always fully
+   opaque; "top" loads the next photo and fades in directly over it, a
+   true blend between the two photos with nothing showing through. */
+.scatter-photo img.layer {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s var(--ease);
 }
-.scatter-cell:hover .scatter-photo img,
-.scatter-cell:focus-visible .scatter-photo img { transform: scale(1.03); }
+.scatter-photo img.layer.top {
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
+}
 
 /* One shared set of corner brackets (appended to <body>, not per photo)
    that glides between whichever photo is hovered — see positionFrame()
@@ -281,9 +292,11 @@ body.menu-open { overflow: hidden; }
 }
 .carousel-frame {
   position: absolute;
-  /* breathing room on every side, and enough space at the bottom that
-     the strip sits clearly below the photo instead of over it */
-  inset: calc(var(--header-h) + 1.5rem) 0 6.5rem;
+  /* as little reserved space as the header + (now smaller) thumbnail
+     strip need — object-fit: contain means the photo's rendered size
+     is driven by this box's height, so trimming the margins here is
+     what actually makes the photo itself appear bigger */
+  inset: calc(var(--header-h) + 0.75rem) 0 4.5rem;
   background: var(--bg);
   overflow: hidden;
 }
@@ -326,74 +339,9 @@ body.menu-open { overflow: hidden; }
   display: block;
 }
 
-.carousel-top {
-  position: absolute;
-  top: var(--header-h);
-  left: 0;
-  right: 0;
-  z-index: 3;
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 1rem;
-  padding: 0.75rem var(--safe);
-  pointer-events: none;
-}
-.carousel-top > * { pointer-events: auto; }
-.carousel-num {
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--sand-dim);
-  background: rgba(255, 255, 255, 0.85);
-  padding: 0.2rem 0.5rem;
-}
-.info-toggle {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--sand-dim);
-  background: rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid var(--line);
-  padding: 0.2rem 0.5rem;
-  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
-}
-.info-toggle:hover { color: var(--sand); border-color: var(--sand-mute); }
 
-.carousel-info {
-  position: absolute;
-  top: calc(var(--header-h) + 2.75rem);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 4;
-  max-width: 30rem;
-  width: calc(100% - 2 * var(--safe));
-  text-align: center;
-  background: rgba(255, 255, 255, 0.92);
-  padding: 1rem 1.25rem;
-}
-.carousel-info .artist-name {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(2rem, 4.5vw, 3rem);
-  letter-spacing: 0.03em;
-  line-height: 0.95;
-  text-transform: uppercase;
-}
-.carousel-info .artist-credit {
-  margin-top: 0.4rem;
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-size: 1.05rem;
-  color: var(--sand-dim);
-}
-.carousel-info .page-lede {
-  margin-top: 0.6rem;
-  font-size: 0.9rem;
-  max-width: none;
-}
-
-/* Floats over the lower portion of the photo rather than sitting below
-   it — only the top half of each thumbnail clears the image's edge. */
+/* A compact, centered row below the photo — narrower than the full
+   width so it doesn't compete with the photo above it. */
 .carousel-strip {
   position: absolute;
   left: 50%;
@@ -401,15 +349,16 @@ body.menu-open { overflow: hidden; }
   transform: translateX(-50%);
   z-index: 3;
   display: flex;
-  gap: 0.5rem;
-  max-width: calc(100% - 2 * var(--safe));
+  justify-content: center;
+  gap: 0.4rem;
+  max-width: min(32rem, calc(100% - 2 * var(--safe)));
   overflow-x: auto;
   padding: 0.25rem;
 }
 .carousel-strip button {
   flex: none;
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   padding: 0;
   overflow: hidden;
   border: 2px solid transparent;

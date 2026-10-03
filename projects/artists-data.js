@@ -12,10 +12,10 @@
 //
 // To add or update a project:
 //   1. Drop its photos in img/<slug>/ (numbered 01.jpg, 02.jpg, ...).
-//      Name whichever one should be the cover (used on index/live/
-//      editorial + the project page) "hero.jpg", or suffix an existing
-//      number with "_hero" (e.g. 03_hero.jpg). If none is marked, the
-//      first image below is used.
+//      Name whichever one should be the cover (used on the landing grid
+//      + the project page) "hero.jpg", or suffix an existing number
+//      with "_hero" (e.g. 03_hero.jpg). If none is marked, the first
+//      image below is used.
 //   2. Run: node scripts/sync-artists.js
 // No new HTML file needed — projects/artist.html renders any slug via
 // artist.html?a=<slug>, and the grid order follows this array.
@@ -136,7 +136,14 @@ window.ARTISTS = [
     heroAlt: "Pher — SPICE cover art",
     lede: "Cover art for SPICE by Pher — studio color, denim, braid pulled taut.",
     images: [
-      { file: "01_hero.jpg", alt: "Pher — Cover", caption: "Cover" }
+      { file: "02.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "hero.jpg", alt: "Pher — Cover", caption: "Cover" }
     ]
   },
   {
@@ -148,14 +155,14 @@ window.ARTISTS = [
     lede: "Live at Tio Tequila Bar — an intimate room, phones up for every chorus.",
     images: [
       { file: "01.jpg", alt: "Adekunle — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Adekunle — Close", caption: "Close" },
       { file: "03.jpg", alt: "Adekunle — Full house", caption: "Full house" },
       { file: "04.jpg", alt: "Adekunle — Reach", caption: "Reach" },
       { file: "05.jpg", alt: "Adekunle — From the crowd", caption: "From the crowd" },
       { file: "06.jpg", alt: "Adekunle — With the band", caption: "With the band" },
       { file: "07.jpg", alt: "Adekunle — Sing it back", caption: "Sing it back" },
-      { file: "09.jpg", alt: "Adekunle — Live", caption: "Live" },
-      { file: "10.jpg", alt: "Adekunle — Encore", caption: "Encore" },
+      { file: "08.jpg", alt: "Adekunle — Live", caption: "Live" },
+      { file: "010.jpg", alt: "Adekunle — Live", caption: "Live" },
+      { file: "011.jpg", alt: "Adekunle — Live", caption: "Live" },
       { file: "hero.jpg", alt: "Adekunle — Cover", caption: "Cover" }
     ]
   },

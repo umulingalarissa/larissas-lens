@@ -15,19 +15,21 @@
   <nav class="nav-mobile" id="mobile-nav" aria-label="Mobile"></nav>
   <div class="page-wrap has-footer-space">
   <main>
-    <section class="artist-hero">
-      <div class="artist-hero-bg">
-        <img alt="" fetchpriority="high" />
+    <div class="carousel">
+      <div class="carousel-frame">
+        <div class="carousel-track" id="carousel-track"></div>
       </div>
-      <div class="artist-hero-shade"></div>
-      <div class="artist-hero-copy">
-        <p class="artist-num"></p>
+      <div class="carousel-top">
+        <p class="carousel-num"></p>
+        <button class="info-toggle" id="info-toggle" type="button" aria-expanded="false" aria-controls="carousel-info">View info</button>
+      </div>
+      <div class="carousel-info" id="carousel-info" hidden>
         <h1 class="artist-name"></h1>
         <p class="artist-credit"></p>
+        <p class="page-lede"></p>
       </div>
-    </section>
-    <p class="page-lede" style="max-width:var(--max);margin:1.5rem auto 0;padding:0 var(--safe);"></p>
-    <section class="gallery" aria-label="Gallery"></section>
+      <div class="carousel-strip" id="carousel-strip"></div>
+    </div>
     <nav class="artist-nav" aria-label="Adjacent work"></nav>
   </main>
   <footer class="site-footer" id="site-footer"></footer>

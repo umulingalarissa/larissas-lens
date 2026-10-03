@@ -5,7 +5,7 @@
 
   function pickHero(images) {
     for (var i = 0; i < images.length; i++) {
-      if (/_hero/i.test(images[i].file)) return images[i];
+      if (/(^|_)hero\./i.test(images[i].file)) return images[i];
     }
     return images[0];
   }
@@ -79,234 +79,210 @@
     }
   }
 
-  function initHomeIndex() {
-    var list = document.getElementById("artist-list");
-    var scroller = document.getElementById("photo-scroller");
-    if (!list || !scroller) return;
+  // Renders the landing page: every project (live + editorial together)
+  // as a scattered photo grid. Hovering/focusing a photo closes a
+  // corner-bracket frame around it and reveals its name — click goes
+  // straight to that project's page.
+  function initScatterGrid() {
+    var grid = document.getElementById("scatter-grid");
+    if (!grid) return;
 
-    var artists = (window.ARTISTS || []).map(function (a) {
-      return {
-        name: a.name,
-        credit: a.credit,
-        href: "projects/artist.html?a=" + a.slug,
-        img: "img/" + a.slug + "/" + pickHero(a.images).file
-      };
-    });
+    var artists = window.ARTISTS || [];
+    var ROW_SIZE = 3; // photos per row; the 4th slot is a text space
+    // Which of the 4 slots is the space, cycling so it never repeats in
+    // the same column on consecutive rows.
+    var SPACE_POSITIONS = [1, 3, 0, 2];
 
-    var cap = document.getElementById("cap-name");
-    var active = -1;
-    var n = artists.length;
-    var scrollingProgrammatic = false;
-    var scrollLockTimer = null;
-    var slides = [];
-    var rows = [];
-
-    function makeSpacer() {
-      var s = document.createElement("div");
-      s.className = "photo-spacer";
-      s.setAttribute("aria-hidden", "true");
-      return s;
+    function escapeAttr(str) {
+      return String(str).replace(/"/g, "&quot;");
     }
-    scroller.appendChild(makeSpacer());
 
-    artists.forEach(function (a, i) {
-      var slide = document.createElement("a");
-      slide.className = "photo-slide";
-      slide.href = a.href;
-      slide.setAttribute("data-i", String(i));
-      slide.setAttribute("aria-label", a.name + " — view project");
-      slide.innerHTML =
-        '<img src="' +
-        a.img +
-        '" alt="' +
-        a.name +
-        ' live" loading="' +
-        (i === 0 ? "eager" : "lazy") +
-        '"' +
-        (i === 0 ? ' fetchpriority="high"' : "") +
-        " />";
-      slide.addEventListener("click", function (e) {
-        if (i !== active) {
-          e.preventDefault();
-          goTo(i, true);
+    var html = [];
+    var i = 0;
+    var row = 0;
+    while (i < artists.length) {
+      var pos = SPACE_POSITIONS[row % SPACE_POSITIONS.length];
+      var rowArtists = artists.slice(i, i + ROW_SIZE);
+      var ai = 0;
+      for (var slot = 0; slot < 4; slot++) {
+        if (slot === pos) {
+          html.push(
+            '<div class="scatter-label" data-row="' +
+            row +
+            '"><span class="label-text"></span><span class="count"></span></div>'
+          );
+        } else if (ai < rowArtists.length) {
+          var a = rowArtists[ai++];
+          var hero = pickHero(a.images);
+          var img = "img/" + a.slug + "/" + hero.file;
+          html.push(
+            '<a class="scatter-cell" href="projects/artist.html?a=' +
+            a.slug +
+            '" data-name="' +
+            escapeAttr(a.name) +
+            '" data-credit="' +
+            escapeAttr(a.credit) +
+            '" data-row="' +
+            row +
+            '" aria-label="' +
+            escapeAttr(a.name) +
+            ' — view project">' +
+            '<span class="scatter-photo"><img src="' +
+            img +
+            '" alt="' +
+            escapeAttr(a.heroAlt || hero.alt) +
+            '" loading="' +
+            (row === 0 ? "eager" : "lazy") +
+            '"' +
+            (row === 0 && ai === 1 ? ' fetchpriority="high"' : "") +
+            " /></span></a>"
+          );
         }
-      });
-      scroller.appendChild(slide);
-      slides.push(slide);
-
-      var row = document.createElement("a");
-      row.href = a.href;
-      row.className = "artist-row";
-      row.setAttribute("role", "listitem");
-      row.setAttribute("data-i", String(i));
-      row.innerHTML =
-        '<span class="num">' +
-        String(i + 1).padStart(2, "0") +
-        '</span><span class="name">' +
-        a.name +
-        '</span><span class="credit">' +
-        a.credit +
-        "</span>";
-      row.addEventListener("mouseenter", function () {
-        goTo(i, true);
-      });
-      row.addEventListener("focus", function () {
-        goTo(i, true);
-      });
-      row.addEventListener("click", function (e) {
-        if (i !== active) {
-          e.preventDefault();
-          goTo(i, true);
-        }
-      });
-      list.appendChild(row);
-      rows.push(row);
-    });
-    scroller.appendChild(makeSpacer());
-
-    function wrap(i) {
-      return ((i % n) + n) % n;
-    }
-
-    function setActive(i, fromScroll) {
-      i = wrap(i);
-      if (i === active) return;
-      active = i;
-
-      rows.forEach(function (el, k) {
-        el.classList.toggle("is-active", k === i);
-      });
-      slides.forEach(function (el, k) {
-        el.classList.toggle("is-active", k === i);
-      });
-      if (cap) cap.textContent = artists[i].name;
-    }
-
-    function goTo(i, smooth) {
-      i = wrap(i);
-      setActive(i, false);
-      scrollingProgrammatic = true;
-      if (scrollLockTimer) clearTimeout(scrollLockTimer);
-      var target = slides[i];
-      if (target) {
-        target.scrollIntoView({
-          behavior: smooth ? "smooth" : "auto",
-          block: "center"
-        });
       }
-      scrollLockTimer = setTimeout(function () {
-        scrollingProgrammatic = false;
-      }, smooth ? 700 : 50);
+      i += ROW_SIZE;
+      row++;
     }
 
-    // Loop the photo scroller: past the last slide wraps to the first
-    // (and vice versa) instead of stopping dead at the end.
-    scroller.addEventListener(
-      "wheel",
-      function (e) {
-        if (scrollingProgrammatic) return;
-        if (active === n - 1 && e.deltaY > 0) {
-          e.preventDefault();
-          goTo(0, true);
-        } else if (active === 0 && e.deltaY < 0) {
-          e.preventDefault();
-          goTo(n - 1, true);
-        }
-      },
-      { passive: false }
-    );
+    grid.innerHTML = html.join("");
 
-    var touchStartY = null;
-    scroller.addEventListener(
-      "touchstart",
-      function (e) {
-        touchStartY = e.touches[0].clientY;
-      },
-      { passive: true }
-    );
-    scroller.addEventListener(
-      "touchend",
-      function (e) {
-        if (touchStartY === null || scrollingProgrammatic) return;
-        var dy = touchStartY - e.changedTouches[0].clientY;
-        touchStartY = null;
-        if (active === n - 1 && dy > 40) {
-          goTo(0, true);
-        } else if (active === 0 && dy < -40) {
-          goTo(n - 1, true);
-        }
-      },
-      { passive: true }
-    );
+    // Each row has its own space cell — hovering a photo only ever
+    // updates the space in that same row, not the whole grid. Row 0's
+    // defaults to the total count; every other row starts blank.
+    var spaceByRow = {};
+    Array.prototype.forEach.call(grid.querySelectorAll(".scatter-label"), function (el) {
+      spaceByRow[el.getAttribute("data-row")] = el;
+    });
 
-    if ("IntersectionObserver" in window) {
-      var io = new IntersectionObserver(
-        function (entries) {
-          if (scrollingProgrammatic) return;
-          var best = null;
-          var bestRatio = 0;
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
-              bestRatio = entry.intersectionRatio;
-              best = entry;
-            }
-          });
-          if (best) {
-            var idx = parseInt(best.target.getAttribute("data-i"), 10);
-            if (!isNaN(idx)) setActive(idx, true);
-          }
-        },
-        {
-          root: scroller,
-          threshold: [0.35, 0.5, 0.65, 0.8]
-        }
-      );
-      slides.forEach(function (slide) {
-        io.observe(slide);
-      });
-    } else {
-      scroller.addEventListener("scroll", function () {
-        if (scrollingProgrammatic) return;
-        var mid = scroller.scrollTop + scroller.clientHeight / 2;
-        var closest = 0;
-        var dist = Infinity;
-        slides.forEach(function (slide, i) {
-          var c = slide.offsetTop + slide.offsetHeight / 2;
-          var d = Math.abs(c - mid);
-          if (d < dist) {
-            dist = d;
-            closest = i;
-          }
+    function setSpace(el, countText, labelText) {
+      el.querySelector(".count").textContent = countText;
+      el.querySelector(".label-text").textContent = labelText;
+    }
+
+    function rowDefault(r) {
+      if (spaceByRow[r]) setSpace(spaceByRow[r], "", "");
+    }
+
+    Object.keys(spaceByRow).forEach(rowDefault);
+
+    function showInfo(cell) {
+      var el = spaceByRow[cell.getAttribute("data-row")];
+      if (!el) return;
+      setSpace(el, cell.getAttribute("data-credit"), cell.getAttribute("data-name"));
+    }
+
+    function showDefault(cell) {
+      rowDefault(cell.getAttribute("data-row"));
+    }
+
+    // One shared set of 4 corner brackets, not one per photo — they fly
+    // in from the actual corners of the viewport the very first time,
+    // and on every hover after that they glide from wherever they
+    // currently are to the newly hovered photo instead of resetting.
+    var CORNER_PAD = 12; // px, matches the old inset(-0.75rem) look
+    var corners = {};
+    ["tl", "tr", "bl", "br"].forEach(function (key) {
+      var el = document.createElement("span");
+      el.className = "scatter-corner " + key;
+      el.setAttribute("aria-hidden", "true");
+      document.body.appendChild(el);
+      corners[key] = el;
+    });
+    var hasAppeared = false;
+
+    // Each corner element's own top-left is what transform: translate()
+    // moves — so for the tr/bl/br legs, the target has to be shifted back
+    // by the element's own width/height, or they land a whole corner-size
+    // off from where the photo's actual corner is.
+    var cornerW = corners.tl.offsetWidth || 24;
+    var cornerH = corners.tl.offsetHeight || 24;
+
+    function positionFrame(cell) {
+      // Document-relative (rect + scroll offset), not just viewport-
+      // relative, since the corners are position:absolute now — this is
+      // what lets them scroll along with the page instead of staying
+      // put in the viewport while the photo scrolls away under them.
+      var rect = cell.getBoundingClientRect();
+      var scrollX = window.scrollX || window.pageXOffset;
+      var scrollY = window.scrollY || window.pageYOffset;
+      var left = rect.left + scrollX;
+      var top = rect.top + scrollY;
+      var right = rect.right + scrollX;
+      var bottom = rect.bottom + scrollY;
+      var targets = {
+        tl: [left - CORNER_PAD, top - CORNER_PAD],
+        tr: [right + CORNER_PAD - cornerW, top - CORNER_PAD],
+        bl: [left - CORNER_PAD, bottom + CORNER_PAD - cornerH],
+        br: [right + CORNER_PAD - cornerW, bottom + CORNER_PAD - cornerH]
+      };
+
+      if (!hasAppeared) {
+        var vw = window.innerWidth;
+        var vh = window.innerHeight;
+        var starts = {
+          tl: [scrollX, scrollY],
+          tr: [scrollX + vw - cornerW, scrollY],
+          bl: [scrollX, scrollY + vh - cornerH],
+          br: [scrollX + vw - cornerW, scrollY + vh - cornerH]
+        };
+        Object.keys(corners).forEach(function (key) {
+          var el = corners[key];
+          el.style.transition = "none";
+          el.style.transform = "translate(" + starts[key][0] + "px, " + starts[key][1] + "px)";
         });
-        setActive(closest, true);
+        // force reflow so the jump to the viewport corner isn't animated
+        corners.tl.getBoundingClientRect();
+        Object.keys(corners).forEach(function (key) {
+          corners[key].style.transition = "";
+        });
+        hasAppeared = true;
+      }
+
+      Object.keys(corners).forEach(function (key) {
+        corners[key].classList.add("is-visible");
+        corners[key].style.transform = "translate(" + targets[key][0] + "px, " + targets[key][1] + "px)";
       });
     }
 
-    goTo(0, false);
+    function hideFrame() {
+      Object.keys(corners).forEach(function (key) {
+        corners[key].classList.remove("is-visible");
+      });
+    }
 
-    document.addEventListener("keydown", function (e) {
-      if (document.body.classList.contains("menu-open")) return;
-      var tag = (e.target && e.target.tagName) || "";
-      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-        e.preventDefault();
-        goTo(active + 1, true);
-      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        e.preventDefault();
-        goTo(active - 1, true);
-      } else if (e.key === "Enter" && active >= 0) {
-        var focusTag = (document.activeElement && document.activeElement.tagName) || "";
-        if (focusTag !== "A" && focusTag !== "BUTTON") {
-          e.preventDefault();
-          location.href = artists[active].href;
-        }
+    Array.prototype.forEach.call(grid.querySelectorAll(".scatter-cell"), function (cell) {
+      cell.addEventListener("mouseenter", function () {
+        showInfo(cell);
+        positionFrame(cell);
+      });
+      cell.addEventListener("focus", function () {
+        showInfo(cell);
+        positionFrame(cell);
+      });
+      cell.addEventListener("mouseleave", function () {
+        showDefault(cell);
+      });
+      cell.addEventListener("blur", function () {
+        showDefault(cell);
+      });
+    });
+
+    // The bracket frame only fully hides once the pointer/focus leaves
+    // the whole grid, not between individual photos — that's what lets
+    // it glide from one to the next instead of fading out and back in
+    // each time. Row text, above, reverts per-photo instead.
+    grid.addEventListener("mouseleave", function () {
+      hideFrame();
+    });
+    grid.addEventListener("focusout", function (e) {
+      if (!grid.contains(e.relatedTarget)) {
+        hideFrame();
       }
     });
   }
 
   function initArtistPage() {
-    var hero = document.querySelector(".artist-hero");
-    if (!hero) return;
+    var carousel = document.querySelector(".carousel");
+    if (!carousel) return;
 
     var list = window.ARTISTS || [];
     var slug = new URLSearchParams(location.search).get("a");
@@ -330,39 +306,190 @@
     var metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", a.name + " photography by Larissa Umulinga.");
 
-    var heroPick = pickHero(a.images);
-    var heroImg = hero.querySelector(".artist-hero-bg img");
-    heroImg.src = base + heroPick.file;
-    heroImg.alt = a.heroAlt || heroPick.alt;
-
-    document.querySelector(".artist-num").textContent =
+    document.querySelector(".carousel-num").textContent =
       "Project " + String(idx + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0");
-    document.querySelector(".artist-name").textContent = a.name.toUpperCase();
-    document.querySelector(".artist-credit").textContent = a.credit;
-    document.querySelector(".page-lede").textContent = a.lede;
+    document.querySelector(".carousel-info .artist-name").textContent = a.name.toUpperCase();
+    document.querySelector(".carousel-info .artist-credit").textContent = a.credit;
+    document.querySelector(".carousel-info .page-lede").textContent = a.lede;
 
-    var gallery = document.querySelector(".gallery");
-    gallery.setAttribute("aria-label", a.name + " gallery");
-    gallery.innerHTML = a.images
+    var track = document.getElementById("carousel-track");
+    var strip = document.getElementById("carousel-strip");
+    var active = 0;
+    var scrollingProgrammatic = false;
+    var scrollLockTimer = null;
+
+    track.innerHTML = a.images
       .map(function (img, i) {
-        var style = img.position ? ' style="object-position: ' + img.position + ';"' : "";
         return (
-          "<figure><img src=\"" +
+          '<div class="carousel-slide" data-i="' +
+          i +
+          '"><img src="' +
           base +
           img.file +
           '" alt="' +
           img.alt +
           '" loading="' +
           (i === 0 ? "eager" : "lazy") +
-          '"' +
-          (i === 0 ? ' fetchpriority="high"' : "") +
-          style +
-          " /><figcaption>" +
-          img.caption +
-          "</figcaption></figure>"
+          '" /></div>'
         );
       })
       .join("");
+    var slides = Array.prototype.slice.call(track.children);
+
+    strip.innerHTML = a.images
+      .map(function (img, i) {
+        return (
+          '<button type="button" data-i="' +
+          i +
+          '" aria-label="' +
+          img.alt +
+          '"><img src="' +
+          base +
+          img.file +
+          '" alt="" loading="lazy" /></button>'
+        );
+      })
+      .join("");
+    var thumbs = Array.prototype.slice.call(strip.children);
+
+    function markActiveEls(i) {
+      slides.forEach(function (el, k) {
+        el.classList.toggle("is-active", k === i);
+      });
+      thumbs.forEach(function (el, k) {
+        el.classList.toggle("is-active", k === i);
+      });
+    }
+
+    // Slides to the given photo with a smooth sliding transition — pass
+    // smooth: false only for the initial, unanimated positioning on load.
+    var SLIDE_MS = 500;
+
+    // Manually animated (rather than scrollIntoView/scroll-behavior:smooth)
+    // so the slide has a slower, consistent duration across browsers.
+    function animateScrollTo(target, duration) {
+      var start = track.scrollLeft;
+      var change = target - start;
+      var startTime = null;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        var t = Math.min((ts - startTime) / duration, 1);
+        var eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        track.scrollLeft = start + change * eased;
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function setActive(i, smooth) {
+      active = i;
+      markActiveEls(i);
+      scrollingProgrammatic = true;
+      if (scrollLockTimer) clearTimeout(scrollLockTimer);
+      var slide = slides[i];
+      var target = slide.offsetLeft + slide.offsetWidth / 2 - track.clientWidth / 2;
+      if (smooth === false) {
+        track.scrollLeft = target;
+      } else {
+        track.style.scrollSnapType = "none";
+        animateScrollTo(target, SLIDE_MS);
+      }
+      scrollLockTimer = setTimeout(
+        function () {
+          scrollingProgrammatic = false;
+          track.style.scrollSnapType = "";
+        },
+        smooth === false ? 50 : SLIDE_MS + 50
+      );
+    }
+
+    thumbs.forEach(function (btn, i) {
+      btn.addEventListener("click", function () {
+        setActive(i);
+      });
+    });
+
+    var heroIdx = -1;
+    for (var h = 0; h < a.images.length; h++) {
+      if (/(^|_)hero\./i.test(a.images[h].file)) {
+        heroIdx = h;
+        break;
+      }
+    }
+    setActive(heroIdx >= 0 ? heroIdx : 0, false);
+
+    // Keep the active slide/thumbnail in sync when the person scrolls or
+    // swipes the strip directly instead of using the arrows/thumbnails.
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          if (scrollingProgrammatic) return;
+          var best = null;
+          var bestRatio = 0;
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
+              bestRatio = entry.intersectionRatio;
+              best = entry;
+            }
+          });
+          if (best) {
+            var idx2 = parseInt(best.target.getAttribute("data-i"), 10);
+            if (!isNaN(idx2) && idx2 !== active) {
+              active = idx2;
+              markActiveEls(idx2);
+            }
+          }
+        },
+        { root: track, threshold: [0.6] }
+      );
+      slides.forEach(function (slide) {
+        io.observe(slide);
+      });
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (document.body.classList.contains("menu-open")) return;
+      var tag = (e.target && e.target.tagName) || "";
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        setActive((active + 1) % a.images.length);
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setActive((active - 1 + a.images.length) % a.images.length);
+      }
+    });
+
+    // Scrolling (vertical wheel) over the strip slides to the next/
+    // previous photo instead of scrolling the page; a horizontal swipe
+    // or shift+wheel still scrolls the strip natively.
+    var wheelLock = false;
+    track.addEventListener(
+      "wheel",
+      function (e) {
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        e.preventDefault();
+        if (wheelLock || !e.deltaY) return;
+        wheelLock = true;
+        if (e.deltaY > 0) setActive((active + 1) % a.images.length);
+        else setActive((active - 1 + a.images.length) % a.images.length);
+        setTimeout(function () {
+          wheelLock = false;
+        }, SLIDE_MS);
+      },
+      { passive: false }
+    );
+
+    var infoToggle = document.getElementById("info-toggle");
+    var infoPanel = document.getElementById("carousel-info");
+    if (infoToggle && infoPanel) {
+      infoToggle.addEventListener("click", function () {
+        var opening = infoPanel.hidden;
+        infoPanel.hidden = !opening;
+        infoToggle.setAttribute("aria-expanded", String(opening));
+        infoToggle.textContent = opening ? "Hide info" : "View info";
+      });
+    }
 
     var prev = list[(idx - 1 + n) % n];
     var next = list[(idx + 1) % n];
@@ -383,7 +510,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     injectChrome();
-    initHomeIndex();
+    initScatterGrid();
     initArtistPage();
   });
 })();

@@ -46,7 +46,7 @@ img { display: block; max-width: 100%; }
   justify-content: space-between;
   height: var(--header-h);
   padding: 0 var(--safe);
-  background: linear-gradient(to bottom, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0) 100%);
+  background: transparent;
 }
 
 .brand {
@@ -167,242 +167,6 @@ body.menu-open { overflow: hidden; }
 .page-wrap.has-footer-space { min-height: 100dvh; display: flex; flex-direction: column; }
 .page-wrap.has-footer-space > main { flex: 1; }
 
-/* —— Homepage index —— */
-.home-body {
-  overflow: hidden;
-  height: 100dvh;
-}
-.home-body .site-footer { display: none; }
-
-.stage {
-  display: grid;
-  grid-template-columns: minmax(22rem, 0.95fr) minmax(0, 1.15fr);
-  width: 100%;
-  max-width: 100vw;
-  min-height: 100dvh;
-  height: 100dvh;
-  padding-top: var(--header-h);
-  overflow: hidden;
-}
-
-.index-pane {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2rem var(--safe) 3rem;
-  background: linear-gradient(90deg, rgb(var(--bg-rgb)) 55%, rgba(var(--bg-rgb), 0.85) 85%, transparent 100%);
-  min-width: 0;
-  height: calc(100dvh - var(--header-h));
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none;
-}
-.index-pane::-webkit-scrollbar { display: none; }
-
-.tagline {
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--sand-dim);
-  margin-bottom: 2.2rem;
-}
-
-.artist-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-}
-
-.artist-row {
-  display: grid;
-  grid-template-columns: 2.4rem minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 0.75rem 1rem;
-  padding: 0.35rem 0;
-  width: 100%;
-  min-width: 0;
-  transition: color 0.25s var(--ease);
-}
-.artist-row .num {
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  color: var(--sand-mute);
-  font-variant-numeric: tabular-nums;
-}
-.artist-row .name {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(2.1rem, 4.6vw, 4.2rem);
-  line-height: 0.92;
-  letter-spacing: 0.015em;
-  text-transform: uppercase;
-  color: var(--sand-mute);
-  min-width: 0;
-  white-space: nowrap;
-  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
-}
-.artist-row .credit {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--sand-mute);
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), color 0.3s;
-}
-.artist-row:hover .name,
-.artist-row.is-active .name {
-  color: var(--sand-soft);
-  transform: translateX(4px);
-}
-.artist-row:hover .num,
-.artist-row.is-active .num { color: var(--sand-dim); }
-.artist-row:hover .credit,
-.artist-row.is-active .credit {
-  opacity: 1;
-  transform: translateX(0);
-  color: var(--sand);
-}
-
-.photo-pane {
-  position: relative;
-  min-height: 0;
-  height: calc(100dvh - var(--header-h));
-  align-self: stretch;
-  isolation: isolate;
-  overflow: hidden;
-  background-color: var(--bg);
-}
-
-.photo-scroller {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background-color: var(--bg);
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  /* smaller peeks — active frame dominates */
-  scroll-padding-block: 12%;
-}
-.photo-scroller::-webkit-scrollbar { display: none; }
-
-.photo-slide {
-  position: relative;
-  display: block;
-  width: 100%;
-  /* larger active frame = smaller peeks */
-  height: 76%;
-  min-height: 76%;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-  overflow: hidden;
-  background-color: var(--bg);
-  cursor: pointer;
-  margin: 0 0 clamp(1.25rem, 3vw, 2.25rem);
-  /* matte — white space between the photo and its corner brackets */
-  padding: var(--matte);
-  border: 0;
-}
-.photo-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 22%;
-  display: block;
-  transform: scale(1.02);
-  transition: filter 0.55s var(--ease), opacity 0.55s var(--ease), transform 0.7s var(--ease);
-  /* softer dimming on neighbors */
-  filter: brightness(0.78) saturate(0.88);
-  opacity: 0.78;
-}
-.photo-spacer {
-  height: 12%;
-  min-height: 12%;
-  flex: none;
-  pointer-events: none;
-}
-
-.photo-slide.is-active img {
-  filter: none;
-  opacity: 1;
-  transform: scale(1);
-}
-
-.photo-vignette {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 6;
-  background: linear-gradient(
-    to bottom,
-    rgba(var(--bg-rgb), 0.65) 0%,
-    transparent 14%,
-    transparent 86%,
-    rgba(var(--bg-rgb), 0.65) 100%
-  );
-}
-
-/* Corner brackets framing the active photo — sit halfway into the matte
-   (padding on .photo-slide), splitting the white gap between the photo
-   edge and the bracket, like a mat inside a picture frame. */
-.photo-frame {
-  position: absolute;
-  inset: calc(12% + var(--matte) / 2) calc(var(--matte) / 2);
-  z-index: 8;
-  pointer-events: none;
-}
-.photo-frame .corner {
-  position: absolute;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 4px solid #000;
-}
-.photo-frame .corner.tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
-.photo-frame .corner.tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
-.photo-frame .corner.bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
-.photo-frame .corner.br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
-
-.photo-caption {
-  position: absolute;
-  right: var(--safe);
-  bottom: 1.75rem;
-  z-index: 9;
-  text-align: right;
-  pointer-events: none;
-  transition: opacity 0.35s var(--ease);
-}
-.photo-caption .label {
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--sand-dim);
-  margin-bottom: 0.35rem;
-}
-.photo-caption .big {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
-}
-
-.home-foot {
-  position: fixed;
-  left: var(--safe);
-  bottom: 1.25rem;
-  z-index: 20;
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  color: var(--sand-mute);
-}
-.home-foot a:hover { color: var(--sand); }
-
 /* —— Inner page chrome —— */
 .page-hero {
   padding: calc(var(--header-h) + 2.5rem) var(--safe) 2rem;
@@ -432,214 +196,236 @@ body.menu-open { overflow: hidden; }
   line-height: 1.45;
 }
 
-/* —— Music grid —— */
-.live-grid {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0.5rem var(--safe) 3rem;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 0.75rem;
-}
-.live-cell {
-  position: relative;
-  overflow: hidden;
-  background: #f2f2f2;
-  aspect-ratio: 3 / 4;
-}
-.live-cell:nth-child(1) { grid-column: span 7; aspect-ratio: 16 / 11; }
-.live-cell:nth-child(2) { grid-column: span 5; }
-.live-cell:nth-child(3) { grid-column: span 4; }
-.live-cell:nth-child(4) { grid-column: span 4; }
-.live-cell:nth-child(5) { grid-column: span 4; }
-.live-cell:nth-child(6) { grid-column: span 6; aspect-ratio: 4 / 3; }
-.live-cell:nth-child(7) { grid-column: span 6; aspect-ratio: 4 / 3; }
-.live-cell img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.7s var(--ease);
-}
-.live-cell:hover img { transform: scale(1.04); }
-.live-meta {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 2.5rem 1rem 0.9rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.live-meta strong {
-  display: block;
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 1.35rem;
-  letter-spacing: 0.06em;
-  font-weight: 400;
-  text-transform: uppercase;
-  margin-top: 0.15rem;
-}
 
-/* —— Projects cards —— */
-.card-grid {
+/* —— Scatter grid (landing page) —— */
+.scatter-grid {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0.5rem var(--safe) 3rem;
+  padding: calc(var(--header-h) + 2rem) var(--safe) 4rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem 1.5rem;
 }
-.project-card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--line);
-  transition: border-color 0.3s var(--ease);
-}
-.project-card:hover { border-color: rgba(20, 20, 20, 0.35); }
-.project-card .thumb {
+.scatter-cell {
   position: relative;
-  overflow: hidden;
+  display: block;
   aspect-ratio: 3 / 4;
+}
+.scatter-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   background: #f2f2f2;
 }
-.project-card .thumb img {
+.scatter-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 18%;
-  transition: transform 0.7s var(--ease);
+  transition: transform 0.6s var(--ease);
 }
-.project-card:hover .thumb img { transform: scale(1.04); }
-.project-card .body {
-  padding: 1.1rem 1.15rem 1.25rem;
+.scatter-cell:hover .scatter-photo img,
+.scatter-cell:focus-visible .scatter-photo img { transform: scale(1.03); }
+
+/* One shared set of corner brackets (appended to <body>, not per photo)
+   that glides between whichever photo is hovered — see positionFrame()
+   in site.js. Absolute (document-relative), not fixed, so they scroll
+   along with the page instead of staying put in the viewport while the
+   photo they're framing scrolls away underneath them. */
+.scatter-corner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid #000;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 50;
+  transition: transform 0.55s cubic-bezier(0.16, 0.84, 0.3, 1), opacity 0.2s var(--ease);
+}
+.scatter-corner.is-visible { opacity: 1; }
+.scatter-corner.tl { border-right: 0; border-bottom: 0; }
+.scatter-corner.tr { border-left: 0; border-bottom: 0; }
+.scatter-corner.bl { border-right: 0; border-top: 0; }
+.scatter-corner.br { border-left: 0; border-top: 0; }
+
+.scatter-label {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  flex: 1;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
 }
-.project-card .num {
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
-  color: var(--sand-mute);
-}
-.project-card .name {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 2.15rem;
-  letter-spacing: 0.04em;
-  line-height: 1;
-}
-.project-card .credit {
+.scatter-label .count {
   font-family: "Instrument Serif", Georgia, serif;
   font-style: italic;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: var(--sand-dim);
+  min-height: 1.2em;
 }
-.project-card .cta {
-  margin-top: 1rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
+.scatter-label .label-text {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.1rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--sand-dim);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-.project-card:hover .cta { color: var(--sand); }
-.project-card .cta span {
-  display: inline-block;
-  width: 1.4rem;
-  height: 1px;
-  background: currentColor;
+  min-height: 1.1em;
+  transition: opacity 0.2s var(--ease);
 }
 
-/* —— Artist project page —— */
-.artist-hero {
+/* —— Artist project page (full-bleed filmstrip carousel) —— */
+.carousel {
   position: relative;
-  min-height: 72dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: calc(var(--header-h) + 2rem) var(--safe) 2.5rem;
+  height: 100dvh;
   overflow: hidden;
 }
-.artist-hero-bg {
+.carousel-frame {
   position: absolute;
-  inset: 0;
-  z-index: 0;
+  /* breathing room on every side, and enough space at the bottom that
+     the strip sits clearly below the photo instead of over it */
+  inset: calc(var(--header-h) + 1.5rem) 0 6.5rem;
+  background: var(--bg);
+  overflow: hidden;
 }
-.artist-hero-bg img {
+/* A horizontally scrolling filmstrip — several photos visible at once,
+   peeking past the viewport edges, snapping smoothly from one to the
+   next rather than hard-cutting between single images. */
+.carousel-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: ns-resize;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+/* Only the current photo is ever visible — each slide is exactly one
+   frame wide, so sliding to the next/previous one swaps the whole view
+   rather than revealing neighboring photos at the sides. */
+.carousel-slide {
+  flex: 0 0 100%;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
-  filter: brightness(0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
-.artist-hero-shade {
+.carousel-slide img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.carousel-top {
   position: absolute;
-  inset: 0;
-  z-index: 1;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.75rem var(--safe);
   pointer-events: none;
-  background:
-    linear-gradient(to top, #000 0%, rgba(0,0,0,0.55) 28%, transparent 62%),
-    linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 50%);
 }
-.artist-hero-copy { position: relative; z-index: 2; max-width: 40rem; }
-.artist-num {
+.carousel-top > * { pointer-events: auto; }
+.carousel-num {
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--sand-dim);
-  margin-bottom: 0.6rem;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0.2rem 0.5rem;
 }
-.artist-name {
+.info-toggle {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid var(--line);
+  padding: 0.2rem 0.5rem;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.info-toggle:hover { color: var(--sand); border-color: var(--sand-mute); }
+
+.carousel-info {
+  position: absolute;
+  top: calc(var(--header-h) + 2.75rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  max-width: 30rem;
+  width: calc(100% - 2 * var(--safe));
+  text-align: center;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1rem 1.25rem;
+}
+.carousel-info .artist-name {
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(3.2rem, 9vw, 6.5rem);
+  font-size: clamp(2rem, 4.5vw, 3rem);
   letter-spacing: 0.03em;
-  line-height: 0.9;
+  line-height: 0.95;
+  text-transform: uppercase;
 }
-.artist-credit {
-  margin-top: 0.85rem;
+.carousel-info .artist-credit {
+  margin-top: 0.4rem;
   font-family: "Instrument Serif", Georgia, serif;
   font-style: italic;
-  font-size: 1.25rem;
+  font-size: 1.05rem;
+  color: var(--sand-dim);
 }
-.artist-credit em { opacity: 0.65; margin-right: 0.2em; }
+.carousel-info .page-lede {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  max-width: none;
+}
 
-.gallery {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 2rem var(--safe) 3rem;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 0.75rem;
+/* Floats over the lower portion of the photo rather than sitting below
+   it — only the top half of each thumbnail clears the image's edge. */
+.carousel-strip {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 0.5rem;
+  max-width: calc(100% - 2 * var(--safe));
+  overflow-x: auto;
+  padding: 0.25rem;
 }
-.gallery figure {
+.carousel-strip button {
+  flex: none;
+  width: 4rem;
+  height: 4rem;
+  padding: 0;
   overflow: hidden;
-  background: #f2f2f2;
-  position: relative;
+  border: 2px solid transparent;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.2s var(--ease), border-color 0.2s var(--ease);
 }
-/* 8/4/5/7-column mosaic, repeating every 4 photos so it still works
-   whether a gallery has 4 images or 40. */
-.gallery figure:nth-child(4n+1) { grid-column: span 8; aspect-ratio: 16 / 11; }
-.gallery figure:nth-child(4n+2) { grid-column: span 4; aspect-ratio: 3 / 4; }
-.gallery figure:nth-child(4n+3) { grid-column: span 5; aspect-ratio: 4 / 5; }
-.gallery figure:nth-child(4n) { grid-column: span 7; aspect-ratio: 16 / 12; }
-.gallery figure img {
+.carousel-strip button img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.gallery figcaption {
-  position: absolute;
-  left: 0.85rem;
-  bottom: 0.75rem;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--sand-dim);
-  text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+.carousel-strip button:hover { opacity: 0.9; }
+.carousel-strip button.is-active {
+  opacity: 1;
+  border-color: var(--sand);
 }
 
 .artist-nav {
@@ -784,23 +570,50 @@ body.menu-open { overflow: hidden; }
 }
 .about-title {
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(3.5rem, 12vw, 7.5rem);
+  font-size: clamp(1.8rem, 5vw, 4.2rem);
   letter-spacing: 0.02em;
-  line-height: 0.88;
+  line-height: 1.05;
   margin-bottom: 2.5rem;
 }
 .about-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: 3rem;
-  align-items: start;
+  align-items: stretch;
+  /* floor under the row height so the photo gets more room than the
+     text alone would give it, cutting down on the crop */
+  min-height: clamp(30rem, 48vw, 44rem);
+}
+.about-photo {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+/* The image is taken out of flow (absolute) so it can never influence
+   this row's height — only .about-body's text does. The frame then
+   just fills whatever space is left after the caption, and the image
+   crops to fill the frame exactly. */
+.about-photo-frame {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.about-photo-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  background: #f2f2f2;
 }
 .about-aside {
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--sand-dim);
-  padding-top: 0.35rem;
+  padding-top: 0.75rem;
 }
 .about-body {
   font-size: 1.05rem;
@@ -881,45 +694,13 @@ body.menu-open { overflow: hidden; }
   .nav { display: none; }
   .menu-toggle { display: block; }
 
-  .home-body { overflow: hidden; }
-  .stage {
-    grid-template-columns: minmax(0, 1fr);
-    width: 100%;
-    max-width: 100vw;
-    min-width: 0;
-  }
-  .photo-pane {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    height: 100dvh;
-    opacity: 0.45;
-  }
-  .photo-vignette {
-    background: rgba(var(--bg-rgb), 0.72);
-  }
-  .index-pane {
-    background: transparent;
-    min-height: 100dvh;
-    height: auto;
-  }
-  .photo-slide { padding: 0; }
-  .photo-caption { display: none; }
-  .photo-frame { display: none; }
-  .artist-row .credit { display: none; }
-  .artist-row .name { font-size: clamp(2rem, 9vw, 3.2rem); }
-
-  .card-grid { grid-template-columns: repeat(2, 1fr); }
-  .live-cell:nth-child(n) { grid-column: span 6; aspect-ratio: 3 / 4; }
-  .live-cell:nth-child(1) { grid-column: span 12; aspect-ratio: 16 / 11; }
+  .scatter-grid { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
 
   .pub-item { grid-template-columns: 1fr; gap: 1.25rem; }
   .pub-visual { max-width: 22rem; }
-  .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-
-  .gallery figure:nth-child(n) { grid-column: span 12; aspect-ratio: 4 / 5; }
-  .gallery figure:nth-child(4n+1),
-  .gallery figure:nth-child(4n) { aspect-ratio: 16 / 11; }
+  .about-grid { grid-template-columns: 1fr; gap: 1.5rem; min-height: 0; }
+  .about-photo { height: auto; }
+  .about-photo-frame { flex: none; aspect-ratio: 3 / 4; }
 
   .site-footer {
     grid-template-columns: 1fr;
@@ -932,10 +713,5 @@ body.menu-open { overflow: hidden; }
 }
 
 @media (max-width: 640px) {
-  .card-grid { grid-template-columns: 1fr; }
-  .live-cell:nth-child(n) { grid-column: span 12; }
-  .artist-row {
-    grid-template-columns: 2rem minmax(0, 1fr);
-  }
-  .artist-row .name { font-size: clamp(2.2rem, 12vw, 3.2rem); }
+  .scatter-grid { grid-template-columns: 1fr; }
 }

@@ -698,7 +698,26 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 960px) {
   .filter-bar { padding: calc(var(--header-h) + 1.5rem) var(--safe) 0; }
   .filter-tabs { gap: 1.1rem; }
-  .scatter-grid { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
+
+  /* One photo per screen on mobile — snap-scrolling instead of a grid
+     of small tiles, so a swipe lands on exactly the next photo filling
+     the screen rather than half-showing two at once. Harmless on pages
+     without scroll-snap-align children (nothing to snap to). */
+  body { scroll-snap-type: y mandatory; }
+  .scatter-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: var(--header-h) 0 0;
+  }
+  .scatter-cell,
+  .scatter-label {
+    scroll-snap-align: start;
+  }
+  .scatter-cell {
+    aspect-ratio: auto;
+    height: 100dvh;
+  }
+  .scatter-label { padding: 2rem var(--safe); min-height: 14rem; }
 
   .carousel-slide.next-up { flex-direction: column; text-align: center; gap: 1.25rem; }
   .next-up-photo { width: clamp(8rem, 40vw, 11rem); }
@@ -718,17 +737,3 @@ body.menu-open { overflow: hidden; }
   .site-footer .left { text-align: center; }
 }
 
-@media (max-width: 640px) {
-  /* One project per screen — scroll to the next instead of a grid of
-     small tiles, so each photo gets the person's full attention. */
-  .scatter-grid {
-    grid-template-columns: 1fr;
-    gap: 0;
-    padding: var(--header-h) 0 0;
-  }
-  .scatter-cell {
-    aspect-ratio: auto;
-    height: 100dvh;
-  }
-  .scatter-label { padding: 2rem var(--safe); min-height: 14rem; }
-}

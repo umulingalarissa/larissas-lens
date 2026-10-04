@@ -707,17 +707,21 @@ body.menu-open { overflow: hidden; }
   .scatter-grid {
     grid-template-columns: 1fr;
     gap: 0;
-    padding: var(--header-h) 0 0;
-  }
-  .scatter-cell,
-  .scatter-label {
-    scroll-snap-align: start;
+    /* No top padding here — the filter bar directly above it already
+       clears the fixed header with its own top padding; adding header-h
+       again would just leave a blank gap before the first photo. */
+    padding: 0;
   }
   .scatter-cell {
+    scroll-snap-align: start;
     aspect-ratio: auto;
     height: 100dvh;
   }
-  .scatter-label { padding: 2rem var(--safe); min-height: 14rem; }
+  /* The label cell only ever fills in on hover/long-press — on a swipe-
+     through mobile feed, with no hover and no long-press mid-swipe, it
+     would just be a blank full-screen slide between photos. Drop it
+     from the sequence instead. */
+  .scatter-label { display: none; }
 
   .carousel-slide.next-up { flex-direction: column; text-align: center; gap: 1.25rem; }
   .next-up-photo { width: clamp(8rem, 40vw, 11rem); }

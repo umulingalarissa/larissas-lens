@@ -87,6 +87,7 @@ window.ARTISTS = [
       { file: "04.jpg", alt: "Ayra Starr — Live", caption: "Live" },
       { file: "05.jpg", alt: "Ayra Starr — Live", caption: "Live" },
       { file: "06.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Ayra Starr — Live", caption: "Live" },
       { file: "hero.jpg", alt: "Ayra Starr — Cover", caption: "Cover" }
     ]
   },
@@ -112,14 +113,14 @@ window.ARTISTS = [
     heroAlt: "Black Sheriff performing live",
     lede: "Live. Ghana on the road, caught mid-phrase.",
     images: [
-      { file: "0-23.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "0-24.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "01.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "02.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "03.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "04.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "05.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "06.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "014.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "hero.jpg", alt: "Black Sheriff — Cover", caption: "Cover" }
     ]
   },

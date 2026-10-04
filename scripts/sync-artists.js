@@ -8,7 +8,8 @@
 // Convention: name files 01.jpg, 02.jpg, ... in display order. Mark the one
 // file that should be the homepage + gallery-page cover either by naming
 // it exactly "hero.jpg" or by suffixing an existing number, e.g.
-// "03_hero.jpg" — it doesn't need to be first, just present.
+// "03_hero.jpg" — it doesn't need to be first on disk, the sync always
+// moves it to the front of the images list so the carousel opens on it.
 // Hand-written fields (name, category, credit, heroAlt, lede, and any
 // alt/caption/position already set on a specific image) are preserved
 // across re-runs; only the list of images is resynced to match the folder.
@@ -26,6 +27,7 @@ const IMG_DIR = path.join(ROOT, "img");
 const DATA_FILE = path.join(ROOT, "projects", "artists-data.js");
 const IMAGE_EXT = /\.(jpe?g|png|webp)$/i;
 const UNSUPPORTED_EXT = /\.(heic|heif|tiff?|raw|cr2|cr3|nef|arw)$/i;
+const HERO_RE = /(^|_)hero\./i;
 
 function readExistingArtists() {
   const src = fs.readFileSync(DATA_FILE, "utf8");
@@ -60,7 +62,16 @@ function listFolderFiles(slug) {
       )}) — convert to .jpg/.png/.webp first.`
     );
   }
-  return all.filter((f) => IMAGE_EXT.test(f)).sort(naturalSort);
+  const files = all.filter((f) => IMAGE_EXT.test(f)).sort(naturalSort);
+  // The hero always opens the carousel first — move it to the front
+  // (keeping everything else in its natural order) regardless of where
+  // its filename would otherwise sort.
+  const heroIdx = files.findIndex((f) => HERO_RE.test(f));
+  if (heroIdx > 0) {
+    const [hero] = files.splice(heroIdx, 1);
+    files.unshift(hero);
+  }
+  return files;
 }
 
 function buildArtist(slug, files, prior) {
@@ -124,9 +135,10 @@ const HEADER = `// Single source of truth for every artist/project page + the
 // To add or update a project:
 //   1. Drop its photos in img/<slug>/ (numbered 01.jpg, 02.jpg, ...).
 //      Name whichever one should be the cover (used on the landing grid
-//      + the project page) "hero.jpg", or suffix an existing number
-//      with "_hero" (e.g. 03_hero.jpg). If none is marked, the first
-//      image below is used.
+//      + opens the project page's carousel first) "hero.jpg", or suffix
+//      an existing number with "_hero" (e.g. 03_hero.jpg) — it's moved
+//      to the front of the list below regardless of where it sorts. If
+//      none is marked, the first image below is used.
 //   2. Run: node scripts/sync-artists.js
 // No new HTML file needed — projects/artist.html renders any slug via
 // artist.html?a=<slug>, and the grid order follows this array.

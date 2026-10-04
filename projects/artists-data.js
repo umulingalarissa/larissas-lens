@@ -13,9 +13,10 @@
 // To add or update a project:
 //   1. Drop its photos in img/<slug>/ (numbered 01.jpg, 02.jpg, ...).
 //      Name whichever one should be the cover (used on the landing grid
-//      + the project page) "hero.jpg", or suffix an existing number
-//      with "_hero" (e.g. 03_hero.jpg). If none is marked, the first
-//      image below is used.
+//      + opens the project page's carousel first) "hero.jpg", or suffix
+//      an existing number with "_hero" (e.g. 03_hero.jpg) — it's moved
+//      to the front of the list below regardless of where it sorts. If
+//      none is marked, the first image below is used.
 //   2. Run: node scripts/sync-artists.js
 // No new HTML file needed — projects/artist.html renders any slug via
 // artist.html?a=<slug>, and the grid order follows this array.
@@ -28,6 +29,7 @@ window.ARTISTS = [
     heroAlt: "Wizkid performing live",
     lede: "Live stage — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Wizkid — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Wizkid — Cover", caption: "Cover", position: "center 30%" },
       { file: "02.jpg", alt: "Wizkid — Live", caption: "Live" },
       { file: "03.jpg", alt: "Wizkid — Live", caption: "Live" },
@@ -36,8 +38,7 @@ window.ARTISTS = [
       { file: "06.jpg", alt: "Wizkid — Live", caption: "Live" },
       { file: "07.jpg", alt: "Wizkid — Live", caption: "Live" },
       { file: "08.jpg", alt: "Wizkid — Live", caption: "Live" },
-      { file: "010.jpg", alt: "Wizkid — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Wizkid — Cover", caption: "Cover" }
+      { file: "010.jpg", alt: "Wizkid — Live", caption: "Live" }
     ]
   },
   {
@@ -48,14 +49,14 @@ window.ARTISTS = [
     heroAlt: "Tyla performing at Giants of Africa Festival, Kigali",
     lede: "Live at Giants of Africa Festival, Kigali — a guest set that closed with a hug from Masai Ujiri.",
     images: [
+      { file: "hero.jpg", alt: "Tyla — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Tyla — Live", caption: "Live" },
       { file: "02.jpg", alt: "Tyla — With the dancers", caption: "With the dancers" },
       { file: "03.jpg", alt: "Tyla — Mid-set", caption: "Mid-set" },
       { file: "04.jpg", alt: "Tyla — Water break", caption: "Water break" },
       { file: "05.jpg", alt: "Tyla — Arms up", caption: "Arms up" },
       { file: "06.jpg", alt: "Tyla — With Masai Ujiri", caption: "With Masai Ujiri" },
-      { file: "07.jpg", alt: "Tyla — Full stride", caption: "Full stride" },
-      { file: "hero.jpg", alt: "Tyla — Cover", caption: "Cover" }
+      { file: "07.jpg", alt: "Tyla — Full stride", caption: "Full stride" }
     ]
   },
   {
@@ -66,11 +67,11 @@ window.ARTISTS = [
     heroAlt: "Davido performing live",
     lede: "Live performance. Heat, jewelry, a white shirt in green stage light.",
     images: [
+      { file: "hero.jpg", alt: "Davido — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Davido — Live", caption: "Live" },
       { file: "02.jpg", alt: "Davido — Live", caption: "Live" },
       { file: "04.jpg", alt: "Davido — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Davido — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Davido — Cover", caption: "Cover" }
+      { file: "05.jpg", alt: "Davido — Live", caption: "Live" }
     ]
   },
   {
@@ -81,14 +82,14 @@ window.ARTISTS = [
     heroAlt: "Ayra Starr performing live",
     lede: "Live, from the pit. Smoke, phones, the whole field leaning forward.",
     images: [
+      { file: "hero.jpg", alt: "Ayra Starr — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Ayra Starr — From the pit", caption: "From the pit", position: "30% 55%" },
       { file: "02.jpg", alt: "Ayra Starr — Live", caption: "Live" },
       { file: "03.jpg", alt: "Ayra Starr — Live", caption: "Live" },
       { file: "04.jpg", alt: "Ayra Starr — Live", caption: "Live" },
       { file: "05.jpg", alt: "Ayra Starr — Live", caption: "Live" },
       { file: "06.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Ayra Starr — Cover", caption: "Cover" }
+      { file: "07.jpg", alt: "Ayra Starr — Live", caption: "Live" }
     ]
   },
   {
@@ -99,10 +100,10 @@ window.ARTISTS = [
     heroAlt: "Tiwa Savage performing live",
     lede: "Live. Command of the stage, held in a still.",
     images: [
+      { file: "hero.jpg", alt: "Tiwa Savage — Cover", caption: "Cover" },
       { file: "0-12.jpg", alt: "Tiwa Savage — Live", caption: "Live" },
       { file: "0-13.jpg", alt: "Tiwa Savage — Live", caption: "Live" },
-      { file: "0-14.jpg", alt: "Tiwa Savage — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Tiwa Savage — Cover", caption: "Cover" }
+      { file: "0-14.jpg", alt: "Tiwa Savage — Live", caption: "Live" }
     ]
   },
   {
@@ -113,6 +114,7 @@ window.ARTISTS = [
     heroAlt: "Black Sheriff performing live",
     lede: "Live. Ghana on the road, caught mid-phrase.",
     images: [
+      { file: "hero.jpg", alt: "Black Sheriff — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "02.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "03.jpg", alt: "Black Sheriff — Live", caption: "Live" },
@@ -120,8 +122,7 @@ window.ARTISTS = [
       { file: "05.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "06.jpg", alt: "Black Sheriff — Live", caption: "Live" },
       { file: "07.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "014.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Black Sheriff — Cover", caption: "Cover" }
+      { file: "014.jpg", alt: "Black Sheriff — Live", caption: "Live" }
     ]
   },
   {
@@ -132,14 +133,14 @@ window.ARTISTS = [
     heroAlt: "Pher — SPICE cover art",
     lede: "Cover art for SPICE by Pher — studio color, denim, braid pulled taut.",
     images: [
+      { file: "hero.jpg", alt: "Pher — Cover", caption: "Cover" },
       { file: "02.jpg", alt: "Pher — Live", caption: "Live" },
       { file: "03.jpg", alt: "Pher — Live", caption: "Live" },
       { file: "04.jpg", alt: "Pher — Live", caption: "Live" },
       { file: "05.jpg", alt: "Pher — Live", caption: "Live" },
       { file: "06.jpg", alt: "Pher — Live", caption: "Live" },
       { file: "07.jpg", alt: "Pher — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Pher — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Pher — Cover", caption: "Cover" }
+      { file: "08.jpg", alt: "Pher — Live", caption: "Live" }
     ]
   },
   {
@@ -150,6 +151,7 @@ window.ARTISTS = [
     heroAlt: "Adekunle performing at Tio Tequila Bar",
     lede: "Live at Tio Tequila Bar — an intimate room, phones up for every chorus.",
     images: [
+      { file: "hero.jpg", alt: "Adekunle — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Adekunle — Live", caption: "Live" },
       { file: "03.jpg", alt: "Adekunle — Full house", caption: "Full house" },
       { file: "04.jpg", alt: "Adekunle — Reach", caption: "Reach" },
@@ -158,8 +160,7 @@ window.ARTISTS = [
       { file: "07.jpg", alt: "Adekunle — Sing it back", caption: "Sing it back" },
       { file: "08.jpg", alt: "Adekunle — Live", caption: "Live" },
       { file: "010.jpg", alt: "Adekunle — Live", caption: "Live" },
-      { file: "011.jpg", alt: "Adekunle — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Adekunle — Cover", caption: "Cover" }
+      { file: "011.jpg", alt: "Adekunle — Live", caption: "Live" }
     ]
   },
   {
@@ -170,14 +171,14 @@ window.ARTISTS = [
     heroAlt: "Bnxn performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Bnxn — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Bnxn — Live", caption: "Live" },
       { file: "02.jpg", alt: "Bnxn — Live", caption: "Live" },
       { file: "03.jpg", alt: "Bnxn — Live", caption: "Live" },
       { file: "04.jpg", alt: "Bnxn — Live", caption: "Live" },
       { file: "05.jpg", alt: "Bnxn — Live", caption: "Live" },
       { file: "06.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Bnxn — Cover", caption: "Cover" }
+      { file: "08.jpg", alt: "Bnxn — Live", caption: "Live" }
     ]
   },
   {
@@ -188,6 +189,7 @@ window.ARTISTS = [
     heroAlt: "Enny performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Enny — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Enny — Live", caption: "Live" },
       { file: "02.jpg", alt: "Enny — Live", caption: "Live" },
       { file: "03.jpg", alt: "Enny — Live", caption: "Live" },
@@ -200,8 +202,7 @@ window.ARTISTS = [
       { file: "011.jpg", alt: "Enny — Live", caption: "Live" },
       { file: "012.jpg", alt: "Enny — Live", caption: "Live" },
       { file: "013.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "014.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Enny — Cover", caption: "Cover" }
+      { file: "014.jpg", alt: "Enny — Live", caption: "Live" }
     ]
   },
   {
@@ -212,14 +213,14 @@ window.ARTISTS = [
     heroAlt: "Ruger performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Ruger — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Ruger — Live", caption: "Live" },
       { file: "02.jpg", alt: "Ruger — Live", caption: "Live" },
       { file: "03.jpg", alt: "Ruger — Live", caption: "Live" },
       { file: "04.jpg", alt: "Ruger — Live", caption: "Live" },
       { file: "05.jpg", alt: "Ruger — Live", caption: "Live" },
       { file: "06.jpg", alt: "Ruger — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Ruger — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Ruger — Cover", caption: "Cover" }
+      { file: "07.jpg", alt: "Ruger — Live", caption: "Live" }
     ]
   },
   {
@@ -230,6 +231,7 @@ window.ARTISTS = [
     heroAlt: "Thuy performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Thuy — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Thuy — Live", caption: "Live" },
       { file: "02.jpg", alt: "Thuy — Live", caption: "Live" },
       { file: "03.jpg", alt: "Thuy — Live", caption: "Live" },
@@ -237,8 +239,7 @@ window.ARTISTS = [
       { file: "05.jpg", alt: "Thuy — Live", caption: "Live" },
       { file: "07.jpg", alt: "Thuy — Live", caption: "Live" },
       { file: "08.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "09.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Thuy — Cover", caption: "Cover" }
+      { file: "09.jpg", alt: "Thuy — Live", caption: "Live" }
     ]
   },
   {
@@ -249,6 +250,7 @@ window.ARTISTS = [
     heroAlt: "Mustafa performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Mustafa — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Mustafa — Live", caption: "Live" },
       { file: "02.jpg", alt: "Mustafa — Live", caption: "Live" },
       { file: "03.jpg", alt: "Mustafa — Live", caption: "Live" },
@@ -261,8 +263,7 @@ window.ARTISTS = [
       { file: "010.jpg", alt: "Mustafa — Live", caption: "Live" },
       { file: "011.jpg", alt: "Mustafa — Live", caption: "Live" },
       { file: "012.jpg", alt: "Mustafa — Live", caption: "Live" },
-      { file: "013.jpg", alt: "Mustafa — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Mustafa — Cover", caption: "Cover" }
+      { file: "013.jpg", alt: "Mustafa — Live", caption: "Live" }
     ]
   },
   {
@@ -273,10 +274,10 @@ window.ARTISTS = [
     heroAlt: "Simi performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Simi — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Simi — Live", caption: "Live" },
       { file: "02.jpg", alt: "Simi — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Simi — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Simi — Cover", caption: "Cover" }
+      { file: "03.jpg", alt: "Simi — Live", caption: "Live" }
     ]
   },
   {
@@ -287,6 +288,7 @@ window.ARTISTS = [
     heroAlt: "Brima performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Brima — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Brima — Live", caption: "Live" },
       { file: "02.jpg", alt: "Brima — Live", caption: "Live" },
       { file: "03.jpg", alt: "Brima — Live", caption: "Live" },
@@ -296,8 +298,7 @@ window.ARTISTS = [
       { file: "07.jpg", alt: "Brima — Live", caption: "Live" },
       { file: "08.jpg", alt: "Brima — Live", caption: "Live" },
       { file: "09.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "010.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Brima — Cover", caption: "Cover" }
+      { file: "010.jpg", alt: "Brima — Live", caption: "Live" }
     ]
   },
   {
@@ -308,6 +309,7 @@ window.ARTISTS = [
     heroAlt: "Lesley performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Lesley — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Lesley — Live", caption: "Live" },
       { file: "02.jpg", alt: "Lesley — Live", caption: "Live" },
       { file: "03.jpg", alt: "Lesley — Live", caption: "Live" },
@@ -316,8 +318,7 @@ window.ARTISTS = [
       { file: "06.jpg", alt: "Lesley — Live", caption: "Live" },
       { file: "07.jpg", alt: "Lesley — Live", caption: "Live" },
       { file: "08.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "09.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Lesley — Cover", caption: "Cover" }
+      { file: "09.jpg", alt: "Lesley — Live", caption: "Live" }
     ]
   },
   {
@@ -328,14 +329,14 @@ window.ARTISTS = [
     heroAlt: "Bobby Nsenga performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Bobby Nsenga — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
       { file: "02.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
       { file: "03.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
       { file: "04.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
       { file: "05.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
       { file: "06.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Bobby Nsenga — Cover", caption: "Cover" }
+      { file: "07.jpg", alt: "Bobby Nsenga — Live", caption: "Live" }
     ]
   },
   {
@@ -346,6 +347,7 @@ window.ARTISTS = [
     heroAlt: "King James performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Kingjames — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Kingjames — Live", caption: "Live" },
       { file: "02.jpg", alt: "Kingjames — Live", caption: "Live" },
       { file: "03.jpg", alt: "Kingjames — Live", caption: "Live" },
@@ -358,8 +360,7 @@ window.ARTISTS = [
       { file: "010.jpg", alt: "Kingjames — Live", caption: "Live" },
       { file: "011.jpg", alt: "Kingjames — Live", caption: "Live" },
       { file: "012.jpg", alt: "Kingjames — Live", caption: "Live" },
-      { file: "013.jpg", alt: "Kingjames — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Kingjames — Cover", caption: "Cover" }
+      { file: "013.jpg", alt: "Kingjames — Live", caption: "Live" }
     ]
   },
   {
@@ -370,6 +371,7 @@ window.ARTISTS = [
     heroAlt: "Mkgnmvmnts performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Mkgnmvmnts — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
       { file: "02.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
       { file: "03.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
@@ -377,8 +379,7 @@ window.ARTISTS = [
       { file: "05.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
       { file: "06.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
       { file: "07.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
-      { file: "09.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Mkgnmvmnts — Cover", caption: "Cover" }
+      { file: "09.jpg", alt: "Mkgnmvmnts — Live", caption: "Live" }
     ]
   },
   {
@@ -389,10 +390,10 @@ window.ARTISTS = [
     heroAlt: "Mustard performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Mustard — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Mustard — Live", caption: "Live" },
       { file: "02.jpg", alt: "Mustard — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Mustard — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Mustard — Cover", caption: "Cover" }
+      { file: "03.jpg", alt: "Mustard — Live", caption: "Live" }
     ]
   },
   {
@@ -403,6 +404,7 @@ window.ARTISTS = [
     heroAlt: "Personal Projects performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Personal Projects — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Personal Projects — Live", caption: "Live" },
       { file: "02.jpg", alt: "Personal Projects — Live", caption: "Live" },
       { file: "03.jpg", alt: "Personal Projects — Live", caption: "Live" },
@@ -440,8 +442,7 @@ window.ARTISTS = [
       { file: "036.jpg", alt: "Personal Projects — Live", caption: "Live" },
       { file: "037.jpg", alt: "Personal Projects — Live", caption: "Live" },
       { file: "038.jpg", alt: "Personal Projects — Live", caption: "Live" },
-      { file: "039.jpg", alt: "Personal Projects — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Personal Projects — Cover", caption: "Cover" }
+      { file: "039.jpg", alt: "Personal Projects — Live", caption: "Live" }
     ]
   },
   {
@@ -452,6 +453,7 @@ window.ARTISTS = [
     heroAlt: "Pheelz performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Pheelz — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Pheelz — Live", caption: "Live" },
       { file: "02.jpg", alt: "Pheelz — Live", caption: "Live" },
       { file: "03.jpg", alt: "Pheelz — Live", caption: "Live" },
@@ -459,8 +461,7 @@ window.ARTISTS = [
       { file: "05.jpg", alt: "Pheelz — Live", caption: "Live" },
       { file: "06.jpg", alt: "Pheelz — Live", caption: "Live" },
       { file: "07.jpg", alt: "Pheelz — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Pheelz — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Pheelz — Cover", caption: "Cover" }
+      { file: "08.jpg", alt: "Pheelz — Live", caption: "Live" }
     ]
   },
   {
@@ -471,14 +472,14 @@ window.ARTISTS = [
     heroAlt: "Shaffy performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Shaffy — Cover", caption: "Cover" },
       { file: "01.jpg", alt: "Shaffy — Live", caption: "Live" },
       { file: "02.jpg", alt: "Shaffy — Live", caption: "Live" },
       { file: "03.jpg", alt: "Shaffy — Live", caption: "Live" },
       { file: "05.jpg", alt: "Shaffy — Live", caption: "Live" },
       { file: "06.jpg", alt: "Shaffy — Live", caption: "Live" },
       { file: "07.jpg", alt: "Shaffy — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Shaffy — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Shaffy — Cover", caption: "Cover" }
+      { file: "08.jpg", alt: "Shaffy — Live", caption: "Live" }
     ]
   },
   {
@@ -489,14 +490,14 @@ window.ARTISTS = [
     heroAlt: "Shenseea performing live",
     lede: "Live — selected frames from the set.",
     images: [
+      { file: "hero.jpg", alt: "Shenseea — Cover", caption: "Cover" },
       { file: "02.jpg", alt: "Shenseea — Live", caption: "Live" },
       { file: "03.jpg", alt: "Shenseea — Live", caption: "Live" },
       { file: "04.jpg", alt: "Shenseea — Live", caption: "Live" },
       { file: "05.jpg", alt: "Shenseea — Live", caption: "Live" },
       { file: "06.jpg", alt: "Shenseea — Live", caption: "Live" },
       { file: "07.jpg", alt: "Shenseea — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Shenseea — Live", caption: "Live" },
-      { file: "hero.jpg", alt: "Shenseea — Cover", caption: "Cover" }
+      { file: "08.jpg", alt: "Shenseea — Live", caption: "Live" }
     ]
   }
 ];

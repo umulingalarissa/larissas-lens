@@ -702,8 +702,11 @@ body.menu-open { overflow: hidden; }
   /* One photo per screen on mobile — snap-scrolling instead of a grid
      of small tiles, so a swipe lands on exactly the next photo filling
      the screen rather than half-showing two at once. Harmless on pages
-     without scroll-snap-align children (nothing to snap to). */
-  body { scroll-snap-type: y mandatory; }
+     without scroll-snap-align children (nothing to snap to). Set on
+     both html and body since different mobile browsers (notably
+     in-app webviews like Instagram's) disagree on which one is the
+     actual scrolling element. */
+  html, body { scroll-snap-type: y mandatory; }
   .scatter-grid {
     grid-template-columns: 1fr;
     gap: 0;
@@ -714,7 +717,16 @@ body.menu-open { overflow: hidden; }
   }
   .scatter-cell {
     scroll-snap-align: start;
+    /* Never let a fast flick skip past a photo without snapping to it
+       — without this, some mobile browsers let a hard swipe sail past
+       a snap point, landing half between two photos. */
+    scroll-snap-stop: always;
     aspect-ratio: auto;
+    /* 100vh first as a fallback for browsers that don't support dvh
+       (treated as invalid and ignored, so vh stands); 100dvh then
+       overrides it where the dynamic viewport unit is supported, to
+       account for a mobile browser's address bar showing/hiding. */
+    height: 100vh;
     height: 100dvh;
   }
   /* The label cell only ever fills in on hover/long-press — on a swipe-

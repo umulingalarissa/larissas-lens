@@ -28,11 +28,12 @@
 
   var INQUIRE_MAILTO = "mailto:umulingalarissa@gmail.com?subject=Photo%20Inquiry%3A";
 
-  // A one-time 0→100% loading bar on the very first page a visitor
-  // opens in this session — sessionStorage keeps it from reappearing
-  // on every subsequent page they click through to. Sits below the
-  // header in z-index, so "LARISSA UMULINGA" stays visible top-left
-  // the whole time instead of being covered.
+  // A one-time 0→100% loading screen on the very first page a visitor
+  // opens in this session — sessionStorage keeps it from reappearing on
+  // every subsequent page they click through to. Shows "LARISSA
+  // UMULINGA" centered at the same size as the real header brand, then
+  // hands off to the header's actual top-left position by animating
+  // that same text there rather than fading the whole screen away.
   function initLoader() {
     var alreadyShown;
     try {
@@ -48,6 +49,10 @@
     overlay.setAttribute("aria-label", "Loading");
     overlay.innerHTML =
       '<div class="loading-box">' +
+      // Reuses .brand's own font rules (same Poppins weight/size/
+      // tracking as the real header) so the handoff below lands on an
+      // identical-looking element rather than a differently-sized copy.
+      '<p class="loading-brand brand">LARISSA UMULINGA</p>' +
       '<p class="loading-label">Loading&hellip;</p>' +
       '<div class="loading-track"><div class="loading-fill"></div></div>' +
       '<p class="loading-pct">0%</p>' +
@@ -56,6 +61,7 @@
 
     var fill = overlay.querySelector(".loading-fill");
     var pct = overlay.querySelector(".loading-pct");
+    var loadingBrand = overlay.querySelector(".loading-brand");
     var progress = 0;
     var done = false;
     var startTime = Date.now();
@@ -63,8 +69,9 @@
     // the real page finishes loading well before it — otherwise on a
     // fast connection window.load could fire within the first step or
     // two, cutting the animation short and making it feel instant.
-    var MIN_DURATION_MS = 3000;
+    var MIN_DURATION_MS = 5000;
     var STEP_MS = Math.round((MIN_DURATION_MS * 0.9) / 9); // 9 steps, 0->90
+    var HANDOFF_MS = 700;
 
     function setProgress(p) {
       progress = Math.min(p, 100);
@@ -89,12 +96,25 @@
       try {
         sessionStorage.setItem("hasLoaded", "1");
       } catch (e) {}
+
+      // Shared-element handoff instead of a cross-fade: slide the
+      // centered brand text to exactly where the real header's brand
+      // link already sits (same size throughout, no scaling), while
+      // the bar/label/percentage and the white backdrop clear out
+      // underneath it — so the page is revealed by that movement, not
+      // by the whole screen dissolving into it.
+      var realBrand = document.querySelector(".site-header .brand");
+      if (realBrand && loadingBrand) {
+        var from = loadingBrand.getBoundingClientRect();
+        var to = realBrand.getBoundingClientRect();
+        loadingBrand.style.transform =
+          "translate(" + (to.left - from.left) + "px, " + (to.top - from.top) + "px)";
+      }
+      overlay.classList.add("is-leaving");
+
       setTimeout(function () {
-        overlay.classList.add("is-hidden");
-        setTimeout(function () {
-          if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-        }, 450); // matches the CSS opacity transition below
-      }, 250); // brief hold at 100% so it doesn't feel like it snapped
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      }, HANDOFF_MS + 50);
     }
 
     // Waits out whatever's left of MIN_DURATION_MS if the real page

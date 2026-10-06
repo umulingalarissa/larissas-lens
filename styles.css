@@ -37,20 +37,35 @@ img { display: block; max-width: 100%; }
 .cover { width: 100%; height: 100%; object-fit: cover; }
 
 /* —— First-load progress bar —— */
-/* z-index sits below the header (40) so "LARISSA UMULINGA" stays
-   visible top-left the whole time instead of being covered. */
+/* z-index sits above the header (40) — the real top-left brand/menu
+   stay hidden under the white backdrop until the handoff below clears
+   it, instead of peeking through underneath the loading screen. */
 .loading-overlay {
   position: fixed;
   inset: 0;
-  z-index: 38;
+  z-index: 42;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg);
-  transition: opacity 0.45s var(--ease);
+  /* Fast and only on the way out (is-leaving) — the handoff below is
+     what reveals the page, not this dissolving into it. */
+  transition: background-color 0.3s var(--ease);
 }
-.loading-overlay.is-hidden { opacity: 0; pointer-events: none; }
-.loading-box { width: min(22rem, 78vw); }
+.loading-overlay.is-leaving {
+  background-color: transparent;
+  pointer-events: none;
+}
+.loading-box { width: min(22rem, 78vw); text-align: center; }
+.loading-brand {
+  /* Same size/weight/tracking as the real header brand (shared .brand
+     class) — only position changes, via the transform handoff below,
+     so the swap from here to the header reads as one continuous move
+     rather than a size change. */
+  display: block;
+  margin-bottom: 2.25rem;
+  transition: transform 0.7s var(--ease);
+}
 .loading-label {
   font-family: "Inter Tight", system-ui, sans-serif;
   font-weight: 600;
@@ -58,6 +73,7 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.01em;
   color: var(--sand);
   margin-bottom: 0.9rem;
+  transition: opacity 0.25s var(--ease);
 }
 .loading-track {
   box-sizing: border-box;
@@ -65,6 +81,7 @@ img { display: block; max-width: 100%; }
   padding: 4px;
   border: 3px solid var(--sand);
   border-radius: 999px;
+  transition: opacity 0.25s var(--ease);
 }
 .loading-fill {
   height: 100%;
@@ -81,6 +98,12 @@ img { display: block; max-width: 100%; }
   font-size: 0.95rem;
   font-variant-numeric: tabular-nums;
   color: var(--sand);
+  transition: opacity 0.25s var(--ease);
+}
+.loading-overlay.is-leaving .loading-label,
+.loading-overlay.is-leaving .loading-track,
+.loading-overlay.is-leaving .loading-pct {
+  opacity: 0;
 }
 
 /* —— Header —— */

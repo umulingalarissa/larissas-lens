@@ -743,6 +743,14 @@ body.menu-open { overflow: hidden; }
     height: 100vh;
     height: 100dvh;
   }
+  /* The lean-in zoom on :hover is a desktop mouse affordance, but iOS
+     approximates :hover on a touch-and-hold too — so a mobile long-
+     press was zooming the photo in (and visibly softening it) on top
+     of the slideshow rotation. The rotation itself only ever swaps
+     which photo is showing, never scales it; this just stops the zoom
+     from riding along with it on mobile. */
+  .scatter-cell:hover .scatter-photo,
+  .scatter-cell:focus-visible .scatter-photo { transform: none; }
   /* The label cell only ever fills in on hover/long-press, neither of
      which a swipe-through mobile feed has — rather than a separate
      blank slide, each photo gets its own project title overlaid

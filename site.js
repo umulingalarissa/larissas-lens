@@ -28,6 +28,76 @@
 
   var INQUIRE_MAILTO = "mailto:umulingalarissa@gmail.com?subject=Photo%20Inquiry%3A";
 
+  // A one-time 0→100% loading bar on the very first page a visitor
+  // opens in this session — sessionStorage keeps it from reappearing
+  // on every subsequent page they click through to. Sits below the
+  // header in z-index, so "LARISSA UMULINGA" stays visible top-left
+  // the whole time instead of being covered.
+  function initLoader() {
+    var alreadyShown;
+    try {
+      alreadyShown = sessionStorage.getItem("hasLoaded");
+    } catch (e) {
+      alreadyShown = true; // storage unavailable — skip rather than risk re-showing every page
+    }
+    if (alreadyShown) return;
+
+    var overlay = document.createElement("div");
+    overlay.className = "loading-overlay";
+    overlay.setAttribute("role", "status");
+    overlay.setAttribute("aria-label", "Loading");
+    overlay.innerHTML =
+      '<div class="loading-box">' +
+      '<p class="loading-label">Loading&hellip;</p>' +
+      '<div class="loading-track"><div class="loading-fill"></div></div>' +
+      '<p class="loading-pct">0%</p>' +
+      "</div>";
+    document.body.appendChild(overlay);
+
+    var fill = overlay.querySelector(".loading-fill");
+    var pct = overlay.querySelector(".loading-pct");
+    var progress = 0;
+    var done = false;
+
+    function setProgress(p) {
+      progress = Math.min(p, 100);
+      fill.style.width = progress + "%";
+      pct.textContent = Math.round(progress) + "%";
+    }
+
+    // Eases toward 90% on its own — slowing the closer it gets, so it
+    // always reads as "still working" rather than stalling flat — then
+    // only jumps to the true 100% once the page has actually finished
+    // loading, instead of being a fixed-duration animation that could
+    // finish before or after the real page is ready.
+    var tick = setInterval(function () {
+      if (done) return;
+      setProgress(progress + (90 - progress) * 0.12 + 0.4);
+    }, 90);
+
+    function finish() {
+      if (done) return;
+      done = true;
+      clearInterval(tick);
+      setProgress(100);
+      try {
+        sessionStorage.setItem("hasLoaded", "1");
+      } catch (e) {}
+      setTimeout(function () {
+        overlay.classList.add("is-hidden");
+        setTimeout(function () {
+          if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 450); // matches the CSS opacity transition below
+      }, 250); // brief hold at 100% so it doesn't feel like it snapped
+    }
+
+    if (document.readyState === "complete") {
+      finish();
+    } else {
+      window.addEventListener("load", finish);
+    }
+  }
+
   function injectChrome() {
     var root = depthPrefix();
     var header = document.getElementById("site-header");
@@ -740,6 +810,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    initLoader();
     injectChrome();
     initScatterGrid();
     initArtistPage();

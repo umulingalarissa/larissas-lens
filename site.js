@@ -388,7 +388,12 @@
             pressTimer = setTimeout(function () {
               longPressed = true;
               showInfo(cell);
-              positionFrame(cell);
+              // No positionFrame() here — the corner-bracket frame is a
+              // mouse-hover affordance that barely registers anyway once
+              // a photo already fills the whole screen on mobile, and
+              // its transform updates on a long-press are the prime
+              // suspect for a page-flip rendering bug seen specifically
+              // when holding a photo down on iOS.
               startSlideshow(cell);
             }, LONG_PRESS_MS);
           },
@@ -410,13 +415,9 @@
           if (longPressed) {
             // The hold already showed the preview — treat lifting the
             // finger as leaving, not as the tap that follows the link.
-            // hideFrame() here too: touch has no mouseleave to retract
-            // the corner brackets, so without this they'd stay stuck
-            // around the last-held photo indefinitely.
             e.preventDefault();
             showDefault(cell);
             stopSlideshow();
-            hideFrame();
           }
           touchStart = null;
         });
@@ -425,7 +426,6 @@
           if (longPressed) {
             showDefault(cell);
             stopSlideshow();
-            hideFrame();
           }
           touchStart = null;
         });

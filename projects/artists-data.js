@@ -164,21 +164,22 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "bnxn",
-    name: "Bnxn",
+    slug: "thuy",
+    name: "Thuy",
     category: "live",
-    credit: "for Blastfest",
-    heroAlt: "Bnxn performing live",
+    credit: "for Wings World Tour",
+    heroAlt: "Thuy performing live",
     lede: "Live — selected frames from the set.",
     images: [
-      { file: "hero.jpg", alt: "Bnxn — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Bnxn — Live", caption: "Live" }
+      { file: "hero.jpg", alt: "Thuy — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "09.jpg", alt: "Thuy — Live", caption: "Live" }
     ]
   },
   {
@@ -224,22 +225,21 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "thuy",
-    name: "Thuy",
+    slug: "bnxn",
+    name: "Bnxn",
     category: "live",
-    credit: "for Wings World Tour",
-    heroAlt: "Thuy performing live",
+    credit: "for Blastfest",
+    heroAlt: "Bnxn performing live",
     lede: "Live — selected frames from the set.",
     images: [
-      { file: "hero.jpg", alt: "Thuy — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "09.jpg", alt: "Thuy — Live", caption: "Live" }
+      { file: "hero.jpg", alt: "Bnxn — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Bnxn — Live", caption: "Live" }
     ]
   },
   {

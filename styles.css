@@ -700,14 +700,27 @@ body.menu-open { overflow: hidden; }
   .filter-tabs { gap: 1.1rem; }
 
   /* One photo per screen on mobile — snap-scrolling instead of a grid
-     of small tiles, so a swipe lands on exactly the next photo filling
-     the screen rather than half-showing two at once. Harmless on pages
-     without scroll-snap-align children (nothing to snap to).
-     body only, not html too — iOS Safari has a known bug where setting
-     scroll-snap-type on html as well renders the whole page flipped
-     180deg during the rubber-band overscroll bounce (easy to trigger
-     with a long-press-then-release). */
-  body { scroll-snap-type: y mandatory; }
+     of small tiles, so a swipe always lands on exactly the next photo
+     filling the screen, never half-showing two at once.
+
+     This scrolls its own dedicated container (.page-wrap), not the
+     document itself. Snapping the root scroller (body, or body+html)
+     was tried first and both have real bugs on iOS: html+body together
+     flips the whole page 180deg during the rubber-band bounce, and
+     body alone still let a fast swipe rest in between two photos. A
+     plain overflow:auto element is the well-tested path instead — it's
+     the same pattern already used for the project carousel's
+     horizontal swipe (.carousel-track) with no such issues.
+     body.photo-page is only set on index.html, so no other page is
+     restructured by this. */
+  body.photo-page { height: 100dvh; overflow: hidden; }
+  body.photo-page .page-wrap {
+    height: 100%;
+    padding-bottom: 0;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
   .scatter-grid {
     grid-template-columns: 1fr;
     gap: 0;
@@ -730,11 +743,35 @@ body.menu-open { overflow: hidden; }
     height: 100vh;
     height: 100dvh;
   }
-  /* The label cell only ever fills in on hover/long-press — on a swipe-
-     through mobile feed, with no hover and no long-press mid-swipe, it
-     would just be a blank full-screen slide between photos. Drop it
-     from the sequence instead. */
+  /* The label cell only ever fills in on hover/long-press, neither of
+     which a swipe-through mobile feed has — rather than a separate
+     blank slide, each photo gets its own project title overlaid
+     directly in the bottom-left corner instead. */
   .scatter-label { display: none; }
+  .scatter-cell::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 38%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0));
+    pointer-events: none;
+    /* .scatter-photo is a later DOM child with the same auto z-index,
+       so without this the gradient (an earlier ::before) would paint
+       underneath the opaque photo and never actually show. */
+    z-index: 1;
+  }
+  .scatter-cell::after {
+    content: attr(data-name);
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 1;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 0.03em;
+    color: #fff;
+  }
 
   .carousel-slide.next-up { flex-direction: column; text-align: center; gap: 1.25rem; }
   .next-up-photo { width: clamp(8rem, 40vw, 11rem); }

@@ -410,9 +410,13 @@
           if (longPressed) {
             // The hold already showed the preview — treat lifting the
             // finger as leaving, not as the tap that follows the link.
+            // hideFrame() here too: touch has no mouseleave to retract
+            // the corner brackets, so without this they'd stay stuck
+            // around the last-held photo indefinitely.
             e.preventDefault();
             showDefault(cell);
             stopSlideshow();
+            hideFrame();
           }
           touchStart = null;
         });
@@ -421,6 +425,7 @@
           if (longPressed) {
             showDefault(cell);
             stopSlideshow();
+            hideFrame();
           }
           touchStart = null;
         });

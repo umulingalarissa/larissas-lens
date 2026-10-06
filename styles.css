@@ -66,29 +66,68 @@ img { display: block; max-width: 100%; }
   margin-bottom: 2.25rem;
   transition: transform 0.7s var(--ease);
 }
-.loading-label {
-  font-family: "Inter Tight", system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 1.05rem;
-  letter-spacing: 0.01em;
-  color: var(--sand);
-  margin-bottom: 0.9rem;
-  transition: opacity 0.25s var(--ease);
-}
 .loading-track {
-  box-sizing: border-box;
-  height: 2.1rem;
-  padding: 4px;
-  border: 3px solid var(--sand);
-  border-radius: 999px;
+  position: relative;
+  height: 2.75rem;
+  border-bottom: 3px solid var(--sand);
   transition: opacity 0.25s var(--ease);
 }
-.loading-fill {
-  height: 100%;
-  width: 0%;
-  border-radius: 999px;
+/* A little stick figure walks the track from 0 to 100% instead of a
+   bar filling. left is set in px by setProgress() in site.js (not a
+   CSS %, which — given the figure's real width — would run it off
+   both ends of the track) so it starts flush at the road's beginning
+   and ends flush at the road's end, moving a step each time the
+   percentage ticks up. */
+.loading-figure {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0.9rem;
+  height: 2.2rem;
+  transition: left 0.3s var(--ease);
+}
+.fig-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: -0.25rem;
+  border-radius: 50%;
   background: var(--sand);
-  transition: width 0.15s linear;
+}
+.fig-body {
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  width: 2px;
+  height: 0.75rem;
+  margin-left: -1px;
+  background: var(--sand);
+}
+.fig-arm,
+.fig-leg {
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  background: var(--sand);
+  transform-origin: top center;
+}
+.fig-arm { top: 0.65rem; height: 0.55rem; }
+.fig-leg { top: 1.3rem; height: 0.7rem; }
+/* Opposite-phase swing on each pair reads as a walk cycle rather than
+   both legs/arms moving in lockstep. */
+.fig-arm-l { animation: fig-swing-a 0.5s ease-in-out infinite; }
+.fig-arm-r { animation: fig-swing-b 0.5s ease-in-out infinite; }
+.fig-leg-l { animation: fig-swing-b 0.5s ease-in-out infinite; }
+.fig-leg-r { animation: fig-swing-a 0.5s ease-in-out infinite; }
+@keyframes fig-swing-a {
+  0%, 100% { transform: rotate(26deg); }
+  50% { transform: rotate(-26deg); }
+}
+@keyframes fig-swing-b {
+  0%, 100% { transform: rotate(-26deg); }
+  50% { transform: rotate(26deg); }
 }
 .loading-pct {
   margin-top: 0.6rem;
@@ -100,7 +139,6 @@ img { display: block; max-width: 100%; }
   color: var(--sand);
   transition: opacity 0.25s var(--ease);
 }
-.loading-overlay.is-leaving .loading-label,
 .loading-overlay.is-leaving .loading-track,
 .loading-overlay.is-leaving .loading-pct {
   opacity: 0;

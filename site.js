@@ -53,13 +53,22 @@
       // tracking as the real header) so the handoff below lands on an
       // identical-looking element rather than a differently-sized copy.
       '<p class="loading-brand brand">LARISSA UMULINGA</p>' +
-      '<p class="loading-label">Loading&hellip;</p>' +
-      '<div class="loading-track"><div class="loading-fill"></div></div>' +
+      '<div class="loading-track">' +
+      '<div class="loading-figure">' +
+      '<span class="fig-head"></span>' +
+      '<span class="fig-body"></span>' +
+      '<span class="fig-arm fig-arm-l"></span>' +
+      '<span class="fig-arm fig-arm-r"></span>' +
+      '<span class="fig-leg fig-leg-l"></span>' +
+      '<span class="fig-leg fig-leg-r"></span>' +
+      "</div>" +
+      "</div>" +
       '<p class="loading-pct">0%</p>' +
       "</div>";
     document.body.appendChild(overlay);
 
-    var fill = overlay.querySelector(".loading-fill");
+    var track = overlay.querySelector(".loading-track");
+    var figure = overlay.querySelector(".loading-figure");
     var pct = overlay.querySelector(".loading-pct");
     var loadingBrand = overlay.querySelector(".loading-brand");
     var progress = 0;
@@ -75,9 +84,16 @@
 
     function setProgress(p) {
       progress = Math.min(p, 100);
-      fill.style.width = progress + "%";
+      // Pixel-based, not left:X% — the figure has real width, so
+      // mapping progress straight to a percentage (centered on that
+      // point) would run it off both ends of the track. This instead
+      // walks its left edge from the very start of the road to its
+      // right edge landing exactly on the end of it.
+      var maxLeft = Math.max(track.clientWidth - figure.offsetWidth, 0);
+      figure.style.left = (progress / 100) * maxLeft + "px";
       pct.textContent = progress + "%";
     }
+    setProgress(0);
 
     // Steps in whole tens — 0, 10, 20, ... 90 — on its own, so it
     // always reads as "still working" rather than stalling flat, then

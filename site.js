@@ -58,6 +58,13 @@
     var pct = overlay.querySelector(".loading-pct");
     var progress = 0;
     var done = false;
+    var startTime = Date.now();
+    // The whole 0->100 climb always takes at least this long, even if
+    // the real page finishes loading well before it — otherwise on a
+    // fast connection window.load could fire within the first step or
+    // two, cutting the animation short and making it feel instant.
+    var MIN_DURATION_MS = 3000;
+    var STEP_MS = Math.round((MIN_DURATION_MS * 0.9) / 9); // 9 steps, 0->90
 
     function setProgress(p) {
       progress = Math.min(p, 100);
@@ -68,14 +75,13 @@
     // Steps in whole tens — 0, 10, 20, ... 90 — on its own, so it
     // always reads as "still working" rather than stalling flat, then
     // only jumps to the true 100% once the page has actually finished
-    // loading, instead of being a fixed-duration animation that could
-    // finish before or after the real page is ready.
+    // loading (see finish() below).
     var tick = setInterval(function () {
       if (done) return;
       if (progress < 90) setProgress(progress + 10);
-    }, 180);
+    }, STEP_MS);
 
-    function finish() {
+    function reallyFinish() {
       if (done) return;
       done = true;
       clearInterval(tick);
@@ -89,6 +95,15 @@
           if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
         }, 450); // matches the CSS opacity transition below
       }, 250); // brief hold at 100% so it doesn't feel like it snapped
+    }
+
+    // Waits out whatever's left of MIN_DURATION_MS if the real page
+    // loaded faster than that; if it took longer, resolves immediately
+    // since the minimum's already satisfied.
+    function finish() {
+      var remaining = MIN_DURATION_MS - (Date.now() - startTime);
+      if (remaining > 0) setTimeout(reallyFinish, remaining);
+      else reallyFinish();
     }
 
     if (document.readyState === "complete") {

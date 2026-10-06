@@ -62,18 +62,18 @@
     function setProgress(p) {
       progress = Math.min(p, 100);
       fill.style.width = progress + "%";
-      pct.textContent = Math.round(progress) + "%";
+      pct.textContent = progress + "%";
     }
 
-    // Eases toward 90% on its own — slowing the closer it gets, so it
-    // always reads as "still working" rather than stalling flat — then
+    // Steps in whole tens — 0, 10, 20, ... 90 — on its own, so it
+    // always reads as "still working" rather than stalling flat, then
     // only jumps to the true 100% once the page has actually finished
     // loading, instead of being a fixed-duration animation that could
     // finish before or after the real page is ready.
     var tick = setInterval(function () {
       if (done) return;
-      setProgress(progress + (90 - progress) * 0.12 + 0.4);
-    }, 90);
+      if (progress < 90) setProgress(progress + 10);
+    }, 180);
 
     function finish() {
       if (done) return;

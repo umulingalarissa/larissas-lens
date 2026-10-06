@@ -702,11 +702,12 @@ body.menu-open { overflow: hidden; }
   /* One photo per screen on mobile — snap-scrolling instead of a grid
      of small tiles, so a swipe lands on exactly the next photo filling
      the screen rather than half-showing two at once. Harmless on pages
-     without scroll-snap-align children (nothing to snap to). Set on
-     both html and body since different mobile browsers (notably
-     in-app webviews like Instagram's) disagree on which one is the
-     actual scrolling element. */
-  html, body { scroll-snap-type: y mandatory; }
+     without scroll-snap-align children (nothing to snap to).
+     body only, not html too — iOS Safari has a known bug where setting
+     scroll-snap-type on html as well renders the whole page flipped
+     180deg during the rubber-band overscroll bounce (easy to trigger
+     with a long-press-then-release). */
+  body { scroll-snap-type: y mandatory; }
   .scatter-grid {
     grid-template-columns: 1fr;
     gap: 0;

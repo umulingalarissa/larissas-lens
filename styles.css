@@ -37,55 +37,55 @@ img { display: block; max-width: 100%; }
 .cover { width: 100%; height: 100%; object-fit: cover; }
 
 /* —— First-load progress bar —— */
-/* z-index sits above the header (40) — the real top-left brand/menu
-   stay hidden under the white backdrop until the handoff below clears
-   it, instead of peeking through underneath the loading screen. */
+/* z-index sits below the header (40) so "LARISSA UMULINGA" stays
+   visible top-left the whole time, untouched — this overlay only ever
+   covers the rest of the page, never the header. */
 .loading-overlay {
   position: fixed;
   inset: 0;
-  z-index: 42;
+  z-index: 38;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg);
-  /* Fast and only on the way out (is-leaving) — the handoff below is
-     what reveals the page, not this dissolving into it. */
-  transition: background-color 0.3s var(--ease);
+  transition: background-color 0.15s var(--ease);
 }
 .loading-overlay.is-leaving {
   background-color: transparent;
   pointer-events: none;
 }
 .loading-box { width: min(22rem, 78vw); text-align: center; }
-.loading-brand {
-  /* Same size/weight/tracking as the real header brand (shared .brand
-     class) — only position changes, via the transform handoff below,
-     so the swap from here to the header reads as one continuous move
-     rather than a size change. */
-  display: block;
-  margin-bottom: 2.25rem;
-  transition: transform 0.7s var(--ease);
-}
 .loading-track {
   position: relative;
   height: 2.75rem;
   border-bottom: 3px solid var(--sand);
-  transition: opacity 0.25s var(--ease);
+  transition: opacity 0.15s var(--ease);
 }
 /* A little stick figure walks the track from 0 to 100% instead of a
    bar filling. left is set in px by setProgress() in site.js (not a
    CSS %, which — given the figure's real width — would run it off
    both ends of the track) so it starts flush at the road's beginning
-   and ends flush at the road's end, moving a step each time the
-   percentage ticks up. */
+   and ends flush at the road's end. Its transition duration/timing is
+   also set from there (figure.style.transition), matching the step
+   interval exactly so consecutive moves never pause between steps —
+   not set here, to keep that one source of truth. transform-origin:
+   bottom + a static forward tilt pivots the lean from the feet (where
+   it's anchored) rather than the center, which is what actually reads
+   as walking forward into the direction of travel instead of
+   ambiguous/backward. */
 .loading-figure {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 0.9rem;
   height: 2.2rem;
-  transition: left 0.3s var(--ease);
+  transform-origin: bottom center;
+  transform: rotate(6deg);
 }
+/* Torso stays static (no sway) — at this size, one more independently
+   animating part on top of four limb joints read as jittery rather
+   than connected motion. Just the lean above, plus the legs/arms. */
+.fig-torso { position: absolute; inset: 0; }
 .fig-head {
   position: absolute;
   top: 0;
@@ -106,7 +106,7 @@ img { display: block; max-width: 100%; }
   background: var(--sand);
 }
 .fig-arm,
-.fig-leg {
+.fig-thigh {
   position: absolute;
   left: 50%;
   width: 2px;
@@ -114,20 +114,57 @@ img { display: block; max-width: 100%; }
   transform-origin: top center;
 }
 .fig-arm { top: 0.65rem; height: 0.55rem; }
-.fig-leg { top: 1.3rem; height: 0.7rem; }
-/* Opposite-phase swing on each pair reads as a walk cycle rather than
-   both legs/arms moving in lockstep. */
-.fig-arm-l { animation: fig-swing-a 0.5s ease-in-out infinite; }
-.fig-arm-r { animation: fig-swing-b 0.5s ease-in-out infinite; }
-.fig-leg-l { animation: fig-swing-b 0.5s ease-in-out infinite; }
-.fig-leg-r { animation: fig-swing-a 0.5s ease-in-out infinite; }
+.fig-thigh { top: 1.3rem; height: 0.5rem; }
+/* Shin pivots at the knee — nested inside the thigh, so it inherits
+   the thigh's own rotation (hip) plus its own independent bend. */
+.fig-shin {
+  position: absolute;
+  top: 0.5rem;
+  left: -1px;
+  width: 2px;
+  height: 0.5rem;
+  background: var(--sand);
+  transform-origin: top center;
+}
+/* Walking cadence — opposite-phase arm/leg pairs (contralateral, same
+   as natural gait), unhurried, with a modest knee bend each stride to
+   clear the ground. */
+.fig-arm-l,
+.fig-thigh-r { animation: fig-swing-a 0.7s ease-in-out infinite; }
+.fig-arm-r,
+.fig-thigh-l { animation: fig-swing-b 0.7s ease-in-out infinite; }
+.fig-thigh-r .fig-shin { animation: fig-knee-a 0.7s ease-in-out infinite; }
+.fig-thigh-l .fig-shin { animation: fig-knee-b 0.7s ease-in-out infinite; }
 @keyframes fig-swing-a {
-  0%, 100% { transform: rotate(26deg); }
-  50% { transform: rotate(-26deg); }
+  0%, 100% { transform: rotate(20deg); }
+  50% { transform: rotate(-20deg); }
 }
 @keyframes fig-swing-b {
-  0%, 100% { transform: rotate(-26deg); }
-  50% { transform: rotate(26deg); }
+  0%, 100% { transform: rotate(-20deg); }
+  50% { transform: rotate(20deg); }
+}
+/* Knee stays ~straight through stance (early cycle, weight-bearing),
+   bends gently to clear the ground mid-swing, straightens again as the
+   foot plants ahead for the next stride — fewer, evenly-spaced stops
+   and a smaller bend than earlier, which was reading as jittery rather
+   than a clean step at this size. */
+@keyframes fig-knee-a {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-22deg); }
+}
+@keyframes fig-knee-b {
+  0%, 100% { transform: rotate(-22deg); }
+  50% { transform: rotate(0deg); }
+}
+/* Finish line: every limb freezes to a neutral standing pose —
+   triggered right as the figure reaches 100%, just before the screen
+   clears. Stands still, no wave, no further motion. */
+.loading-figure.is-still .fig-thigh,
+.loading-figure.is-still .fig-shin,
+.loading-figure.is-still .fig-arm-l,
+.loading-figure.is-still .fig-arm-r {
+  animation: none;
+  transform: rotate(0deg);
 }
 .loading-pct {
   margin-top: 0.6rem;
@@ -137,7 +174,7 @@ img { display: block; max-width: 100%; }
   font-size: 0.95rem;
   font-variant-numeric: tabular-nums;
   color: var(--sand);
-  transition: opacity 0.25s var(--ease);
+  transition: opacity 0.15s var(--ease);
 }
 .loading-overlay.is-leaving .loading-track,
 .loading-overlay.is-leaving .loading-pct {

@@ -28,12 +28,11 @@
 
   var INQUIRE_MAILTO = "mailto:umulingalarissa@gmail.com?subject=Photo%20Inquiry%3A";
 
-  // A one-time 0→100% loading screen on the very first page a visitor
-  // opens in this session — sessionStorage keeps it from reappearing on
-  // every subsequent page they click through to. Shows "LARISSA
-  // UMULINGA" centered at the same size as the real header brand, then
-  // hands off to the header's actual top-left position by animating
-  // that same text there rather than fading the whole screen away.
+  // A one-time stick-figure loading screen on the very first page a
+  // visitor opens in this session — sessionStorage keeps it from
+  // reappearing on every subsequent page they click through to. Sits
+  // below the header in z-index, so "LARISSA UMULINGA" stays visible
+  // top-left the whole time, untouched — no animation, no handoff.
   function initLoader() {
     var alreadyShown;
     try {
@@ -49,18 +48,23 @@
     overlay.setAttribute("aria-label", "Loading");
     overlay.innerHTML =
       '<div class="loading-box">' +
-      // Reuses .brand's own font rules (same Poppins weight/size/
-      // tracking as the real header) so the handoff below lands on an
-      // identical-looking element rather than a differently-sized copy.
-      '<p class="loading-brand brand">LARISSA UMULINGA</p>' +
       '<div class="loading-track">' +
       '<div class="loading-figure">' +
+      // Torso (head+body) wrapper — kept static rather than animated,
+      // since on top of four moving limb joints a swaying torso read
+      // as jittery rather than connected motion.
+      '<span class="fig-torso">' +
       '<span class="fig-head"></span>' +
       '<span class="fig-body"></span>' +
+      "</span>" +
       '<span class="fig-arm fig-arm-l"></span>' +
       '<span class="fig-arm fig-arm-r"></span>' +
-      '<span class="fig-leg fig-leg-l"></span>' +
-      '<span class="fig-leg fig-leg-r"></span>' +
+      // Two-segment leg — thigh pivots at the hip, shin pivots at the
+      // knee (nested inside the thigh, so it inherits the thigh's
+      // rotation plus its own independent bend) — rather than one
+      // rigid straight line scissoring from the hip.
+      '<span class="fig-thigh fig-thigh-l"><span class="fig-shin"></span></span>' +
+      '<span class="fig-thigh fig-thigh-r"><span class="fig-shin"></span></span>' +
       "</div>" +
       "</div>" +
       '<p class="loading-pct">0%</p>' +
@@ -70,7 +74,6 @@
     var track = overlay.querySelector(".loading-track");
     var figure = overlay.querySelector(".loading-figure");
     var pct = overlay.querySelector(".loading-pct");
-    var loadingBrand = overlay.querySelector(".loading-brand");
     var progress = 0;
     var done = false;
     var startTime = Date.now();
@@ -80,7 +83,13 @@
     // two, cutting the animation short and making it feel instant.
     var MIN_DURATION_MS = 5000;
     var STEP_MS = Math.round((MIN_DURATION_MS * 0.9) / 9); // 9 steps, 0->90
-    var HANDOFF_MS = 700;
+    // The figure's own CSS transition duration matches STEP_MS exactly
+    // (one source of truth, not a hardcoded value in the stylesheet)
+    // and runs linear, not eased — each step's motion then starts
+    // exactly where the previous one ended, at the same rate, instead
+    // of easing to a stop and pausing before the next jump, which is
+    // what actually reads as stop-motion.
+    figure.style.transition = "left " + STEP_MS + "ms linear";
 
     function setProgress(p) {
       progress = Math.min(p, 100);
@@ -113,24 +122,23 @@
         sessionStorage.setItem("hasLoaded", "1");
       } catch (e) {}
 
-      // Shared-element handoff instead of a cross-fade: slide the
-      // centered brand text to exactly where the real header's brand
-      // link already sits (same size throughout, no scaling), while
-      // the bar/label/percentage and the white backdrop clear out
-      // underneath it — so the page is revealed by that movement, not
-      // by the whole screen dissolving into it.
-      var realBrand = document.querySelector(".site-header .brand");
-      if (realBrand && loadingBrand) {
-        var from = loadingBrand.getBoundingClientRect();
-        var to = realBrand.getBoundingClientRect();
-        loadingBrand.style.transform =
-          "translate(" + (to.left - from.left) + "px, " + (to.top - from.top) + "px)";
-      }
-      overlay.classList.add("is-leaving");
-
+      // Let the final step actually land at the end of the road first
+      // (same duration as every other step), stand still just long
+      // enough to not be a jarring snap, then clear almost immediately
+      // — this is a pit stop, not a moment to linger on. The real
+      // header (LARISSA UMULINGA already sitting at top left,
+      // untouched by any of this) has been visible underneath the
+      // whole time, so finishing just clears the figure/track/
+      // percentage and the backdrop, fast, not a slow cross-fade.
       setTimeout(function () {
-        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-      }, HANDOFF_MS + 50);
+        figure.classList.add("is-still");
+        setTimeout(function () {
+          overlay.classList.add("is-leaving");
+          setTimeout(function () {
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+          }, 150);
+        }, 100);
+      }, STEP_MS);
     }
 
     // Waits out whatever's left of MIN_DURATION_MS if the real page

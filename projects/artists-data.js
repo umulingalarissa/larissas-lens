@@ -42,36 +42,40 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "tyla",
-    name: "Tyla",
+    slug: "thuy",
+    name: "Thuy",
     category: "live",
-    credit: "for Giants of Africa",
-    heroAlt: "Tyla performing at Giants of Africa Festival, Kigali",
-    lede: "Live at Giants of Africa Festival, Kigali — a guest set that closed with a hug from Masai Ujiri.",
+    credit: "for Wings World Tour",
+    heroAlt: "Thuy performing live",
+    lede: "Live — selected frames from the set.",
     images: [
-      { file: "hero.jpg", alt: "Tyla — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Tyla — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Tyla — With the dancers", caption: "With the dancers" },
-      { file: "03.jpg", alt: "Tyla — Mid-set", caption: "Mid-set" },
-      { file: "04.jpg", alt: "Tyla — Water break", caption: "Water break" },
-      { file: "05.jpg", alt: "Tyla — Arms up", caption: "Arms up" },
-      { file: "06.jpg", alt: "Tyla — With Masai Ujiri", caption: "With Masai Ujiri" },
-      { file: "07.jpg", alt: "Tyla — Full stride", caption: "Full stride" }
+      { file: "hero.jpg", alt: "Thuy — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Thuy — Live", caption: "Live" },
+      { file: "09.jpg", alt: "Thuy — Live", caption: "Live" }
     ]
   },
   {
-    slug: "davido",
-    name: "Davido",
-    category: "live",
-    credit: "for Giants of Africa",
-    heroAlt: "Davido performing live",
-    lede: "Live performance. Heat, jewelry, a white shirt in green stage light.",
+    slug: "pher",
+    name: "Pher",
+    category: "editorial",
+    credit: "SPICE cover",
+    heroAlt: "Pher — SPICE cover art",
+    lede: "Cover art for SPICE by Pher — studio color, denim, braid pulled taut.",
     images: [
-      { file: "hero.jpg", alt: "Davido — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Davido — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Davido — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Davido — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Davido — Live", caption: "Live" }
+      { file: "hero.jpg", alt: "Pher — Cover", caption: "Cover" },
+      { file: "02.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Pher — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Pher — Live", caption: "Live" }
     ]
   },
   {
@@ -126,21 +130,18 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "pher",
-    name: "Pher",
-    category: "editorial",
-    credit: "SPICE cover",
-    heroAlt: "Pher — SPICE cover art",
-    lede: "Cover art for SPICE by Pher — studio color, denim, braid pulled taut.",
+    slug: "davido",
+    name: "Davido",
+    category: "live",
+    credit: "for Giants of Africa",
+    heroAlt: "Davido performing live",
+    lede: "Live performance. Heat, jewelry, a white shirt in green stage light.",
     images: [
-      { file: "hero.jpg", alt: "Pher — Cover", caption: "Cover" },
-      { file: "02.jpg", alt: "Pher — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Pher — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Pher — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Pher — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Pher — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Pher — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Pher — Live", caption: "Live" }
+      { file: "hero.jpg", alt: "Davido — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Davido — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Davido — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Davido — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Davido — Live", caption: "Live" }
     ]
   },
   {
@@ -164,22 +165,21 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "thuy",
-    name: "Thuy",
+    slug: "tyla",
+    name: "Tyla",
     category: "live",
-    credit: "for Wings World Tour",
-    heroAlt: "Thuy performing live",
-    lede: "Live — selected frames from the set.",
+    credit: "for Giants of Africa",
+    heroAlt: "Tyla performing at Giants of Africa Festival, Kigali",
+    lede: "Live at Giants of Africa Festival, Kigali — a guest set that closed with a hug from Masai Ujiri.",
     images: [
-      { file: "hero.jpg", alt: "Thuy — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Thuy — Live", caption: "Live" },
-      { file: "09.jpg", alt: "Thuy — Live", caption: "Live" }
+      { file: "hero.jpg", alt: "Tyla — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Tyla — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Tyla — With the dancers", caption: "With the dancers" },
+      { file: "03.jpg", alt: "Tyla — Mid-set", caption: "Mid-set" },
+      { file: "04.jpg", alt: "Tyla — Water break", caption: "Water break" },
+      { file: "05.jpg", alt: "Tyla — Arms up", caption: "Arms up" },
+      { file: "06.jpg", alt: "Tyla — With Masai Ujiri", caption: "With Masai Ujiri" },
+      { file: "07.jpg", alt: "Tyla — Full stride", caption: "Full stride" }
     ]
   },
   {

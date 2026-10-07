@@ -841,7 +841,10 @@ body.menu-open { overflow: hidden; }
 
 /* —— Responsive —— */
 @media (max-width: 960px) {
-  .filter-bar { padding: calc(var(--header-h) + 1.5rem) var(--safe) 0; }
+  /* Its own snap point, not just padding to clear the header — without
+     this, mandatory snap below has nowhere valid to rest at the top
+     and forces the scroll straight to the first photo instead. */
+  .filter-bar { padding: calc(var(--header-h) + 1.5rem) var(--safe) 0; scroll-snap-align: start; }
   .filter-tabs { gap: 1.1rem; }
 
   /* One photo per screen on mobile — snap-scrolling instead of a grid
@@ -863,13 +866,16 @@ body.menu-open { overflow: hidden; }
     height: 100%;
     padding-bottom: 0;
     overflow-y: auto;
-    /* proximity, not mandatory — the filter bar above the photos is
-       deliberately not a snap point, and "mandatory" won't let the
-       scroll rest anywhere that isn't one, which was auto-scrolling
-       straight past the filter bar to the first photo on load. Still
-       snaps cleanly between photos on an intentional swipe, just
-       doesn't forcibly evict you from the top of the page. */
-    scroll-snap-type: y proximity;
+    /* mandatory — proximity was tried to keep the filter bar reachable
+       (mandatory with no snap point at the top was auto-scrolling past
+       it on load), but proximity doesn't guarantee a snap at all, so a
+       swipe could rest halfway between two photos again. The actual
+       fix for both bugs at once: give the filter bar its own snap
+       point too (below), so mandatory always has somewhere valid to
+       rest at the top instead of being forced to evict to the first
+       photo — and every swipe between photos still lands exactly on
+       one, never in between. */
+    scroll-snap-type: y mandatory;
     -webkit-overflow-scrolling: touch;
   }
   .scatter-grid {

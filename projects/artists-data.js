@@ -79,21 +79,23 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "ayra-starr",
-    name: "Ayra Starr",
-    category: "live",
-    credit: "for Blastfest",
-    heroAlt: "Ayra Starr performing live",
-    lede: "Live, from the pit. Smoke, phones, the whole field leaning forward.",
+    slug: "lesley",
+    name: "Lesley",
+    category: "editorial",
+    credit: "AfroSexy Summer cover",
+    heroAlt: "Lesley performing live",
+    lede: "Live — selected frames from the set.",
     images: [
-      { file: "hero.jpg", alt: "Ayra Starr — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Ayra Starr — From the pit", caption: "From the pit", position: "30% 55%" },
-      { file: "02.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Ayra Starr — Live", caption: "Live" }
+      { file: "hero.jpg", alt: "Lesley — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Lesley — Live", caption: "Live" },
+      { file: "09.jpg", alt: "Lesley — Live", caption: "Live" }
     ]
   },
   {
@@ -111,22 +113,21 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "black-sheriff",
-    name: "Black Sheriff",
+    slug: "bobby-nsenga",
+    name: "Bobby Nsenga",
     category: "live",
-    credit: "for Blastfest",
-    heroAlt: "Black Sheriff performing live",
-    lede: "Live. Ghana on the road, caught mid-phrase.",
+    credit: "for The Bobby Nsenga Experience",
+    heroAlt: "Bobby Nsenga performing live",
+    lede: "Live — selected frames from the set.",
     images: [
-      { file: "hero.jpg", alt: "Black Sheriff — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "014.jpg", alt: "Black Sheriff — Live", caption: "Live" }
+      { file: "hero.jpg", alt: "Bobby Nsenga — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Bobby Nsenga — Live", caption: "Live" }
     ]
   },
   {
@@ -302,41 +303,40 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "lesley",
-    name: "Lesley",
-    category: "editorial",
-    credit: "AfroSexy Summer cover",
-    heroAlt: "Lesley performing live",
-    lede: "Live — selected frames from the set.",
+    slug: "ayra-starr",
+    name: "Ayra Starr",
+    category: "live",
+    credit: "for Blastfest",
+    heroAlt: "Ayra Starr performing live",
+    lede: "Live, from the pit. Smoke, phones, the whole field leaning forward.",
     images: [
-      { file: "hero.jpg", alt: "Lesley — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Lesley — Live", caption: "Live" },
-      { file: "09.jpg", alt: "Lesley — Live", caption: "Live" }
+      { file: "hero.jpg", alt: "Ayra Starr — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Ayra Starr — From the pit", caption: "From the pit", position: "30% 55%" },
+      { file: "02.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Ayra Starr — Live", caption: "Live" }
     ]
   },
   {
-    slug: "bobby-nsenga",
-    name: "Bobby Nsenga",
+    slug: "black-sheriff",
+    name: "Black Sheriff",
     category: "live",
-    credit: "for The Bobby Nsenga Experience",
-    heroAlt: "Bobby Nsenga performing live",
-    lede: "Live — selected frames from the set.",
+    credit: "for Blastfest",
+    heroAlt: "Black Sheriff performing live",
+    lede: "Live. Ghana on the road, caught mid-phrase.",
     images: [
-      { file: "hero.jpg", alt: "Bobby Nsenga — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Bobby Nsenga — Live", caption: "Live" }
+      { file: "hero.jpg", alt: "Black Sheriff — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "014.jpg", alt: "Black Sheriff — Live", caption: "Live" }
     ]
   },
   {

@@ -99,20 +99,6 @@ window.ARTISTS = [
     ]
   },
   {
-    slug: "tiwa-savage",
-    name: "Tiwa Savage",
-    category: "live",
-    credit: "for Blastfest",
-    heroAlt: "Tiwa Savage performing live",
-    lede: "Live. Command of the stage, held in a still.",
-    images: [
-      { file: "hero.jpg", alt: "Tiwa Savage — Cover", caption: "Cover" },
-      { file: "0-12.jpg", alt: "Tiwa Savage — Live", caption: "Live" },
-      { file: "0-13.jpg", alt: "Tiwa Savage — Live", caption: "Live" },
-      { file: "0-14.jpg", alt: "Tiwa Savage — Live", caption: "Live" }
-    ]
-  },
-  {
     slug: "bobby-nsenga",
     name: "Bobby Nsenga",
     category: "live",
@@ -128,119 +114,6 @@ window.ARTISTS = [
       { file: "05.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
       { file: "06.jpg", alt: "Bobby Nsenga — Live", caption: "Live" },
       { file: "07.jpg", alt: "Bobby Nsenga — Live", caption: "Live" }
-    ]
-  },
-  {
-    slug: "davido",
-    name: "Davido",
-    category: "live",
-    credit: "for Giants of Africa",
-    heroAlt: "Davido performing live",
-    lede: "Live performance. Heat, jewelry, a white shirt in green stage light.",
-    images: [
-      { file: "hero.jpg", alt: "Davido — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Davido — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Davido — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Davido — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Davido — Live", caption: "Live" }
-    ]
-  },
-  {
-    slug: "adekunle",
-    name: "Adekunle",
-    category: "live",
-    credit: "for DukeConcept",
-    heroAlt: "Adekunle performing at Tio Tequila Bar",
-    lede: "Live at Tio Tequila Bar — an intimate room, phones up for every chorus.",
-    images: [
-      { file: "hero.jpg", alt: "Adekunle — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Adekunle — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Adekunle — Full house", caption: "Full house" },
-      { file: "04.jpg", alt: "Adekunle — Reach", caption: "Reach" },
-      { file: "05.jpg", alt: "Adekunle — From the crowd", caption: "From the crowd" },
-      { file: "06.jpg", alt: "Adekunle — With the band", caption: "With the band" },
-      { file: "07.jpg", alt: "Adekunle — Sing it back", caption: "Sing it back" },
-      { file: "08.jpg", alt: "Adekunle — Live", caption: "Live" },
-      { file: "010.jpg", alt: "Adekunle — Live", caption: "Live" },
-      { file: "011.jpg", alt: "Adekunle — Live", caption: "Live" }
-    ]
-  },
-  {
-    slug: "tyla",
-    name: "Tyla",
-    category: "live",
-    credit: "for Giants of Africa",
-    heroAlt: "Tyla performing at Giants of Africa Festival, Kigali",
-    lede: "Live at Giants of Africa Festival, Kigali — a guest set that closed with a hug from Masai Ujiri.",
-    images: [
-      { file: "hero.jpg", alt: "Tyla — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Tyla — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Tyla — With the dancers", caption: "With the dancers" },
-      { file: "03.jpg", alt: "Tyla — Mid-set", caption: "Mid-set" },
-      { file: "04.jpg", alt: "Tyla — Water break", caption: "Water break" },
-      { file: "05.jpg", alt: "Tyla — Arms up", caption: "Arms up" },
-      { file: "06.jpg", alt: "Tyla — With Masai Ujiri", caption: "With Masai Ujiri" },
-      { file: "07.jpg", alt: "Tyla — Full stride", caption: "Full stride" }
-    ]
-  },
-  {
-    slug: "enny",
-    name: "Enny",
-    category: "live",
-    credit: "for her Solo Tour",
-    heroAlt: "Enny performing live",
-    lede: "Live — selected frames from the set.",
-    images: [
-      { file: "hero.jpg", alt: "Enny — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "09.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "010.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "011.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "012.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "013.jpg", alt: "Enny — Live", caption: "Live" },
-      { file: "014.jpg", alt: "Enny — Live", caption: "Live" }
-    ]
-  },
-  {
-    slug: "ruger",
-    name: "Ruger",
-    category: "live",
-    credit: "for DukeConcept",
-    heroAlt: "Ruger performing live",
-    lede: "Live — selected frames from the set.",
-    images: [
-      { file: "hero.jpg", alt: "Ruger — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Ruger — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Ruger — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Ruger — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Ruger — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Ruger — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Ruger — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Ruger — Live", caption: "Live" }
-    ]
-  },
-  {
-    slug: "bnxn",
-    name: "Bnxn",
-    category: "live",
-    credit: "for Blastfest",
-    heroAlt: "Bnxn performing live",
-    lede: "Live — selected frames from the set.",
-    images: [
-      { file: "hero.jpg", alt: "Bnxn — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Bnxn — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Bnxn — Live", caption: "Live" }
     ]
   },
   {
@@ -268,6 +141,68 @@ window.ARTISTS = [
     ]
   },
   {
+    slug: "ruger",
+    name: "Ruger",
+    category: "live",
+    credit: "for DukeConcept",
+    heroAlt: "Ruger performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "hero.jpg", alt: "Ruger — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Ruger — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Ruger — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Ruger — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Ruger — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Ruger — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Ruger — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Ruger — Live", caption: "Live" }
+    ]
+  },
+  {
+    slug: "adekunle",
+    name: "Adekunle",
+    category: "live",
+    credit: "for DukeConcept",
+    heroAlt: "Adekunle performing at Tio Tequila Bar",
+    lede: "Live at Tio Tequila Bar — an intimate room, phones up for every chorus.",
+    images: [
+      { file: "hero.jpg", alt: "Adekunle — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Adekunle — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Adekunle — Full house", caption: "Full house" },
+      { file: "04.jpg", alt: "Adekunle — Reach", caption: "Reach" },
+      { file: "05.jpg", alt: "Adekunle — From the crowd", caption: "From the crowd" },
+      { file: "06.jpg", alt: "Adekunle — With the band", caption: "With the band" },
+      { file: "07.jpg", alt: "Adekunle — Sing it back", caption: "Sing it back" },
+      { file: "08.jpg", alt: "Adekunle — Live", caption: "Live" },
+      { file: "010.jpg", alt: "Adekunle — Live", caption: "Live" },
+      { file: "011.jpg", alt: "Adekunle — Live", caption: "Live" }
+    ]
+  },
+  {
+    slug: "enny",
+    name: "Enny",
+    category: "live",
+    credit: "for her Solo Tour",
+    heroAlt: "Enny performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "hero.jpg", alt: "Enny — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "09.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "010.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "011.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "012.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "013.jpg", alt: "Enny — Live", caption: "Live" },
+      { file: "014.jpg", alt: "Enny — Live", caption: "Live" }
+    ]
+  },
+  {
     slug: "simi",
     name: "Simi",
     category: "live",
@@ -279,64 +214,6 @@ window.ARTISTS = [
       { file: "01.jpg", alt: "Simi — Live", caption: "Live" },
       { file: "02.jpg", alt: "Simi — Live", caption: "Live" },
       { file: "03.jpg", alt: "Simi — Live", caption: "Live" }
-    ]
-  },
-  {
-    slug: "brima",
-    name: "Brima",
-    category: "editorial",
-    credit: "Campaign shoot",
-    heroAlt: "Brima performing live",
-    lede: "Live — selected frames from the set.",
-    images: [
-      { file: "hero.jpg", alt: "Brima — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "08.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "09.jpg", alt: "Brima — Live", caption: "Live" },
-      { file: "010.jpg", alt: "Brima — Live", caption: "Live" }
-    ]
-  },
-  {
-    slug: "ayra-starr",
-    name: "Ayra Starr",
-    category: "live",
-    credit: "for Blastfest",
-    heroAlt: "Ayra Starr performing live",
-    lede: "Live, from the pit. Smoke, phones, the whole field leaning forward.",
-    images: [
-      { file: "hero.jpg", alt: "Ayra Starr — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Ayra Starr — From the pit", caption: "From the pit", position: "30% 55%" },
-      { file: "02.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Ayra Starr — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Ayra Starr — Live", caption: "Live" }
-    ]
-  },
-  {
-    slug: "black-sheriff",
-    name: "Black Sheriff",
-    category: "live",
-    credit: "for Blastfest",
-    heroAlt: "Black Sheriff performing live",
-    lede: "Live. Ghana on the road, caught mid-phrase.",
-    images: [
-      { file: "hero.jpg", alt: "Black Sheriff — Cover", caption: "Cover" },
-      { file: "01.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "02.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "03.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "04.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "05.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "06.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "07.jpg", alt: "Black Sheriff — Live", caption: "Live" },
-      { file: "014.jpg", alt: "Black Sheriff — Live", caption: "Live" }
     ]
   },
   {
@@ -361,6 +238,129 @@ window.ARTISTS = [
       { file: "011.jpg", alt: "Kingjames — Live", caption: "Live" },
       { file: "012.jpg", alt: "Kingjames — Live", caption: "Live" },
       { file: "013.jpg", alt: "Kingjames — Live", caption: "Live" }
+    ]
+  },
+  {
+    slug: "ayra-starr",
+    name: "Ayra Starr",
+    category: "live",
+    credit: "for Blastfest",
+    heroAlt: "Ayra Starr performing live",
+    lede: "Live, from the pit. Smoke, phones, the whole field leaning forward.",
+    images: [
+      { file: "hero.jpg", alt: "Ayra Starr — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Ayra Starr — From the pit", caption: "From the pit", position: "30% 55%" },
+      { file: "02.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Ayra Starr — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Ayra Starr — Live", caption: "Live" }
+    ]
+  },
+  {
+    slug: "tiwa-savage",
+    name: "Tiwa Savage",
+    category: "live",
+    credit: "for Blastfest",
+    heroAlt: "Tiwa Savage performing live",
+    lede: "Live. Command of the stage, held in a still.",
+    images: [
+      { file: "hero.jpg", alt: "Tiwa Savage — Cover", caption: "Cover" },
+      { file: "0-12.jpg", alt: "Tiwa Savage — Live", caption: "Live" },
+      { file: "0-13.jpg", alt: "Tiwa Savage — Live", caption: "Live" },
+      { file: "0-14.jpg", alt: "Tiwa Savage — Live", caption: "Live" }
+    ]
+  },
+  {
+    slug: "davido",
+    name: "Davido",
+    category: "live",
+    credit: "for Giants of Africa",
+    heroAlt: "Davido performing live",
+    lede: "Live performance. Heat, jewelry, a white shirt in green stage light.",
+    images: [
+      { file: "hero.jpg", alt: "Davido — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Davido — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Davido — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Davido — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Davido — Live", caption: "Live" }
+    ]
+  },
+  {
+    slug: "tyla",
+    name: "Tyla",
+    category: "live",
+    credit: "for Giants of Africa",
+    heroAlt: "Tyla performing at Giants of Africa Festival, Kigali",
+    lede: "Live at Giants of Africa Festival, Kigali — a guest set that closed with a hug from Masai Ujiri.",
+    images: [
+      { file: "hero.jpg", alt: "Tyla — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Tyla — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Tyla — With the dancers", caption: "With the dancers" },
+      { file: "03.jpg", alt: "Tyla — Mid-set", caption: "Mid-set" },
+      { file: "04.jpg", alt: "Tyla — Water break", caption: "Water break" },
+      { file: "05.jpg", alt: "Tyla — Arms up", caption: "Arms up" },
+      { file: "06.jpg", alt: "Tyla — With Masai Ujiri", caption: "With Masai Ujiri" },
+      { file: "07.jpg", alt: "Tyla — Full stride", caption: "Full stride" }
+    ]
+  },
+  {
+    slug: "bnxn",
+    name: "Bnxn",
+    category: "live",
+    credit: "for Blastfest",
+    heroAlt: "Bnxn performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "hero.jpg", alt: "Bnxn — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Bnxn — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Bnxn — Live", caption: "Live" }
+    ]
+  },
+  {
+    slug: "brima",
+    name: "Brima",
+    category: "editorial",
+    credit: "Campaign shoot",
+    heroAlt: "Brima performing live",
+    lede: "Live — selected frames from the set.",
+    images: [
+      { file: "hero.jpg", alt: "Brima — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Brima — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Brima — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Brima — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Brima — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Brima — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Brima — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Brima — Live", caption: "Live" },
+      { file: "08.jpg", alt: "Brima — Live", caption: "Live" },
+      { file: "09.jpg", alt: "Brima — Live", caption: "Live" },
+      { file: "010.jpg", alt: "Brima — Live", caption: "Live" }
+    ]
+  },
+  {
+    slug: "black-sheriff",
+    name: "Black Sheriff",
+    category: "live",
+    credit: "for Blastfest",
+    heroAlt: "Black Sheriff performing live",
+    lede: "Live. Ghana on the road, caught mid-phrase.",
+    images: [
+      { file: "hero.jpg", alt: "Black Sheriff — Cover", caption: "Cover" },
+      { file: "01.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "02.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "03.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "04.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "05.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "06.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "07.jpg", alt: "Black Sheriff — Live", caption: "Live" },
+      { file: "014.jpg", alt: "Black Sheriff — Live", caption: "Live" }
     ]
   },
   {

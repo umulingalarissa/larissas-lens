@@ -863,7 +863,13 @@ body.menu-open { overflow: hidden; }
     height: 100%;
     padding-bottom: 0;
     overflow-y: auto;
-    scroll-snap-type: y mandatory;
+    /* proximity, not mandatory — the filter bar above the photos is
+       deliberately not a snap point, and "mandatory" won't let the
+       scroll rest anywhere that isn't one, which was auto-scrolling
+       straight past the filter bar to the first photo on load. Still
+       snaps cleanly between photos on an intentional swipe, just
+       doesn't forcibly evict you from the top of the page. */
+    scroll-snap-type: y proximity;
     -webkit-overflow-scrolling: touch;
   }
   .scatter-grid {
